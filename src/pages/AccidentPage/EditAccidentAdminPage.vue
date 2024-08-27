@@ -48,7 +48,6 @@
 import EditAccidentForm from "@/components/Forms/EditAccidentForm";
 import EventForm from "@/components/Forms/EventForm";
 import axios from "axios";
-import M from "materialize-css";
 import TimeLineForm from "@/components/Forms/TimeLineForm";
 export default {
   name: "EditAccidentAdminPage",
@@ -77,12 +76,12 @@ export default {
           .put(`accident/${this.uuidAccident}`, accident)
           .then((response) => {
             if(response.status >= 200){
-              M.toast({html: response.data.message})
+              console.log(response.status)
             }
           })
           .catch((response) => {
             console.log(response.data)
-            M.toast({html: response.data.message})
+
           })
     },
 
@@ -92,12 +91,12 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.timeLineForm.timeLineSeries = response.data
-              M.toast({html: "добавлено"})
+              console.log(response.data)
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     },
 
@@ -107,12 +106,12 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.timeLineForm.timeLineSeries = response.data
-              M.toast({html: "Удалено"})
+              console.log(response.data)
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     },
 
@@ -122,13 +121,13 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.timeLineForm.timeLineSeries = response.data
-              M.toast({html: "Обновить"})
+              console.log(response.data)
 
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     },
 
@@ -138,12 +137,12 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.eventForm.events = response.data
-              M.toast({html: "добавлено"})
+              console.log(response.data)
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     },
 
@@ -153,12 +152,12 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.eventForm.events = response.data
-              M.toast({html: "Удалено"})
+              console.log(response.data)
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     },
 
@@ -168,13 +167,13 @@ export default {
           .then((response) => {
             if(response.status >= 200){
               this.$refs.eventForm.events = response.data
-              M.toast({html: "Обновить"})
+              console.log(response.data)
 
 
             }
           })
           .catch((response) => {
-            M.toast({html: response.data.message})
+            console.log(response.data)
           })
     }
 
