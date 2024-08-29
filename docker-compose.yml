@@ -13,6 +13,8 @@ services:
     container_name: vue-nginx-app
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/ssl/certs/cloud_aggreko.crt:/root/ssl/cloud_aggreko.crt
+      - /etc/ssl/private/cloud_aggreko.key:/root/ssl/cloud_aggreko.key
     ports:
       - 80:80
     depends_on:
