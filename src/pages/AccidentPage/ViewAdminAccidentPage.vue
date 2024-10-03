@@ -28,7 +28,7 @@ export default {
   methods: {
     addAccident(entity){
       axios
-          .post('/accident/', entity)
+          .post('/accident', entity)
           .then((response) => {
             if(response.status >= 200){
               M.toast({html: response.data.message})
