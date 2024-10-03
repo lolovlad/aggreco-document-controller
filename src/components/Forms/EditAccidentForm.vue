@@ -92,9 +92,11 @@
       </v-col>
     </v-row>
     <v-row>
+
       <v-col cols="12" sm="5">
         <v-text-field v-model="accident.additional_material" variant="underlined" label="Ссылка на материал"/>
       </v-col>
+
     </v-row>
     <v-btn class="mt-4" type="submit" @click="saveChange">Сохранить</v-btn>
   </v-form>

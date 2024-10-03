@@ -129,6 +129,19 @@ class ObjectService{
                 throw e.data.message
             })
     }
+
+    getListObject(){
+        return axios
+            .get('/object/list')
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch((response) => {
+                throw response
+            })
+    }
+
 }
 
 export default new ObjectService();

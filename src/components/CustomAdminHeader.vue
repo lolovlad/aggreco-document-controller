@@ -13,6 +13,7 @@
       <v-list-item prepend-icon="mdi-file-outline" title="Документы" @click="documentPage"/>
       <v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>
+      <v-list-item prepend-icon="mdi-file-alert" title="Статистика" @click="statisticPage"/>
     </v-list>
     <v-divider></v-divider>
     <template v-slot:append>
@@ -47,6 +48,9 @@ export default {
     },
     accidentPage(){
       router.push('/admin/accident')
+    },
+    statisticPage(){
+      router.push('/admin/statistic')
     }
   }
 }

@@ -22,6 +22,9 @@ import BaseAdminAccidentPage from "@/pages/AccidentPage/BaseAdminAccidentPage";
 import ViewAdminAccidentPage from "@/pages/AccidentPage/ViewAdminAccidentPage";
 import EditAccidentAdminPage from "@/pages/AccidentPage/EditAccidentAdminPage";
 import InfoAccidentPage from "@/pages/AccidentPage/InfoAccidentPage";
+import MainStatisticPage from "@/pages/StatisticPage/MainStatisticPage.vue";
+import AllStatistic from "@/pages/StatisticPage/AllStatistic.vue";
+import ObjectStatic from "@/pages/StatisticPage/ObjectStatic.vue";
 
 const routes = [
     {
@@ -148,6 +151,20 @@ const routes = [
                     }
                 ]
             },
+            {
+                path: "statistic",
+                component: MainStatisticPage,
+                children: [
+                    {
+                        path: "",
+                        component: AllStatistic
+                    },
+                    {
+                        path: "object",
+                        component: ObjectStatic
+                    }
+                ]
+            }
 
         ],
         beforeEnter: (to, from, next) => {

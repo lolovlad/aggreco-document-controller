@@ -87,6 +87,7 @@
 <script>
 import FixedButton from "@/components/UI/FixedButton";
 import axios from "axios";
+import ObjectService from "@/store/object.service";
 export default {
   name: "AddAccidentForm",
   components: {FixedButton},
@@ -107,11 +108,11 @@ export default {
   },
   methods: {
     getListObject(){
-      axios
-          .get(`/object/list`)
-          .then((response) => {
-            this.listObject = response.data
-          })
+      ObjectService.getListObject().then(
+          data => {
+            this.listObject = data
+          }
+      )
     },
     getListEquipments(){
       axios
