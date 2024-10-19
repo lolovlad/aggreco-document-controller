@@ -25,6 +25,10 @@ import InfoAccidentPage from "@/pages/AccidentPage/InfoAccidentPage";
 import MainStatisticPage from "@/pages/StatisticPage/MainStatisticPage.vue";
 import AllStatistic from "@/pages/StatisticPage/AllStatistic.vue";
 import ObjectStatic from "@/pages/StatisticPage/ObjectStatic.vue";
+import ProfessionPage from "@/pages/UsersPage/ProfessionPage.vue";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage.vue";
+import EditAccountPage from "@/pages/ProfilePage/EditAccountPage.vue";
+import EditSignaturePage from "@/pages/ProfilePage/EditSignaturePage.vue";
 
 const routes = [
     {
@@ -41,6 +45,28 @@ const routes = [
                 }
             }else{
                 next()
+            }
+        }
+    },
+    {
+        path: "/profile",
+        component: ProfilePage,
+        children: [
+            {
+                path: "account",
+                component: EditAccountPage
+            },
+            {
+                path: "signature",
+                component: EditSignaturePage
+            }
+        ],
+        beforeEnter: (to, from, next) => {
+            const initialState = $store.state;
+            if(initialState.status.loggedIn){
+                next();
+            }else{
+                next('/')
             }
         }
     },
@@ -63,6 +89,10 @@ const routes = [
                     {
                         path: "",
                         component: AdminUserPage
+                    },
+                    {
+                        path: "profession",
+                        component: ProfessionPage
                     }
                 ]
             },

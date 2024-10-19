@@ -11,14 +11,35 @@ class AuthService {
                 }
             })
             .then(response => {
-                if (response.data.access_token) {
-                    sessionStorage.setItem('user', JSON.stringify(response.data));
-                    axios.defaults.headers.common['Authorization'] = `Bearer ` + response.data.access_token
+                console.log(response.status, "auth.service")
+                if(response.status === 200) {
+                    if (response.data.access_token) {
+                        sessionStorage.setItem('user', JSON.stringify(response.data));
+                        axios.defaults.headers.common['Authorization'] = `Bearer ` + response.data.access_token
+                    }
+                    return response;
                 }
-                return response;
             })
             .catch(function (e) {
-                return e;
+                return e.response.data
+            })
+    }
+
+    refresh(refreshToken) {
+        return axios
+            .post('/login/refresh', {refresh_token: refreshToken})
+            .then(response => {
+                console.log(response.status, "auth.service")
+                if(response.status === 200) {
+                    if (response.data.access_token) {
+                        sessionStorage.setItem('user', JSON.stringify(response.data));
+                        axios.defaults.headers.common['Authorization'] = `Bearer ` + response.data.access_token
+                    }
+                    return response;
+                }
+            })
+            .catch(function (e) {
+                return e.response.data
             })
     }
 

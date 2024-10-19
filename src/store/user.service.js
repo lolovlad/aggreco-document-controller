@@ -84,6 +84,77 @@ class UserService {
                 return e
             })
     }
+    getProfUser(){
+        return axios
+            .get(`/user/profession`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    addProf(prof){
+        return axios
+            .post("/user/profession", prof)
+            .then((response) => {
+                if(response.status === 201)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    deleteProf(id_prof){
+        return axios
+            .delete(`/user/profession/${id_prof}`)
+            .then(
+                (response) => {
+                    if(response.status === 200)
+                        return response
+                }
+            )
+            .catch(function (e){
+                throw e
+            })
+    }
+    getProfile(){
+        return axios
+            .get(`/user/get/profile`)
+            .then(
+                (response) => {
+                    if(response.status === 200)
+                        return response.data
+                }
+            )
+            .catch(function (e){
+                throw e
+            })
+    }
+    saveSignature(form){
+        return axios
+            .post('/user/file/signature', form)
+            .then(response => {
+                if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    getSignature(){
+        return axios
+            .get('user/file/signature')
+            .then(response => {
+                if(response.status === 200)
+                    return response.data
+
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 }
 
 export default new UserService();

@@ -5,7 +5,7 @@
         <CustomUserTable :users="users"/>
       </v-col>
     </v-row>
-    <UserTool ref="userTool" @export="exportUsers" @addUser="addUser"></UserTool>
+    <UserTool ref="userTool" @export="exportUsers" @addUser="addUser" @openProf="openProf"></UserTool>
     <v-snackbar
         :timeout="4000"
         v-model="snackbar"
@@ -55,6 +55,10 @@ export default {
     addUser(){
       this.$refs.userTool.close()
       this.$router.push(`/admin/user/add`)
+    },
+    openProf(){
+      this.$refs.userTool.close()
+      this.$router.push(`/admin/user/profession`)
     }
   }
 

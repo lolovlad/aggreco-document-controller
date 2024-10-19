@@ -1,3 +1,86 @@
+<script>
+import ButtonAgrea from "@/components/UI/ButtonAgrea.vue";
+import UserService from "@/store/user.service";
+
+export default {
+  name: "EditAccountForm",
+  components: {ButtonAgrea},
+  props: {
+    idUser: {
+      type: String,
+      default: null
+    }
+  },
+  data(){
+    return{
+      user: {
+        email: null,
+        id_type: 1,
+        id_profession: 1,
+        name: null,
+        surname: null,
+        patronymic: null,
+        password: null
+      },
+      userScheme: {
+        email: null,
+        id_type: 1,
+        id_profession: 1,
+        name: null,
+        surname: null,
+        patronymic: null,
+        password: null
+      },
+      typeUser: [],
+      profUser: []
+    }
+  },
+  methods: {
+    loadType(){
+      UserService.loadTypeUser()
+          .then(
+              (userType) => {
+                this.typeUser = userType
+              }
+          )
+    },
+
+    loadProf(){
+      UserService.getProfUser()
+          .then(
+              (profUSer) => {
+                this.profUser = profUSer
+              }
+          )
+    },
+
+    getUser(){
+      UserService.getUserByUuid(this.idUser)
+          .then((user) => {
+            Object.assign(this.user, user)
+          })
+    },
+
+    clearForm(){
+      Object.assign(this.user, this.userScheme)
+    },
+
+    addUser(){
+      this.$emit("addUser", this.user)
+    },
+    updateUser(){
+      this.$emit("updateUser", this.user)
+    },
+
+  },
+  mounted() {
+    this.loadType()
+    this.loadProf()
+    this.getUser()
+  }
+}
+</script>
+
 <template>
   <v-form @submit.prevent>
     <v-row>
@@ -33,6 +116,7 @@
             v-model="user.email"
             label="Почта"
             variant="underlined"
+            disabled
         />
       </v-col>
     </v-row>
@@ -45,6 +129,7 @@
             item-value="id"
             label="Тип пользователя"
             variant="underlined"
+            disabled
         />
       </v-col>
     </v-row>
@@ -71,103 +156,12 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="4" v-if="addMode">
-        <ButtonAgrea @click="addUser">Сохранить</ButtonAgrea>
-      </v-col>
-      <v-col cols="12" md="4" v-else>
+      <v-col cols="12" md="4">
         <ButtonAgrea @click="updateUser">Обновить</ButtonAgrea>
       </v-col>
     </v-row>
   </v-form>
 </template>
-
-<script>
-import ButtonAgrea from "@/components/UI/ButtonAgrea";
-import UserService from "@/store/user.service";
-export default {
-  name: "EditUserForm",
-  components: {ButtonAgrea},
-  props: {
-    addMode: {
-      type: Boolean,
-      default: true
-    },
-    idUser: {
-      type: String,
-      default: null
-    }
-  },
-  data(){
-    return{
-      user: {
-        email: null,
-        id_type: 1,
-        id_profession: 1,
-        name: null,
-        surname: null,
-        patronymic: null,
-        password: null
-      },
-      userScheme: {
-        email: null,
-        id_type: 1,
-        id_profession: 1,
-        name: null,
-        surname: null,
-        patronymic: null,
-        password: null
-      },
-      typeUser: [],
-      profUser: []
-    }
-  },
-  methods: {
-    loadType(){
-      UserService.loadTypeUser()
-          .then(
-          (userType) => {
-            this.typeUser = userType
-          }
-      )
-    },
-
-    loadProf(){
-      UserService.getProfUser()
-          .then(
-              (profUSer) => {
-                this.profUser = profUSer
-              }
-          )
-    },
-
-    getUser(){
-      UserService.getUserByUuid(this.idUser)
-          .then((user) => {
-            Object.assign(this.user, user)
-          })
-    },
-
-    clearForm(){
-      Object.assign(this.user, this.userScheme)
-    },
-
-    addUser(){
-      this.$emit("addUser", this.user)
-    },
-    updateUser(){
-      this.$emit("updateUser", this.user)
-    },
-
-  },
-  mounted() {
-    this.loadType()
-    this.loadProf()
-    if(this.addMode === false){
-      this.getUser()
-    }
-  }
-}
-</script>
 
 <style scoped>
 

@@ -38,6 +38,7 @@
                               :rules="emailRules"
                               label="Email"
                               variant="underlined"
+                              type="email"
                               required
                           />
                         </v-col>
@@ -48,6 +49,7 @@
                               v-model="password"
                               label="Пароль"
                               variant="underlined"
+                              type="password"
                               required
                           />
                         </v-col>
@@ -88,7 +90,6 @@ export default {
           .then(
               (response) => {
                 if (response.status !== 200){
-                  console.log(response)
                   this.error = response.message
                 }
                 else{

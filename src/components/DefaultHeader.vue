@@ -6,6 +6,11 @@
     </template>
 
     <v-app-bar-title @click="$route.push('/')">Aggreco-work-tool</v-app-bar-title>
+
+    <template v-slot:append>
+      <v-btn icon="mdi-dots-vertical"></v-btn>
+    </template>
+
   </v-app-bar>
 </template>
 

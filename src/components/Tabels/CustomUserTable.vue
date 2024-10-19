@@ -66,6 +66,12 @@ export default {
           }
         },
         { title: 'Роль', key: 'type', align: 'start', value: item => `${item.type.name}` },
+        { title: 'Должность', key: 'profession', align: 'start', value: item => {
+              if(item.profession === null)
+                return "Нет"
+              return item.profession.description
+            }
+          },
         { title: 'Действия', key: "actions", align: 'center' }
       ],
       users: [],
@@ -81,6 +87,7 @@ export default {
         UserService.getPageUser(page).then(
             response => {
               this.users = response.data
+              console.log(this.users)
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
