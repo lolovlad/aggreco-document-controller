@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import EditUserForm from "@/components/Forms/EditUserForm";
+import EditUserForm from "@/components/Forms/EditUserForm.vue";
 import UserService from "@/store/user.service";
 export default {
   name: "EditUserPage",

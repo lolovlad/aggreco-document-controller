@@ -5,30 +5,37 @@ import {
 import {auth as $store} from "@/store/auth.model";
 import LoginPage from "@/pages/LoginPage";
 import AdminMainPage from "@/pages/AdminMainPage";
-import AdminUserPage from "@/pages/UsersPage/AdminUserPage";
-import UserPage from "@/pages/UserPage";
+import AdminUserPage from "@/pages/AdminPage/UsersPage/AdminUserPage";
 import AdminDocumentPage from "@/pages/AdminDocumentPage";
 import AdminDocumentUserViewPage from "@/pages/AdminDocumentUserViewPage";
 import AccessDeniedPage from "@/pages/ErrorPage/AccessDeniedPage";
-import BaseAdminUserPage from "@/pages/UsersPage/BaseAdminUserPage";
-import EditUserPage from "@/pages/UsersPage/EditUserPage";
-import BaseAdminObjectPage from "@/pages/ObjectPage/BaseAdminObjectPage";
-import ViewObjectAdminPage from "@/pages/ObjectPage/ViewObjectAdminPage";
-import EditObjectPage from "@/pages/ObjectPage/EditObjectPage";
-import ViewEquipmentAdminPage from "@/pages/EquipmentPage/ViewEquipmentAdminPage";
-import EditEquipmentPage from "@/pages/EquipmentPage/EditEquipmentPage";
-import BaseAdminEquipmentPage from "@/pages/EquipmentPage/BaseAdminEquipmentPage";
-import BaseAdminAccidentPage from "@/pages/AccidentPage/BaseAdminAccidentPage";
-import ViewAdminAccidentPage from "@/pages/AccidentPage/ViewAdminAccidentPage";
-import EditAccidentAdminPage from "@/pages/AccidentPage/EditAccidentAdminPage";
-import InfoAccidentPage from "@/pages/AccidentPage/InfoAccidentPage";
-import MainStatisticPage from "@/pages/StatisticPage/MainStatisticPage.vue";
-import AllStatistic from "@/pages/StatisticPage/AllStatistic.vue";
-import ObjectStatic from "@/pages/StatisticPage/ObjectStatic.vue";
-import ProfessionPage from "@/pages/UsersPage/ProfessionPage.vue";
-import ProfilePage from "@/pages/ProfilePage/ProfilePage.vue";
-import EditAccountPage from "@/pages/ProfilePage/EditAccountPage.vue";
-import EditSignaturePage from "@/pages/ProfilePage/EditSignaturePage.vue";
+import BaseAdminUserPage from "@/pages/AdminPage/UsersPage/BaseAdminUserPage";
+import EditUserPage from "@/pages/AdminPage/UsersPage/EditUserPage";
+import BaseAdminObjectPage from "@/pages/AdminPage/ObjectPage/BaseAdminObjectPage";
+import ViewObjectAdminPage from "@/pages/AdminPage/ObjectPage/ViewObjectAdminPage";
+import EditObjectPage from "@/pages/AdminPage/ObjectPage/EditObjectPage";
+import ViewEquipmentAdminPage from "@/pages/AdminPage/EquipmentPage/ViewEquipmentAdminPage";
+import EditEquipmentPage from "@/pages/AdminPage/EquipmentPage/EditEquipmentPage";
+import BaseAdminEquipmentPage from "@/pages/AdminPage/EquipmentPage/BaseAdminEquipmentPage";
+import BaseAdminAccidentPage from "@/pages/AdminPage/AccidentPage/BaseAdminAccidentPage";
+import ViewAdminAccidentPage from "@/pages/AdminPage/AccidentPage/ViewAdminAccidentPage";
+import EditAccidentAdminPage from "@/pages/AdminPage/AccidentPage/EditAccidentAdminPage";
+import InfoAccidentPage from "@/pages/AdminPage/AccidentPage/InfoAccidentPage";
+import MainStatisticPage from "@/pages/AdminPage/StatisticPage/MainStatisticPage.vue";
+import AllStatistic from "@/pages/AdminPage/StatisticPage/AllStatistic.vue";
+import ObjectStatic from "@/pages/AdminPage/StatisticPage/ObjectStatic.vue";
+import ProfessionPage from "@/pages/AdminPage/UsersPage/ProfessionPage.vue";
+import ProfilePage from "@/pages/AdminPage/ProfilePage/ProfilePage.vue";
+import EditAccountPage from "@/pages/AdminPage/ProfilePage/EditAccountPage.vue";
+import EditSignaturePage from "@/pages/AdminPage/ProfilePage/EditSignaturePage.vue";
+import ViewAccountPage from "@/pages/AdminPage/ProfilePage/ViewAccountPage.vue";
+import WorkerMainPage from "@/pages/Workers/WorkerMainPage.vue";
+import ClaimViewPage from "@/pages/Workers/ClaimPage/ClaimViewPage.vue";
+import BasePage from "@/pages/Workers/ClaimPage/BasePage.vue";
+import EditClaimPage from "@/pages/Workers/ClaimPage/EditClaimPage.vue";
+import BaseAdminClaimPage from "@/pages/AdminPage/ClaimPage/BaseAdminClaimPage.vue";
+import ClaimViewAdminPage from "@/pages/AdminPage/ClaimPage/ClaimViewAdminPage.vue";
+import EditClaimAdminPage from "@/pages/AdminPage/ClaimPage/EditClaimAdminPage.vue";
 
 const routes = [
     {
@@ -59,6 +66,10 @@ const routes = [
             {
                 path: "signature",
                 component: EditSignaturePage
+            },
+            {
+                path: '',
+                component: ViewAccountPage
             }
         ],
         beforeEnter: (to, from, next) => {
@@ -194,6 +205,20 @@ const routes = [
                         component: ObjectStatic
                     }
                 ]
+            },
+            {
+                path: "claim",
+                component: BaseAdminClaimPage,
+                children: [
+                    {
+                        path: "",
+                        component: ClaimViewAdminPage
+                    },
+                    {
+                        path: "edit/:uuid",
+                        component: EditClaimAdminPage
+                    }
+                ]
             }
 
         ],
@@ -212,8 +237,24 @@ const routes = [
         }
     },
     {
-        path: '/user',
-        component: UserPage,
+        path: '/worker',
+        component: WorkerMainPage,
+        children: [
+            {
+                path: "claim",
+                component: BasePage,
+                children: [
+                    {
+                        path: "",
+                        component: ClaimViewPage
+                    },
+                    {
+                        path: "edit/:uuid",
+                        component: EditClaimPage
+                    }
+                ]
+            }
+        ],
         beforeEnter: (to, from, next) => {
             const initialState = $store.state;
             if(initialState.status.loggedIn){

@@ -1,3 +1,59 @@
+<script>
+import router from "@/router/router";
+
+export default {
+  name: "WorkerHeader",
+  data(){
+    return{
+      drawer: false,
+
+      fav: true,
+      menu: false,
+      message: false,
+      hints: true,
+    }
+  },
+  methods:{
+    profilePageOpen(){
+      router.push(`/profile`)
+    },
+    objectPage(){
+      router.push('/worker/object')
+    },
+    accidentPage(){
+      router.push('/worker/accident')
+    },
+    claimPage(){
+      router.push('/worker/claim')
+    },
+    logout(){
+      this.$store.dispatch('auth/logout')
+      router.push('/')
+    }
+  },
+  computed: {
+    fullName(){
+      const user = this.$store.state.auth.user
+      if(user === null)
+        return `Неизветно`
+      if(user.name !== undefined){
+        return `${user.surname} ${user.name[0]}. ${user.patronymic[0]}.`
+      }
+      return `Неизветно`
+    },
+    prof(){
+      const user = this.$store.state.auth.user
+      if(user === null)
+        return `Неизветно`
+      if(user.profession !== null){
+        return `${user.profession.description}`
+      }
+      return "Неизветно"
+    }
+  }
+}
+</script>
+
 <template>
   <v-app-bar color="orange-darken-3"
              prominent>
@@ -60,82 +116,12 @@
       temporary
   >
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-account" title="Пользователи" @click="userPage"/>
-      <v-list-item prepend-icon="mdi-file-outline" title="Документы" @click="documentPage"/>
-      <v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>
+      <!--<v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>-->
       <v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="Заявки" @click="claimPage"/>
-      <v-list-item prepend-icon="mdi-chart-bar" title="Статистика" @click="statisticPage"/>
     </v-list>
   </v-navigation-drawer>
 </template>
-
-<script>
-import router from "@/router/router";
-
-
-export default {
-  name: "CustomAdminHeader",
-  components: {},
-  data(){
-    return{
-      drawer: false,
-
-      fav: true,
-      menu: false,
-      message: false,
-      hints: true,
-    }
-  },
-  methods:{
-    profilePageOpen(){
-      router.push(`/profile`)
-    },
-    userPage(){
-      router.push('/admin/user')
-    },
-    documentPage(){
-      router.push('/admin/document')
-    },
-    objectPage(){
-      router.push('/admin/object')
-    },
-    accidentPage(){
-      router.push('/admin/accident')
-    },
-    statisticPage(){
-      router.push('/admin/statistic')
-    },
-    claimPage(){
-      router.push('/admin/claim')
-    },
-    logout(){
-      this.$store.dispatch('auth/logout')
-      router.push('/')
-    }
-  },
-  computed: {
-    fullName(){
-      const user = this.$store.state.auth.user
-      if(user === null)
-        return `Неизветно`
-      if(user.name !== undefined){
-        return `${user.surname} ${user.name[0]}. ${user.patronymic[0]}.`
-      }
-      return `Неизветно`
-    },
-    prof(){
-      const user = this.$store.state.auth.user
-      if(user === null)
-        return `Неизветно`
-      if(user.profession !== null){
-        return `${user.profession.description}`
-      }
-      return "Неизветно"
-    }
-  }
-}
-</script>
 
 <style scoped>
 

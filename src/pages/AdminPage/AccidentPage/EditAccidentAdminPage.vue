@@ -42,6 +42,14 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-container>
+
+  <v-snackbar
+      :timeout="4000"
+      v-model="snackbar"
+  >
+    {{message}}
+  </v-snackbar>
+
 </template>
 
 <script>
@@ -49,6 +57,7 @@ import EditAccidentForm from "@/components/Forms/EditAccidentForm";
 import EventForm from "@/components/Forms/EventForm";
 import axios from "axios";
 import TimeLineForm from "@/components/Forms/TimeLineForm";
+import AccidentService from "@/store/accident.service";
 export default {
   name: "EditAccidentAdminPage",
   components: {TimeLineForm, EventForm, EditAccidentForm},
@@ -57,7 +66,9 @@ export default {
       tab: null,
       uuidAccident: this.$route.params.uuid,
       datetimeStart: null,
-      datetimeEnd: null
+      datetimeEnd: null,
+      snackbar: false,
+      message: ""
     }
   },
   methods:{
@@ -72,107 +83,86 @@ export default {
     },
 
     saveAccident(accident){
-      axios
-          .put(`accident/${this.uuidAccident}`, accident)
-          .then((response) => {
+      AccidentService.updateAccident(this.uuidAccident, accident)
+          .then(response => {
             if(response.status >= 200){
+              this.snackbar = true
+              this.message = "Основная информация обновлена"
               console.log(response.status)
             }
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
-
           })
     },
 
     addTimeLine(item){
-      axios
-          .post(`accident/${this.uuidAccident}/time_line/`, item)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.timeLineForm.timeLineSeries = response.data
-              console.log(response.data)
-
-            }
-          })
-          .catch((response) => {
-            console.log(response.data)
-          })
+      AccidentService.addTimeLine(this.claim.accident.uuid, item)
+          .then(timeline =>{
+            this.$refs.timeLineForm.timeLineSeries = timeline
+            this.snackbar = true
+            this.message = "Событие добавлено"
+          }).catch((response) => {
+        console.log(response.data)
+      })
     },
 
     deleteTimeLine(uuidItem){
-      axios
-          .delete(`accident/${this.uuidAccident}/time_line/${uuidItem}/`)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.timeLineForm.timeLineSeries = response.data
-              console.log(response.data)
-
-            }
+      AccidentService.deleteTimeLine(this.claim.accident.uuid, uuidItem)
+          .then((data) => {
+            this.$refs.timeLineForm.timeLineSeries = data
+            this.snackbar = true
+            this.message = "Событие удалено"
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
           })
     },
 
     updateTimeLine(item){
-      axios
-          .put(`accident/${this.uuidAccident}/time_line/`, item)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.timeLineForm.timeLineSeries = response.data
-              console.log(response.data)
-
-
-            }
+      AccidentService.updateTimeLine(this.claim.accident.uuid, item)
+          .then((data) => {
+            this.$refs.timeLineForm.timeLineSeries = data
+            this.snackbar = true
+            this.message = "Событие обновлено"
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
           })
     },
 
     addEvent(item){
-      axios
-          .post(`accident/${this.uuidAccident}/event/`, item)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.eventForm.events = response.data
-              console.log(response.data)
-
-            }
+      AccidentService.addEvent(this.claim.accident.uuid, item)
+          .then((data) => {
+            this.$refs.eventForm.events = data
+            this.snackbar = true
+            this.message = "Мероприятие добавлено"
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
           })
     },
 
     deleteEvent(uuidEvent){
-      axios
-          .delete(`accident/${this.uuidAccident}/event/${uuidEvent}/`)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.eventForm.events = response.data
-              console.log(response.data)
-
-            }
+      AccidentService.deleteEvent(this.claim.accident.uuid, uuidEvent)
+          .then((data) => {
+            this.$refs.eventForm.events = data
+            this.snackbar = true
+            this.message = "Мероприятие добавлено"
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
           })
     },
 
     updateEvent(item){
-      axios
-          .put(`accident/${this.uuidAccident}/event/`, item)
-          .then((response) => {
-            if(response.status >= 200){
-              this.$refs.eventForm.events = response.data
-              console.log(response.data)
-
-
-            }
+      AccidentService.updateEvent(this.claim.accident.uuid, item)
+          .then((data) => {
+            this.$refs.eventForm.events = data
+            this.snackbar = true
+            this.message = "Мероприятие добавлено"
           })
-          .catch((response) => {
+          .catch(response => {
             console.log(response.data)
           })
     }

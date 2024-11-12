@@ -10,6 +10,7 @@
           <v-icon
               size="small"
               @click="deleteEvent(item)"
+              v-if="!readOnly"
           >
             mdi-delete
           </v-icon>
@@ -17,6 +18,7 @@
               class="me-2"
               size="small"
               @click="editEvent(item)"
+              v-if="!readOnly"
           >
             mdi-pencil
           </v-icon>
@@ -26,6 +28,7 @@
   </v-container>
   <FixedButton
       @click="dialog = true"
+      v-if="!readOnly"
   />
   <v-dialog
       v-model="dialog"
@@ -86,7 +89,11 @@ export default {
   props: {
     minDate: null,
     maxDate: null,
-    uuidAccident: null
+    uuidAccident: null,
+    readOnly:{
+      type: Boolean,
+      default: false
+    }
   },
   components: {FixedButton},
   data(){

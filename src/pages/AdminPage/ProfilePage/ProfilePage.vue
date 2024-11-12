@@ -4,6 +4,7 @@ import router from "@/router/router";
 
 export default {
   name: "ProfilePage",
+  components: {},
   data(){
     return{
       user: null
@@ -22,6 +23,9 @@ export default {
     },
     openSigForm(){
       router.push(`/profile/signature`)
+    },
+    backWindow(){
+      router.push(`/`)
     }
   },
   mounted() {
@@ -67,6 +71,9 @@ export default {
       <v-list-item prepend-icon="mdi-account" title="Данные аккаунта" @click="openEditForm"></v-list-item>
       <v-list-item prepend-icon="mdi-border-color" title="Добавить подпись" @click="openSigForm"></v-list-item>
     </v-list>
+    <template v-slot:append>
+      <v-list-item prepend-icon="mdi-arrow-left" title="Назад" @click="backWindow"></v-list-item>
+    </template>
   </v-navigation-drawer>
   <v-container>
     <router-view>

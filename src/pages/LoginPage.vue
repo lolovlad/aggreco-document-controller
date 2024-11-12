@@ -74,6 +74,7 @@
 <script>
 import router from "@/router/router";
 import ButtonAgrea from "@/components/UI/ButtonAgrea";
+import {auth as $store} from "@/store/auth.model";
 
 export default {
   components: {ButtonAgrea},
@@ -93,7 +94,12 @@ export default {
                   this.error = response.message
                 }
                 else{
-                  router.push('/admin')
+                  const initialState = $store.state;
+                  if(initialState.user.type.name === "user"){
+                    router.push("/worker")
+                  }else{
+                    router.push('/admin')
+                  }
                 }
               },
           )

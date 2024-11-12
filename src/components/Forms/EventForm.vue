@@ -9,6 +9,7 @@
         <v-icon
             size="small"
             @click="deleteEvent(item)"
+            v-if="!readOnly"
         >
           mdi-delete
         </v-icon>
@@ -16,13 +17,14 @@
             class="me-2"
             size="small"
             @click="editEvent(item)"
+            v-if="!readOnly"
         >
           mdi-pencil
         </v-icon>
       </template>
     </v-data-table>
   </v-row>
-  <v-row>
+  <v-row v-if="!readOnly">
     <v-btn @click="dialog = true">
       Добавить
     </v-btn>
@@ -92,7 +94,11 @@ import axios from "axios";
 export default {
   name: "EventForm",
   props: {
-    uuidAccident: null
+    uuidAccident: null,
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
   },
   data(){
     return{

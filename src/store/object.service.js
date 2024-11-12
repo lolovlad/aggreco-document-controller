@@ -141,6 +141,17 @@ class ObjectService{
                 throw response
             })
     }
+    searchEquipmentInObject(uuid, search){
+        return axios
+            .get(`/object/${uuid}/equipment/search`, {params: {search_field: search}})
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 
 }
 

@@ -1,40 +1,30 @@
 <script>
-import UserService from "@/store/user.service";
+import FileDocumentService from "@/store/fileDocument.service";
 
 export default {
-  name: "EditProfessionForm",
-  props: {
-    addMode: {
-      type: Boolean,
-      default: true
-    },
-  },
+  name: "UploadBlueprintForm",
   data: () => ({
     dialog: false,
-    prof: {
-      id: null,
-      name: null,
-      description: null
-    }
+    fileDocument: null,
+    snackbar: false,
+    message: ""
   }),
   methods: {
-    saveProf(){
-      UserService.addProf(this.prof).then(response => {
-        console.log(response)
 
-        this.prof.id = null
-        this.prof.name = null
-        this.prof.description = null
-
-        this.dialog = false
-
-        this.$emit("addProf")
-      }).catch((e) => {
-        console.log(e)
-      })
+    saveFileDoc() {
+      let form = new FormData()
+      form.append("file", this.fileDocument)
+      if (this.fileDocument !== null) {
+        FileDocumentService.saveFile(form).then(() => {
+          this.snackbar = true
+          this.message = "Файл сохранен"
+          this.fileDocument = null
+        }).catch((e) => {
+          console.log(e)
+        });
+      }
     }
   }
-
 }
 </script>
 
@@ -46,7 +36,7 @@ export default {
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
           class="text-none font-weight-regular"
-          prepend-icon="mdi-account"
+          prepend-icon="mdi-text-box-plus-outline"
           text="Добавить"
           variant="tonal"
           v-bind="activatorProps"
@@ -55,7 +45,7 @@ export default {
 
     <v-card
         prepend-icon="mdi-account"
-        title="Шаблоны документов"
+        title="Должность"
     >
       <v-card-text>
         <v-row dense>
@@ -63,25 +53,13 @@ export default {
               cols="12"
               md="12"
           >
-            <v-text-field
-                label="Системное название на ENG*"
-                type="text"
-                v-model="prof.name"
-                required
-            ></v-text-field>
-          </v-col>
-
-
-          <v-col
-              cols="12"
-              md="12"
-          >
-            <v-text-field
-                label="На русском языке*"
-                v-model="prof.description"
-                type="text"
-                required
-            ></v-text-field>
+            <v-file-input
+                v-model="fileDocument"
+                label="Шаблон документа"
+                accept="*"
+                prepend-icon="mdi-border-color"
+                show-size
+            ></v-file-input>
           </v-col>
         </v-row>
 
@@ -103,11 +81,17 @@ export default {
             color="primary"
             text="Сохранить"
             variant="tonal"
-            @click="saveProf"
+            @click="saveFileDoc"
         ></v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-snackbar
+      :timeout="4000"
+      v-model="snackbar"
+  >
+    {{message}}
+  </v-snackbar>
 </template>
 
 <style scoped>

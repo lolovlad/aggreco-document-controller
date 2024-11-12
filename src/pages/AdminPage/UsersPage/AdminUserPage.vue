@@ -17,8 +17,8 @@
 
 <script>
 import UserService from "@/store/user.service";
-import CustomUserTable from "@/components/Tabels/CustomUserTable";
-import UserTool from "@/components/UserTool";
+import CustomUserTable from "@/components/Tabels/CustomUserTable.vue";
+import UserTool from "@/components/UserTool.vue";
 export default {
   name: "AdminUserPage",
   components: {UserTool, CustomUserTable},

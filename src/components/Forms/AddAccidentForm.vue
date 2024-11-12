@@ -17,7 +17,7 @@
             @click="dialog = false"
         ></v-btn>
 
-        <v-toolbar-title>Добавить АО</v-toolbar-title>
+        <v-toolbar-title>{{title}}</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -65,16 +65,10 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-select
-                  v-model="accident.equipments"
-                  :items="listEquipment"
-                  item-title="name"
-                  item-value="uuid"
-                  label="Оборудованние"
-                  chips
-                  multiple
-                  variant="underlined"
+              <item-object-selection
                   v-if="accident.object !== null"
+                  v-model="accident.equipments"
+                  :uuid-object="accident.object"
               />
             </v-col>
           </v-row>
@@ -86,11 +80,17 @@
 
 <script>
 import FixedButton from "@/components/UI/FixedButton";
-import axios from "axios";
 import ObjectService from "@/store/object.service";
+import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
 export default {
   name: "AddAccidentForm",
-  components: {FixedButton},
+  components: {ItemObjectSelection, FixedButton},
+  props: {
+    title: {
+      type: String,
+      default: "Добавить АО"
+    }
+  },
   data(){
     return{
       dialog: false,
@@ -103,6 +103,7 @@ export default {
         datetime_start: null,
         datetime_end: null,
         equipments: [],
+        id_state_accident: 1
       }
     }
   },
@@ -114,15 +115,11 @@ export default {
           }
       )
     },
-    getListEquipments(){
-      axios
-          .get(`/object/${this.accident.object}/equipment/list`)
-          .then((response) => {
-            this.listEquipment = response.data
-          })
-    },
     saveAccident(){
       this.dialog = false
+
+      this.accident.equipments = Object.keys(this.accident.equipments)
+
       this.$emit("save", this.accident)
       this.clearForm()
     },
@@ -132,6 +129,7 @@ export default {
         datetime_start: null,
         datetime_end: null,
         equipments: [],
+        id_state_accident: 1
       }
       this.accident = accidentShema
     }
@@ -139,14 +137,6 @@ export default {
   mounted() {
     this.getListObject()
   },
-  watch:{
-    "accident.object"(newVal){
-      this.accident.object = newVal
-      if(newVal !== null)
-        this.getListEquipments()
-
-    }
-  }
 }
 </script>
 

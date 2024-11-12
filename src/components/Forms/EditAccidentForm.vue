@@ -9,12 +9,13 @@
             item-value="uuid"
             variant="underlined"
             v-model="accident.uuid_object"
+            :readonly="readOnly"
         />
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" sm="6">
-        <VueDatePicker v-model="accident.datetime_start" locale="ru" >
+        <VueDatePicker v-model="accident.datetime_start" locale="ru" :readonly="readOnly">
           <template #input-icon>
             <img/>
           </template>
@@ -25,7 +26,8 @@
             v-model="accident.datetime_end"
             locale="ru"
             :min-date="accident.datetime_start"
-            prevent-min-max-navigation>
+            prevent-min-max-navigation
+            :readonly="readOnly">
           <template #input-icon>
             <img/>
           </template>
@@ -34,7 +36,13 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="12">
-        <v-select
+        <item-object-selection
+            v-model="accident.damaged_equipment"
+            v-if="accident.uuid_object !== null"
+            :uuid-object="accident.uuid_object"
+            :readonly="readOnly"
+        />
+        <!--<v-select
             v-model="accident.damaged_equipment"
             :items="listEquipment"
             item-title="name"
@@ -44,7 +52,8 @@
             multiple
             variant="underlined"
             v-if="accident.uuid_object !== null"
-        />
+            :readonly="readOnly"
+        />-->
       </v-col>
     </v-row>
     <v-row>
@@ -58,6 +67,7 @@
             item-value="id"
             chips
             multiple
+            :readonly="readOnly"
         />
       </v-col>
       <v-col cols="12" sm="6">
@@ -70,6 +80,7 @@
             item-value="id"
             multiple
             chips
+            :readonly="readOnly"
         />
       </v-col>
     </v-row>
@@ -79,7 +90,8 @@
             label="краткий пересказ ситуации"
             variant="underlined"
             auto-grow
-            v-model="accident.causes_of_the_emergency"/>
+            v-model="accident.causes_of_the_emergency"
+            :readonly="readOnly"/>
       </v-col>
     </v-row>
     <v-row>
@@ -88,28 +100,34 @@
             v-model="accident.damaged_equipment_material"
             label="Потраченные материалы"
             variant="underlined"
-            auto-grow/>
+            auto-grow
+            :readonly="readOnly"/>
       </v-col>
     </v-row>
     <v-row>
 
       <v-col cols="12" sm="5">
-        <v-text-field v-model="accident.additional_material" variant="underlined" label="Ссылка на материал"/>
+        <v-text-field v-model="accident.additional_material" variant="underlined" label="Ссылка на материал" :readonly="readOnly"/>
       </v-col>
 
     </v-row>
-    <v-btn class="mt-4" type="submit" @click="saveChange">Сохранить</v-btn>
+    <v-btn class="mt-4" type="submit" @click="saveChange" v-if="!readOnly">Сохранить</v-btn>
   </v-form>
 </template>
 
 <script>
 import axios from "axios";
+import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
 
 export default {
   name: "EditAccidentForm",
-  components: {},
+  components: {ItemObjectSelection},
   props: {
-    uuidAccident: null
+    uuidAccident: null,
+    readOnly: {
+      type: Boolean,
+      default: false
+    }
   },
   data(){
     return{
@@ -130,7 +148,8 @@ export default {
         class_meh_brake: [],
         causes_of_the_emergency: null,
         damaged_equipment_material: null,
-        additional_material: null
+        additional_material: null,
+        id_state_accident: 1
       },
     }
   },
@@ -146,7 +165,7 @@ export default {
             this.accident.datetime_start = accidentResponse.datetime_start
             this.accident.datetime_end = accidentResponse.datetime_end
 
-            this.accident.damaged_equipment = accidentResponse.damaged_equipment.map((item) => item.uuid)
+            this.accident.damaged_equipment = accidentResponse.damaged_equipment
 
             this.accident.class_org_brake = accidentResponse.type_brakes
                 .filter((item) => item.type.name === "org")
@@ -167,13 +186,6 @@ export default {
             this.listObject = response.data
           })
     },
-    getListEquipments(){
-      axios
-          .get(`/object/${this.accident.object}/equipment/list`)
-          .then((response) => {
-            this.listEquipment = response.data
-          })
-    },
     getTypeBrakes(){
       axios
           .get(`/accident/type_brake_mechanical/org`)
@@ -191,11 +203,12 @@ export default {
         uuid_object: this.accident.uuid_object,
         datetime_start: this.accident.datetime_start,
         datetime_end: this.accident.datetime_end,
-        equipments: this.accident.damaged_equipment,
+        equipments: Object.keys(this.accident.damaged_equipment),
         type_brakes: this.accident.class_meh_brake.concat(this.accident.class_org_brake),
         causes_of_the_emergency: this.accident.causes_of_the_emergency,
         damaged_equipment_material: this.accident.damaged_equipment_material,
-        additional_material: this.accident.additional_material
+        additional_material: this.accident.additional_material,
+        id_state_accident: this.accident.id_state_accident
       })
     }
   },
@@ -203,15 +216,7 @@ export default {
     this.getListObject()
     this.getAccident()
     this.getTypeBrakes()
-  },
-  watch:{
-    "accident.uuid_object"(newVal){
-      this.accident.object = newVal
-      if(newVal !== null)
-        this.getListEquipments()
-
-    }
-  },
+  }
 }
 </script>
 
