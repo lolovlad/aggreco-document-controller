@@ -6,7 +6,7 @@
         color="deep-purple-accent-4"
     >
       <v-tab value="main">Главная информация</v-tab>
-      <v-tab value="timeLine">Таймлайн</v-tab>
+      <v-tab value="timeLine">Хронология событий</v-tab>
       <v-tab value="eventAccident">Мероприятия</v-tab>
     </v-tabs>
 

@@ -107,7 +107,7 @@
     <v-row>
 
       <v-col cols="12" sm="5">
-        <v-text-field v-model="accident.additional_material" variant="underlined" label="Ссылка на материал" :readonly="readOnly"/>
+        <v-text-field v-model="accident.additional_material" variant="underlined" label="Ссылка на дополнительную информацию" :readonly="readOnly"/>
       </v-col>
 
     </v-row>

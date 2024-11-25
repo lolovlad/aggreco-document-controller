@@ -3,7 +3,7 @@
     <v-row align="center">
       <v-col cols="12" md="12">
         <v-sheet>
-          <h1 class="text-center">Aggreco-work-tool</h1>
+          <h1 class="text-center">Aggreko-work-tool</h1>
         </v-sheet>
       </v-col>
     </v-row>

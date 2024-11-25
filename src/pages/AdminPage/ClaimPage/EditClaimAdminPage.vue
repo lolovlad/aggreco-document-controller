@@ -133,7 +133,7 @@ export default {
     >
       <v-tab value="claim">Информация заявки</v-tab>
       <v-tab value="accident">Информация инциндента</v-tab>
-      <v-tab value="timeLine">Таймлайн</v-tab>
+      <v-tab value="timeLine">Хронология событий</v-tab>
       <v-tab value="eventAccident">Мероприятия</v-tab>
     </v-tabs>
 

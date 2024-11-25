@@ -23,6 +23,17 @@ class FileDocumentService{
                 throw e
             })
     }
+    generateDocument(uuidClaim, dataGenerate){
+        return axios
+            .post(`/file/generate/${uuidClaim}`, dataGenerate)
+            .then((response) => {
+                if(response.status === 201)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 }
 
 export default new FileDocumentService();

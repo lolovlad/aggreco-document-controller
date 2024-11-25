@@ -58,7 +58,7 @@ export default {
   <v-app-bar color="orange-darken-3"
              prominent>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    <v-app-bar-title @click="$route.push('/')">Aggreco-work-tool</v-app-bar-title>
+    <v-app-bar-title @click="$route.push('/')">Aggreko-work-tool</v-app-bar-title>
     <template v-slot:append>
       <v-menu
           v-model="menu"
@@ -117,8 +117,8 @@ export default {
   >
     <v-list density="compact" nav>
       <!--<v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>-->
-      <v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>
-      <v-list-item prepend-icon="mdi-file-alert" title="Заявки" @click="claimPage"/>
+      <!--<v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>-->
+      <v-list-item prepend-icon="mdi-file-alert" title="Регистрации АО" @click="claimPage"/>
     </v-list>
   </v-navigation-drawer>
 </template>

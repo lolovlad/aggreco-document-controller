@@ -5,7 +5,7 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </template>
 
-    <v-app-bar-title @click="$route.push('/')">Aggreco-work-tool</v-app-bar-title>
+    <v-app-bar-title @click="$route.push('/')">Aggreko-work-tool</v-app-bar-title>
 
     <template v-slot:append>
       <v-btn icon="mdi-dots-vertical"></v-btn>
