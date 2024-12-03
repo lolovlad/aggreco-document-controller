@@ -25,6 +25,63 @@ class AccidentService{
                 return e
             })
     }
+    getTimeLine(uuidAccident){
+        return axios
+            .get(`accident/${uuidAccident}/time_line`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+
+    getEventAll(uuidAccident){
+        return axios
+            .get(`accident/${uuidAccident}/event`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    getEvent(uuidAccident, uuidItem){
+        return axios
+            .get(`accident/${uuidAccident}/event/${uuidItem}`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    getTypeEvent(){
+        return axios
+            .get(`accident/event/type_event`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    getStateEvent(){
+        return axios
+            .get(`accident/event/state_event`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+
     addTimeLine(uuidAccident, item){
         return axios
             .post(`accident/${uuidAccident}/time_line`, item)

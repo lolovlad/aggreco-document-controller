@@ -57,7 +57,14 @@
             />
           </v-col>
           <v-col cols="12" sm="4">
-            <VueDatePicker v-model="event.date_finish" locale="ru" :enable-time-picker="false">
+            <label>Дата проведения</label>
+            <VueDatePicker
+                v-model="event.date_finish"
+                locale="ru"
+                :enable-time-picker="false"
+                :format="formatDate"
+                :min-date="minDate"
+            >
               <template #input-icon>
                 <img/>
               </template>
@@ -89,7 +96,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import moment from "moment/moment";
+import accidentService from "@/store/accident.service";
 
 export default {
   name: "EventForm",
@@ -99,6 +107,7 @@ export default {
       type: Boolean,
       default: false
     },
+    minDate: null,
   },
   data(){
     return{
@@ -139,40 +148,37 @@ export default {
 
     },
     getStateEvent(){
-      axios
-          .get(`accident/event/state_event/`)
-          .then((response) => {
-            this.listStateEvent = response.data
-          })
+      accidentService.getStateEvent().then(
+          (stateEvent) => {
+            this.listStateEvent = stateEvent
+          }
+      )
     },
     getTypeEvent(){
-      axios
-          .get(`accident/event/type_event/`)
-          .then((response) => {
-            this.listTypeEvent = response.data
-          })
+      accidentService.getTypeEvent().then(
+          (typeEvent) => {
+            this.listTypeEvent = typeEvent
+          }
+      )
     },
     getAllEvents(){
-      axios
-          .get(`accident/${this.uuidAccident}/event/`)
-          .then((response) => {
-            this.events = response.data
-          })
+      accidentService.getEventAll(this.uuidAccident).then(
+          (events) => {
+            this.events = events
+          }
+      )
     },
     getEvent(uuid){
-      axios
-          .get(`accident/${this.uuidAccident}/event/${uuid}`)
-          .then((response) => {
-            const targetEvent = response.data
-            this.event.description = targetEvent.description
-            this.event.uuid = targetEvent.uuid
-            this.event.date_finish = targetEvent.date_finish
-            this.event.id_type_event = targetEvent.id_type_event
-            this.event.id_state_event = targetEvent.id_state_event
+      accidentService.getEvent(this.uuidAccident, uuid).then((evt) => {
+        const targetEvent = evt
+        this.event.description = targetEvent.description
+        this.event.uuid = targetEvent.uuid
+        this.event.date_finish = targetEvent.date_finish
+        this.event.id_type_event = targetEvent.id_type_event
+        this.event.id_state_event = targetEvent.id_state_event
 
-            this.dialog = true
-
-          })
+        this.dialog = true
+      })
     },
 
     closeDialog(){
@@ -196,6 +202,10 @@ export default {
     editEvent(item){
       this.getEvent(item.uuid)
     },
+
+    formatDate(date){
+      return moment(date).format('DD/MM/YYYY');
+    }
 
   },
   mounted() {

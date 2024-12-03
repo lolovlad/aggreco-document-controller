@@ -9,6 +9,10 @@ export default {
     idUser: {
       type: String,
       default: null
+    },
+    typeUserForm: {
+      type: String,
+      default: "admin"
     }
   },
   data(){
@@ -116,7 +120,8 @@ export default {
             v-model="user.email"
             label="Почта"
             variant="underlined"
-            disabled
+            :disabled="typeUserForm === 'worker'"
+
         />
       </v-col>
     </v-row>
@@ -129,7 +134,7 @@ export default {
             item-value="id"
             label="Тип пользователя"
             variant="underlined"
-            disabled
+            :disabled="typeUserForm === 'worker'"
         />
       </v-col>
     </v-row>
@@ -142,6 +147,7 @@ export default {
             item-value="id"
             label="Должность"
             variant="underlined"
+            :disabled="typeUserForm === 'worker'"
         />
       </v-col>
     </v-row>

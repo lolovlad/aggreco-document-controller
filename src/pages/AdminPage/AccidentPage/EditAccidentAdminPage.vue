@@ -33,6 +33,7 @@
         <v-container fluid>
           <EventForm
               :uuidAccident="uuidAccident"
+              :minDate="datetimeStart"
               @updateEvent="updateEvent"
               @addEvent="addEvent"
               @deleteEvent="deleteEvent"
@@ -97,7 +98,7 @@ export default {
     },
 
     addTimeLine(item){
-      AccidentService.addTimeLine(this.claim.accident.uuid, item)
+      AccidentService.addTimeLine(this.uuidAccident, item)
           .then(timeline =>{
             this.$refs.timeLineForm.timeLineSeries = timeline
             this.snackbar = true
@@ -108,7 +109,7 @@ export default {
     },
 
     deleteTimeLine(uuidItem){
-      AccidentService.deleteTimeLine(this.claim.accident.uuid, uuidItem)
+      AccidentService.deleteTimeLine(this.uuidAccident, uuidItem)
           .then((data) => {
             this.$refs.timeLineForm.timeLineSeries = data
             this.snackbar = true
@@ -120,7 +121,7 @@ export default {
     },
 
     updateTimeLine(item){
-      AccidentService.updateTimeLine(this.claim.accident.uuid, item)
+      AccidentService.updateTimeLine(this.uuidAccident, item)
           .then((data) => {
             this.$refs.timeLineForm.timeLineSeries = data
             this.snackbar = true
@@ -132,7 +133,7 @@ export default {
     },
 
     addEvent(item){
-      AccidentService.addEvent(this.claim.accident.uuid, item)
+      AccidentService.addEvent(this.uuidAccident, item)
           .then((data) => {
             this.$refs.eventForm.events = data
             this.snackbar = true
@@ -144,7 +145,7 @@ export default {
     },
 
     deleteEvent(uuidEvent){
-      AccidentService.deleteEvent(this.claim.accident.uuid, uuidEvent)
+      AccidentService.deleteEvent(this.uuidAccident, uuidEvent)
           .then((data) => {
             this.$refs.eventForm.events = data
             this.snackbar = true
@@ -156,7 +157,7 @@ export default {
     },
 
     updateEvent(item){
-      AccidentService.updateEvent(this.claim.accident.uuid, item)
+      AccidentService.updateEvent(this.uuidAccident, item)
           .then((data) => {
             this.$refs.eventForm.events = data
             this.snackbar = true

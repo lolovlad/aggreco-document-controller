@@ -48,7 +48,7 @@ const routes = [
                     next("/admin");
                 }
                 else {
-                    next("/user");
+                    next("/worker");
                 }
             }else{
                 next()

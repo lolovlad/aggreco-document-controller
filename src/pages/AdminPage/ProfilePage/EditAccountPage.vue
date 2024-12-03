@@ -19,7 +19,6 @@ export default {
       UserService.getProfile().then(
           user => {
             this.user = user
-            console.log(this.user)
             this.load = true
           }
       )
@@ -57,7 +56,9 @@ export default {
   <EditAccountForm
       :idUser="user.uuid"
       @updateUser="updateUser"
-      v-if="load"/>
+      v-if="load"
+      :type-user-form="'worker'"
+  />
   <v-snackbar
       :timeout="4000"
       v-model="snackbar"

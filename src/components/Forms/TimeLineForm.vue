@@ -25,11 +25,12 @@
         </template>
       </v-data-table>
     </v-row>
+    <v-row v-if="!readOnly">
+      <v-btn @click="dialog = true">
+        Добавить
+      </v-btn>
+    </v-row>
   </v-container>
-  <FixedButton
-      @click="dialog = true"
-      v-if="!readOnly"
-  />
   <v-dialog
       v-model="dialog"
       transition="dialog-bottom-transition"
@@ -63,7 +64,8 @@
                   enable-seconds
                   locale="ru"
                   :min-date="minDate"
-                  :max-date="maxDate"/>
+                  :max-date="maxDate"
+                  :format="formatDate"/>
             </v-col>
           </v-row>
           <v-row>
@@ -82,8 +84,8 @@
 </template>
 
 <script>
-import FixedButton from "@/components/UI/FixedButton";
-import axios from "axios";
+import moment from "moment";
+import AccidentService from "@/store/accident.service";
 export default {
   name: "TimeLineForm",
   props: {
@@ -95,7 +97,6 @@ export default {
       default: false
     }
   },
-  components: {FixedButton},
   data(){
     return{
       headers: [
@@ -153,13 +154,18 @@ export default {
     },
 
     getTimeLine(){
-      axios
-          .get(`accident/${this.uuidAccident}/time_line/`)
-          .then((response) => {
-            this.timeLineSeries = response.data
-          })
+      AccidentService.getTimeLine(this.uuidAccident).then((timeline) => {
+        this.timeLineSeries = timeline
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+
+    formatDate(date){
+      return moment(date).format('DD/MM/YYYY HH:mm');
     }
   },
+
   mounted() {
     this.getTimeLine()
   }

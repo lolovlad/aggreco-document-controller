@@ -13,11 +13,22 @@ export default {
     getProfile(){
       UserService.getProfile().then(
           user => {
+            console.log(user)
             this.user = user
             this.load = true
           }
       )
     },
+  },
+  computed: {
+    prof(){
+      if(this.user === null)
+        return `Неизветно`
+      if(this.user.profession !== null){
+        return `${this.user.profession.description}`
+      }
+      return "Неизветно"
+    }
   },
   mounted() {
     this.getProfile()
@@ -30,7 +41,7 @@ export default {
     <v-col cols="12" md="12">
       <v-card
           class="mx-auto"
-          :subtitle="user.profession.description"
+          :subtitle="prof"
       >
         <template v-slot:title>
           <span class="font-weight-black">{{user.surname}} {{user.name}} {{user.patronymic}}</span>

@@ -45,18 +45,23 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="6">
-              <VueDatePicker v-model="accident.datetime_start" locale="ru" >
+              <label>Время начала</label>
+              <VueDatePicker v-model="accident.datetime_start"
+                             locale="ru"
+                             :format="formatDate">
                 <template #input-icon>
                   <img/>
                 </template>
               </VueDatePicker>
             </v-col>
             <v-col cols="12" sm="6" v-if="accident.datetime_start !== null">
+              <label>Время окончания</label>
               <VueDatePicker
                   v-model="accident.datetime_end"
                   locale="ru"
-                  :min-date="accident.datetime_end"
-                  prevent-min-max-navigation>
+                  :min-date="accident.datetime_start"
+                  prevent-min-max-navigation
+                  :format="formatDate">
                 <template #input-icon>
                   <img/>
                 </template>
@@ -82,6 +87,7 @@
 import FixedButton from "@/components/UI/FixedButton";
 import ObjectService from "@/store/object.service";
 import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
+import moment from "moment";
 export default {
   name: "AddAccidentForm",
   components: {ItemObjectSelection, FixedButton},
@@ -98,7 +104,22 @@ export default {
       listObject: [],
       listEquipment: [],
 
+      step: 1,
+      items: [
+        'Выбрать шаблон',
+        'Дополнительная информация',
+        'Сгенерировать',
+      ],
+
       accident: {
+        object: null,
+        datetime_start: null,
+        datetime_end: null,
+        equipments: [],
+        id_state_accident: 1
+      },
+
+      accidentSchama: {
         object: null,
         datetime_start: null,
         datetime_end: null,
@@ -124,14 +145,10 @@ export default {
       this.clearForm()
     },
     clearForm(){
-      const accidentShema = {
-        object: null,
-        datetime_start: null,
-        datetime_end: null,
-        equipments: [],
-        id_state_accident: 1
-      }
-      this.accident = accidentShema
+      Object.assign(this.accident, this.accidentSchama)
+    },
+    formatDate(date){
+      return moment(date).format('DD/MM/YYYY HH:mm');
     }
   },
   mounted() {

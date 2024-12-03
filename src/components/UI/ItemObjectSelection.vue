@@ -66,7 +66,7 @@ export default {
   <v-dialog
       v-model="dialog"
       transition="dialog-bottom-transition"
-      fullscreen
+      max-width="500"
   >
     <template v-slot:activator="{ props: activatorProps }">
       <v-row align="center" justify="start">
@@ -85,16 +85,6 @@ export default {
         </v-col>
       </v-row>
     </template>
-    <v-toolbar>
-      <v-btn
-          icon="mdi-close"
-          @click="dialog = false"
-      ></v-btn>
-
-      <v-toolbar-title>Оборудованние</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-    </v-toolbar>
     <v-card>
       <v-container>
         <v-row align="center" justify="start">
@@ -117,7 +107,7 @@ export default {
             <v-text-field
                 ref="searchField"
                 v-model="search"
-                label="Поиск по названию"
+                label="Поиск по названию или коду"
                 hide-details
                 single-line
             ></v-text-field>
@@ -132,7 +122,8 @@ export default {
                     :disabled="loading"
                     @click="addEquipment(equip)"
                 >
-                  <v-list-item-title v-text="equip.name"/>
+                  <v-list-item-title v-text="`${equip.name} (${equip.code})`"/>
+
                 </v-list-item>
               </template>
             </v-list>

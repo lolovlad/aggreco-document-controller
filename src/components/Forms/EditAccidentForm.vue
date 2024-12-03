@@ -15,7 +15,10 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="6">
-        <VueDatePicker v-model="accident.datetime_start" locale="ru" :readonly="readOnly">
+        <VueDatePicker v-model="accident.datetime_start"
+                       locale="ru"
+                       :readonly="readOnly"
+                       :format="formatDate">
           <template #input-icon>
             <img/>
           </template>
@@ -27,7 +30,8 @@
             locale="ru"
             :min-date="accident.datetime_start"
             prevent-min-max-navigation
-            :readonly="readOnly">
+            :readonly="readOnly"
+            :format="formatDate">
           <template #input-icon>
             <img/>
           </template>
@@ -118,6 +122,7 @@
 <script>
 import axios from "axios";
 import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
+import moment from "moment/moment";
 
 export default {
   name: "EditAccidentForm",
@@ -210,6 +215,9 @@ export default {
         additional_material: this.accident.additional_material,
         id_state_accident: this.accident.id_state_accident
       })
+    },
+    formatDate(date){
+      return moment(date).format('DD/MM/YYYY HH:mm');
     }
   },
   mounted() {
