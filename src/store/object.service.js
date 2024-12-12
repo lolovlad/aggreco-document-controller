@@ -152,6 +152,17 @@ class ObjectService{
                 throw e
             })
     }
+    getObjectByUser(){
+        return axios
+            .get(`/object/get_object_to_user`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 
 }
 

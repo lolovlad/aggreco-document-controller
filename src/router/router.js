@@ -36,6 +36,9 @@ import EditClaimPage from "@/pages/Workers/ClaimPage/EditClaimPage.vue";
 import BaseAdminClaimPage from "@/pages/AdminPage/ClaimPage/BaseAdminClaimPage.vue";
 import ClaimViewAdminPage from "@/pages/AdminPage/ClaimPage/ClaimViewAdminPage.vue";
 import EditClaimAdminPage from "@/pages/AdminPage/ClaimPage/EditClaimAdminPage.vue";
+import BaseWorkerObjectPage from "@/pages/Workers/ObjectPage/BaseWorkerObjectPage.vue";
+import ViewObjectWorkerPage from "@/pages/Workers/ObjectPage/ViewObjectWorkerPage.vue";
+import EditEquipmentWorkerPage from "@/pages/Workers/ObjectPage/EditEquipmentWorkerPage.vue";
 
 const routes = [
     {
@@ -253,7 +256,25 @@ const routes = [
                         component: EditClaimPage
                     }
                 ]
-            }
+            },
+            {
+                path: "object",
+                component: BaseWorkerObjectPage,
+                children: [
+                    {
+                        path: "",
+                        component: ViewObjectWorkerPage
+                    },
+                    {
+                        path: ":uuid/equip/edit/:uuid_equip",
+                        component: EditEquipmentWorkerPage,
+                    },
+                    {
+                        path: ":uuid/equip/add",
+                        component: EditEquipmentWorkerPage,
+                    }
+                ]
+            },
         ],
         beforeEnter: (to, from, next) => {
             const initialState = $store.state;

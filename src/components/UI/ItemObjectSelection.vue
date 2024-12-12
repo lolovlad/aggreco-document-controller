@@ -71,7 +71,9 @@ export default {
     <template v-slot:activator="{ props: activatorProps }">
       <v-row align="center" justify="start">
         <v-col cols="auto">
-          <v-chip v-for="item in this.modelValue" :key="item.uuid">{{item.name}}</v-chip>
+          <v-chip-group>
+            <v-chip v-for="item in this.modelValue" :key="item.uuid">{{item.name}}</v-chip>
+          </v-chip-group>
         </v-col>
         <v-col cols="auto">
           <v-btn

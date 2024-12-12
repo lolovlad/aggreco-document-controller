@@ -1,6 +1,6 @@
 <template>
   <v-card
-      title="Объекты"
+      title="Оборудованние"
       flat
   >
     <template v-slot:text>
@@ -41,32 +41,6 @@
       </template>
     </v-data-table-server>
   </v-card>
-  <!--<table>
-    <thead>
-    <tr>
-      <th>Название</th>
-      <th>Номер</th>
-      <th>Тип</th>
-      <th>Описпание</th>
-      <th></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr v-for="equ in equipments" :key="equ.uuid">
-      <td>{{equ.name}}</td>
-      <td>{{equ.code}}</td>
-      <td>{{equ.type.description}}</td>
-      <td>{{equ.description}}</td>
-      <td>
-        <div class="button-menu">
-          <a class="waves-effect waves-light btn-small" @click="$emit('update', equ.uuid)">Редактировать</a>
-          <ButtonDelete @click="deleteEquip(equ.uuid)" />
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
 </template>
 
 <script>
@@ -104,7 +78,6 @@ export default {
       if(this.search.length === 0){
         ObjectService.getEquipmentPage(this.uuidObject, page)
             .then(response => {
-              console.log(response.data)
               this.equipment = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
