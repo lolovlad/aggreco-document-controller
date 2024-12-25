@@ -109,7 +109,7 @@ class ObjectService{
     }
     addEquipment(uuidObject, obj){
         return axios
-            .post(`/object/${uuidObject}/equipment/`, obj)
+            .post(`/object/${uuidObject}/equipment`, obj)
             .then((response) => {
                 if(response.status === 201)
                     return response.data.message
