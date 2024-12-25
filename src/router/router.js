@@ -48,10 +48,10 @@ const routes = [
             const initialState = $store.state;
             if(initialState.status.loggedIn){
                 if(initialState.user.type.name === "admin") {
-                    next("/admin");
+                    next("/admin/claim");
                 }
                 else {
-                    next("/worker");
+                    next("/worker/object");
                 }
             }else{
                 next()
