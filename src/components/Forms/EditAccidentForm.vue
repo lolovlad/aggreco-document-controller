@@ -163,6 +163,7 @@ export default {
       axios
           .get(`accident/${this.uuidAccident}`)
           .then((response) => {
+            console.log(response.data)
             const accidentResponse = response.data
             this.accident.uuid = accidentResponse.uuid
             this.accident.uuid_object = accidentResponse.object.uuid
@@ -173,7 +174,7 @@ export default {
             this.accident.damaged_equipment = accidentResponse.damaged_equipment
 
             this.accident.class_org_brake = accidentResponse.type_brakes
-                .filter((item) => item.type.name === "org")
+                .filter((item) => item.type.name !== "meh")
                 .map((item) => item.id)
             this.accident.class_meh_brake = accidentResponse.type_brakes
                 .filter((item) => item.type.name === "meh")
