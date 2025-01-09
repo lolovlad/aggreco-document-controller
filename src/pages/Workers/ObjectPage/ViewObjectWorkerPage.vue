@@ -143,10 +143,10 @@ export default {
           })
     },
     updateEquipment(uuid){
-      this.$router.push(`/worker/object/${this.idObject}/equip/edit/${uuid}`)
+      this.$router.push(`/worker/object/${this.targetObject.uuid}/equip/edit/${uuid}`)
     },
     openAddEquipPage(){
-      this.$router.push(`/worker/object/${this.idObject}/equip/add`)
+      this.$router.push(`/worker/object/${this.targetObject.uuid}/equip/add`)
     }
 
   },

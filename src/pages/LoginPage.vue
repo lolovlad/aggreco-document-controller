@@ -96,9 +96,9 @@ export default {
                 else{
                   const initialState = $store.state;
                   if(initialState.user.type.name === "user"){
-                    router.push("/worker")
+                    router.push("/worker/object")
                   }else{
-                    router.push('/admin')
+                    router.push('/admin/claim')
                   }
                 }
               },
