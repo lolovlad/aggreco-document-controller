@@ -1,11 +1,10 @@
 <script>
 import ClaimTable from "@/components/Tabels/ClaimTable.vue";
 import ClaimService from "@/store/claim.service";
-import UploadBlueprintForm from "@/components/Forms/UploadBlueprintForm.vue";
 
 export default {
   name: "ClaimViewAdminPage",
-  components: {UploadBlueprintForm, ClaimTable},
+  components: {ClaimTable},
   data(){
     return{
       snackbar: false,
@@ -46,7 +45,13 @@ export default {
 <template>
   <v-row>
     <v-col cols="12" md="12">
-      <upload-blueprint-form/>
+      <v-btn
+          class="text-none font-weight-regular"
+          prepend-icon="mdi-text-box-plus-outline"
+          text="Добавить"
+          variant="tonal"
+          @click="$router.push('/admin/blueprint')"
+      ></v-btn>
     </v-col>
   </v-row>
   <v-row>

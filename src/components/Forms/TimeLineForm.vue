@@ -43,7 +43,7 @@
             @click="closeDialog"
         ></v-btn>
 
-        <v-toolbar-title>Добавить состояние</v-toolbar-title>
+        <v-toolbar-title>Добавить событие</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -63,8 +63,8 @@
                   v-model="editItem.time"
                   enable-seconds
                   locale="ru"
-                  :min-date="minDate"
-                  :max-date="maxDate"
+                  :min-date="minDataNow"
+                  :max-date="maxDataNow"
                   :format="formatDate"/>
             </v-col>
           </v-row>
@@ -113,12 +113,12 @@ export default {
       editItem: {
         uuid: null,
         description: null,
-        time: null
+        time: this.minDate
       },
       defaultItem: {
         uuid: null,
         description: null,
-        time: null
+        time: this.minDate
       },
 
       uuidItem: null
@@ -163,6 +163,21 @@ export default {
 
     formatDate(date){
       return moment(date).format('DD/MM/YYYY HH:mm');
+    }
+  },
+
+  computed: {
+    minDataNow(){
+      const currentDate = new Date(this.minDate);
+      const tenDaysAgo = new Date(this.minDate)
+      tenDaysAgo.setDate(currentDate.getDate() - 10);
+      return tenDaysAgo
+    },
+    maxDataNow(){
+      const currentDate = new Date(this.maxDate);
+      const tenDaysAgo = new Date(this.maxDate)
+      tenDaysAgo.setDate(currentDate.getDate() + 10);
+      return tenDaysAgo
     }
   },
 

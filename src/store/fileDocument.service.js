@@ -34,6 +34,28 @@ class FileDocumentService{
                 throw e
             })
     }
+    getFile(idBlueprint){
+        return axios
+            .get(`/file/metadata/${idBlueprint}`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    updateFile(idBlueprint, file){
+        return axios
+            .put(`/file/${idBlueprint}`, file)
+            .then(response => {
+                if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 }
 
 export default new FileDocumentService();

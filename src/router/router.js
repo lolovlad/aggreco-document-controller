@@ -39,6 +39,9 @@ import EditClaimAdminPage from "@/pages/AdminPage/ClaimPage/EditClaimAdminPage.v
 import BaseWorkerObjectPage from "@/pages/Workers/ObjectPage/BaseWorkerObjectPage.vue";
 import ViewObjectWorkerPage from "@/pages/Workers/ObjectPage/ViewObjectWorkerPage.vue";
 import EditEquipmentWorkerPage from "@/pages/Workers/ObjectPage/EditEquipmentWorkerPage.vue";
+import BaseAdminBlueprintPage from "@/pages/AdminPage/BlueprintPage/BaseAdminBlueprintPage.vue";
+import ViewBlueprinAdminPage from "@/pages/AdminPage/BlueprintPage/ViewBlueprinAdminPage.vue";
+import EditBlueprintAdminPage from "@/pages/AdminPage/BlueprintPage/EditBlueprintAdminPage.vue";
 
 const routes = [
     {
@@ -220,6 +223,24 @@ const routes = [
                     {
                         path: "edit/:uuid",
                         component: EditClaimAdminPage
+                    }
+                ]
+            },
+            {
+                path: "blueprint",
+                component: BaseAdminBlueprintPage,
+                children: [
+                    {
+                        path: "",
+                        component: ViewBlueprinAdminPage
+                    },
+                    {
+                        path: "add",
+                        component: EditBlueprintAdminPage
+                    },
+                    {
+                        path: "edit/:id",
+                        component: EditBlueprintAdminPage
                     }
                 ]
             }

@@ -37,7 +37,10 @@ export default {
           })
     },
     close(){
+      this.step = 1
+      this.error = null
       this.dialog = false
+      this.generate.id_blueprint = null
     },
     genFile(){
       this.isGenerate = true
@@ -63,6 +66,7 @@ export default {
 <template>
   <v-dialog
       v-model="dialog"
+      persistent
   >
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
@@ -93,7 +97,7 @@ export default {
                   <v-select
                       label="Шаблоны"
                       :items="listFileDock"
-                      item-title="file_name"
+                      item-title="name"
                       item-value="id"
                       variant="underlined"
                       v-model="generate.id_blueprint"
