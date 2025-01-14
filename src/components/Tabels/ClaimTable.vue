@@ -1,9 +1,11 @@
 <script>
 import moment from "moment";
 import ClaimService from "@/store/claim.service";
+import DeleteButton from "@/components/UI/DeleteButton.vue";
 
 export default {
   name: "ClaimTable",
+  components: {DeleteButton},
   data(){
     return{
       headers: [
@@ -52,7 +54,7 @@ export default {
     },
     loadItem({page}){
       this.loading = true
-      if(this.search.length === 0){
+      if(this.search.length >= 0){
         ClaimService.getPageClaim(page).then(
             response => {
               this.items = response.data
@@ -68,6 +70,14 @@ export default {
       }else{
         return ''
       }
+    },
+
+    getColor (state) {
+      console.log(state)
+      if (state === "Черновик") return 'black'
+      else if (state === "На рассмотрении") return 'orange'
+      else if (state === "На доработку") return 'red'
+      else return 'green'
     },
   }
 }
@@ -97,14 +107,13 @@ export default {
         item-value="uuid"
         @update:options="loadItem"
     >
+      <template v-slot:[`item.state_claim`]="{ value }">
+        <v-chip :color="getColor(value)">
+          {{ value }}
+        </v-chip>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="deleteClaim(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <delete-button @click="deleteClaim(item)"/>
         <v-icon
             class="me-2"
             size="small"

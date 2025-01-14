@@ -55,7 +55,7 @@
                 <EquipmentTable
                     :uuidObject="targetObject.uuid"
                     @update="updateEquipment"
-                    @delete="dialogDelete = true"
+                    @delete="deleteEquipment"
                     ref="equipmentTable"
 
                 />
@@ -77,30 +77,6 @@
     >
       {{message}}
     </v-snackbar>
-
-    <v-dialog
-        v-model="dialogDelete"
-        max-width="500"
-        persistent
-    >
-      <v-card
-          prepend-icon="mdi-close"
-          text="При согласиии объект будет удален"
-          title="Вы действиетльно хотите удалить объект?"
-      >
-        <template v-slot:actions>
-          <v-spacer></v-spacer>
-
-          <v-btn @click="dialogDelete = false">
-            Отмена
-          </v-btn>
-
-          <v-btn @click="deleteEquipment">
-            Подтвердить
-          </v-btn>
-        </template>
-      </v-card>
-    </v-dialog>
   </v-container>
   <loader-page v-else/>
 </template>

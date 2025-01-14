@@ -29,7 +29,7 @@
             <v-container>
               <v-row>
                 <v-col cols="12" md="12">
-                  <v-form v-model="valid">
+                  <v-form ref="form">
                     <v-container>
                       <v-row>
                         <v-col cols="12" md="12">
@@ -82,11 +82,20 @@ export default {
     return{
       email: "",
       password: "",
-      error: null
+      error: null,
+
+      emailRules: [
+        v => !!v || 'Почта обязательна',
+        v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'Неверная почта',
+      ]
     }
   },
   methods:{
-    login(){
+    async login(){
+      const valid = await this.$refs.form.validate()
+      if(!valid.valid)
+        return
+
       this.$store.dispatch('auth/login', {url: '/login/sign-in', email: this.email, password: this.password})
           .then(
               (response) => {

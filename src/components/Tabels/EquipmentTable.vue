@@ -31,13 +31,7 @@
         >
           mdi-pencil
         </v-icon>
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="$emit('delete', item.uuid)"
-        >
-          mdi-close
-        </v-icon>
+        <delete-button @agree="$emit('delete', item.uuid)"/>
       </template>
     </v-data-table-server>
   </v-card>
@@ -45,9 +39,11 @@
 
 <script>
 import ObjectService from "@/store/object.service";
+import DeleteButton from "@/components/UI/DeleteButton.vue";
 
 export default {
   name: "EquipmentTable",
+  components: {DeleteButton},
   props: {
     uuidObject: null
   },
@@ -88,7 +84,24 @@ export default {
                   console.log(response)
                 }
             )
+      }else{
+        ObjectService.searchEquipmentInObject(this.uuidObject, this.search).then(
+            response => {
+              this.equipment = response
+              this.loading = false
+            }
+        ).catch(
+            (response) => {
+              console.log(response)
+            }
+        )
       }
+    }
+  },
+  watch: {
+    search(){
+      this.loadItem(1)
+
     }
   }
 }

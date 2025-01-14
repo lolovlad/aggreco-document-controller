@@ -1,12 +1,13 @@
 <template>
-  <v-form @submit.prevent>
+  <v-form ref="form">
     <v-row>
       <v-col cols="12" md="12">
         <v-text-field
             type="text"
             v-model="equip.name"
-            label="Название"
+            label="Название *"
             variant="underlined"
+            :rules="nameRule"
         />
       </v-col>
     </v-row>
@@ -15,8 +16,9 @@
         <v-text-field
             type="text"
             v-model="equip.code"
-            label="Номер"
+            label="Номер *"
             variant="underlined"
+            :rules="codeRule"
         />
       </v-col>
     </v-row>
@@ -27,8 +29,9 @@
             :items="typeEquip"
             item-title="name"
             item-value="id"
-            label="Тип"
+            label="Тип *"
             variant="underlined"
+            :rules="typeRule"
         />
       </v-col>
     </v-row>
@@ -39,7 +42,11 @@
             variant="underlined"
             label="Описание"
             auto-grow
+            :rules="descriptionRule"
         />
+      </v-col>
+      <v-col cols="12" md="12">
+        <small class="text-caption text-medium-emphasis">* - Поле обязательное</small>
       </v-col>
     </v-row>
     <v-row>
@@ -82,7 +89,22 @@ export default {
         description: null,
         code: null
       },
-      typeEquip: []
+      typeEquip: [],
+
+      nameRule: [
+          v => !!v || 'Название не заполнено',
+          v => (v && v.length >= 3 && v.length <= 20) || 'Название должно быть от 3 до 21 символа'
+      ],
+      codeRule: [
+        v => !!v || 'Код не заполнено',
+        v => /^[^\u0400-\u04FF]{2,25}$/.test(v) || 'Код не может содержать русских букв и быть от 2 до 26 сиволов'
+      ],
+      typeRule: [
+        v => !!v || 'Тип не выбран',
+      ],
+      descriptionRule: [
+        v => (!v || v.length <= 300) || 'Описание не может быть болше 300 симворлов'
+      ]
     }
   },
   methods: {
@@ -103,11 +125,15 @@ export default {
           })
     },
 
-    addEquipment(){
-      this.$emit("add", this.equip)
+    async addEquipment(){
+      const valid = await this.$refs.form.validate()
+      if(valid.valid)
+        this.$emit("add", this.equip)
     },
-    updateEquipment(){
-      this.$emit("update", this.equip, this.idEquipment)
+    async updateEquipment(){
+      const valid = await this.$refs.from.validate()
+      if(valid.valid)
+        this.$emit("update", this.equip, this.idEquipment)
     },
 
   },
