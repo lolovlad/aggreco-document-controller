@@ -2,7 +2,9 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="12">
-        <ObjectTable @updateObject="openToolTip" ref="objectTable"/>
+        <ObjectTable @updateObject="openToolTip"
+                     @deleteObject="deleteObj"
+                     ref="objectTable"/>
       </v-col>
     </v-row>
   </v-container>
@@ -14,9 +16,8 @@
   >
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-pencil" title="Редактировать" @click="openEditPage"></v-list-item>
-      <v-list-item prepend-icon="mdi-close" title="Удалить" @click="dialogDelete = true"></v-list-item>
       <v-divider></v-divider>
-      <v-list-item prepend-icon="mdi-engine" title="Наполнение" @click="openEquipPage"></v-list-item>
+      <v-list-item prepend-icon="mdi-engine" title="Оборудованние" @click="openEquipPage"></v-list-item>
       <v-list-item prepend-icon="mdi-account-multiple" title="Рабочий персонал" @click="openUserRegModel"></v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -25,30 +26,6 @@
   <FixedButton @click="addObject"/>
 
   <UserObjectAddForm :uuidObject="targetObject" ref="userAddForm"/>
-
-  <v-dialog
-      v-model="dialogDelete"
-      max-width="500"
-      persistent
-  >
-    <v-card
-        prepend-icon="mdi-close"
-        text="При согласиии объект будет удален"
-        title="Вы действиетльно хотите удалить объект?"
-    >
-      <template v-slot:actions>
-        <v-spacer></v-spacer>
-
-        <v-btn @click="dialogDelete = false">
-          Отмена
-        </v-btn>
-
-        <v-btn @click="deleteObj">
-          Подтвердить
-        </v-btn>
-      </template>
-    </v-card>
-  </v-dialog>
 
   <v-snackbar
       :timeout="4000"
@@ -70,9 +47,8 @@ export default {
   data(){
     return{
       targetObject: null,
-      dataChip: [{tag: 'Apple'}],
+      dataChip: [],
       drawel: false,
-      dialogDelete: false,
       snackbar: false,
       message: ""
     }
@@ -89,11 +65,10 @@ export default {
     openEditPage(){
       this.$router.push(`/admin/object/edit/${this.targetObject}`)
     },
-    deleteObj(){
-      ObjectService.deleteObject(this.targetObject)
+    deleteObj(uuid){
+      ObjectService.deleteObject(uuid)
           .then(() => {
             this.message = "Объект удален"
-            this.dialogDelete = false
             this.drawel = false
             this.$nextTick(()=>{
               this.snackbar = true

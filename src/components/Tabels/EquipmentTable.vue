@@ -22,6 +22,13 @@
         v-model:items-per-page="itemsPerPage"
         :items-length="totalItems"
         @update:options="loadItem"
+
+        :items-per-page-options="[
+          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+      ]"
+        :items-per-page-text="'Количество элементов'"
+        :loading-text="'Закгрузка данных'"
+        :no-data-text="'Данных не обнаружено'"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon

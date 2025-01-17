@@ -22,12 +22,12 @@ export default {
           size="small"
           v-bind="activatorProps"
       >
-        mdi-close
+        mdi-delete
       </v-icon>
     </template>
     <v-card
         prepend-icon="mdi-close"
-        text="При согласиии запись будет удалена будет удален"
+        text="При согласиии запись будет удалена"
         title="Вы действиетльно хотите удалить запись?"
     >
       <template v-slot:actions>

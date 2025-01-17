@@ -22,15 +22,17 @@
       :loading="loading"
       item-value="uuid"
       @update:options="loadItem"
+      :items-per-page-options="[
+          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+      ]"
+      :items-per-page-text="'Количество элементов'"
+      :loading-text="'Закгрузка данных'"
+      :no-data-text="'Данных не обнаружено'"
   >
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon
-          class="me-2"
-          size="small"
-          @click="deleteUser(item.uuid)"
-      >
-        mdi-delete
-      </v-icon>
+      <delete-button
+          @agree="deleteUser(item.uuid)"
+      />
       <v-icon
           class="me-2"
           size="small"
@@ -46,9 +48,11 @@
 <script>
 
 import UserService from "@/store/user.service";
+import DeleteButton from "@/components/UI/DeleteButton.vue";
 
 export default {
   name: "CustomUserTable",
+  components: {DeleteButton},
   data(){
     return{
       itemsPerPage: 20,
@@ -101,8 +105,6 @@ export default {
         UserService.searchUsers(this.search).then(
             response => {
               this.users = response.data
-              //this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
-              //this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
             }
         ).catch(
@@ -130,9 +132,4 @@ export default {
 </script>
 
 <style scoped>
-.button-menu{
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-}
 </style>

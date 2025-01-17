@@ -5,7 +5,21 @@ import ObjectService from "@/store/object.service";
 export default {
   name: "ItemObjectSelection",
   components: {},
-  props: ["uuidObject", "modelValue", "readonly"],
+  props: {
+    uuidObject: {
+      type: String
+    },
+    modelValue: {
+      type: Object
+    },
+    readonly: {
+      type: Boolean,
+    },
+    textBtn: {
+      type: String,
+      default: "Выбрать оборудованние"
+    }
+  },
   data: () => ({
     dialog: false,
     equipment: [],
@@ -70,20 +84,19 @@ export default {
   >
     <template v-slot:activator="{ props: activatorProps }">
       <v-row align="center" justify="start">
-        <v-col cols="auto">
+        <v-col cols="auto" v-if="Object.keys(content).length > 0">
           <v-chip-group>
-            <v-chip v-for="item in this.modelValue" :key="item.uuid">{{item.name}}</v-chip>
+            <v-chip v-for="item in this.modelValue" :key="item.uuid">{{item.name}} ({{item.code}})</v-chip>
           </v-chip-group>
         </v-col>
         <v-col cols="auto">
           <v-btn
               class="text-none font-weight-regular"
               prepend-icon="mdi-engine"
-              text="Выбрать оборудованние"
               variant="tonal"
               v-bind="activatorProps"
               :disabled="readonly"
-          />
+          >{{textBtn}}</v-btn>
         </v-col>
       </v-row>
     </template>

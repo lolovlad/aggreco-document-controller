@@ -30,11 +30,11 @@
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
-        <v-form @submit.prevent>
+        <v-form ref="form">
           <v-row>
             <v-col cols="12" sm="12">
               <v-select
-                  label="Объект"
+                  label="Объект *"
                   :items="listObject"
                   item-title="name"
                   item-value="uuid"
@@ -45,7 +45,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="6">
-              <label>Время начала</label>
+              <label>Время начала *</label>
               <VueDatePicker v-model="accident.datetime_start"
                              locale="ru"
                              :format="formatDate">
@@ -74,12 +74,22 @@
                   v-if="accident.object !== null"
                   v-model="accident.equipments"
                   :uuid-object="accident.object"
+                  :text-btn="'Выбрать оборудованние *'"
               />
+            </v-col>
+            <v-col cols="12" md="12">
+              <small class="text-caption text-medium-emphasis">* - Поле обязательное</small>
             </v-col>
           </v-row>
         </v-form>
       </v-card-text>
     </v-card>
+    <v-snackbar
+        :timeout="4000"
+        v-model="snackbar"
+    >
+      {{message}}
+    </v-snackbar>
   </v-dialog>
 </template>
 
@@ -100,6 +110,8 @@ export default {
   data(){
     return{
       dialog: false,
+      snackbar: false,
+      message: null,
 
       listObject: [],
       listEquipment: [],
@@ -129,6 +141,15 @@ export default {
     }
   },
   methods: {
+    validate(){
+      if(this.accident.object != null)
+        if(Object.keys(this.accident.equipments).length > 0)
+          if(this.accident.datetime_start != null)
+            return true
+      return false
+    },
+
+
     getListObject(){
       ObjectService.getListObject().then(
           data => {
@@ -137,12 +158,17 @@ export default {
       )
     },
     saveAccident(){
-      this.dialog = false
+      if(this.validate()){
+        this.dialog = false
+        this.accident.equipments = Object.keys(this.accident.equipments)
+        this.$emit("save", this.accident)
+        this.clearForm()
+      }else{
+        this.snackbar = true
+        this.message = "Не все данные заполнены"
+      }
 
-      this.accident.equipments = Object.keys(this.accident.equipments)
 
-      this.$emit("save", this.accident)
-      this.clearForm()
     },
     clearForm(){
       Object.assign(this.accident, this.accidentSchama)

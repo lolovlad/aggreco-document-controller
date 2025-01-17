@@ -73,7 +73,6 @@ export default {
     },
 
     getColor (state) {
-      console.log(state)
       if (state === "Черновик") return 'black'
       else if (state === "На рассмотрении") return 'orange'
       else if (state === "На доработку") return 'red'
@@ -106,6 +105,12 @@ export default {
         :loading="loading"
         item-value="uuid"
         @update:options="loadItem"
+        :items-per-page-options="[
+          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+      ]"
+        :items-per-page-text="'Количество элементов'"
+        :loading-text="'Закгрузка данных'"
+        :no-data-text="'Данных не обнаружено'"
     >
       <template v-slot:[`item.state_claim`]="{ value }">
         <v-chip :color="getColor(value)">
@@ -113,7 +118,7 @@ export default {
         </v-chip>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <delete-button @click="deleteClaim(item)"/>
+        <delete-button @agree="deleteClaim(item)"/>
         <v-icon
             class="me-2"
             size="small"

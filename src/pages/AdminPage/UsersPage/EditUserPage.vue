@@ -16,7 +16,9 @@
         <EditUserForm
             :add-mode="addMode"
             :id-user="idUser"
-            @addUser="addUser"/>
+            @addUser="addUser"
+            @updateUser="updateUser"
+        />
       </v-col>
     </v-row>
   </v-container>

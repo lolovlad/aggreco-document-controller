@@ -61,7 +61,7 @@
   >
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-account" title="Пользователи" @click="userPage"/>
-      <v-list-item prepend-icon="mdi-file-outline" title="Документы" @click="documentPage"/>
+      <!--<v-list-item prepend-icon="mdi-file-outline" title="Документы" @click="documentPage"/>-->
       <v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрация АО" @click="claimPage"/>

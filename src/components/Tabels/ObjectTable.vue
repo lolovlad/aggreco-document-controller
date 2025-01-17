@@ -3,7 +3,7 @@
       title="Объекты"
       flat
   >
-    <template v-slot:text>
+    <!--<template v-slot:text>
       <v-text-field
           v-model="search"
           label="Поиск"
@@ -12,7 +12,7 @@
           hide-details
           single-line
       ></v-text-field>
-    </template>
+    </template>-->
 
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
@@ -22,6 +22,12 @@
         :loading="loading"
         item-value="uuid"
         @update:options="loadItem"
+        :items-per-page-options="[
+          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+      ]"
+        :items-per-page-text="'Количество элементов'"
+        :loading-text="'Закгрузка данных'"
+        :no-data-text="'Данных не обнаружено'"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
@@ -31,6 +37,7 @@
         >
           mdi-pencil
         </v-icon>
+        <delete-button @agree="deleteObject(item.uuid)"/>
       </template>
     </v-data-table-server>
   </v-card>
@@ -39,9 +46,11 @@
 
 <script>
 import ObjectService from "@/store/object.service";
+import DeleteButton from "@/components/UI/DeleteButton.vue";
 
 export default {
   name: "ObjectTable",
+  components: {DeleteButton},
   data(){
     return {
       search: "",

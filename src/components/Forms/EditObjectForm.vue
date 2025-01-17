@@ -1,12 +1,13 @@
 <template>
-  <v-form @submit.prevent>
+  <v-form ref="form">
     <v-row>
       <v-col cols="12" md="12">
         <v-text-field
           type="text"
           v-model="obj.name"
-          label="Название"
+          label="Название *"
           variant="underlined"
+          :rules="nameRules"
         />
       </v-col>
     </v-row>
@@ -15,8 +16,9 @@
         <v-text-field
             type="text"
             v-model="obj.address"
-            label="Адрес"
+            label="Адрес *"
             variant="underlined"
+            :rules="addressRules"
         />
       </v-col>
     </v-row>
@@ -25,16 +27,18 @@
         <v-text-field
             type="number"
             v-model="obj.cx"
-            label="X"
+            label="Долгота"
             variant="underlined"
+            :rules="latitudeRules"
         />
       </v-col>
       <v-col cols="12" md="6">
         <v-text-field
             type="number"
             v-model="obj.cy"
-            label="Y"
+            label="Широта"
             variant="underlined"
+            :rules="longitudeRules"
         />
       </v-col>
     </v-row>
@@ -43,8 +47,9 @@
         <v-text-field
             type="text"
             v-model="obj.counterparty"
-            label="Контрагент"
+            label="Контрагент *"
             variant="underlined"
+            :rules="counterpartyRules"
         />
       </v-col>
     </v-row>
@@ -55,7 +60,7 @@
             :items="stateObj"
             item-title="description"
             item-value="id"
-            label="Состояние"
+            label="Состояние *"
             variant="underlined"
         />
       </v-col>
@@ -67,7 +72,11 @@
             variant="underlined"
             label="Описание"
             auto-grow
+            :rules="descriptionRules"
         />
+      </v-col>
+      <v-col cols="12" md="12">
+        <small class="text-caption text-medium-emphasis">* - Поле обязательное</small>
       </v-col>
     </v-row>
     <v-row>
@@ -108,6 +117,29 @@ export default {
         id_state: 1,
         description: null
       },
+
+      nameRules: [
+        v => !!v || 'Назывние не заполнена',
+        v => /^[а-яА-ЯёЁ\s-]{2,20}$/.test(v) || 'Назывние может содержать только русские символы и длинной от 2 до 32 символа'
+      ],
+      addressRules: [
+        v => !!v || 'Адресс не заполнена',
+        v => (!!v && v.length >= 10 && v.length <= 50) || 'Адресс может быть длинной от 10 до 50 символов'
+      ],
+      latitudeRules: [
+        v => (!v || /^-?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(v)) || 'Широта некорректна',
+      ],
+      longitudeRules: [
+        v => (!v || /^-?((1[0-7]\d|[1-9]?\d)(\.\d+)?|180(\.0+)?)$/.test(v)) || 'Долгота некорректна',
+      ],
+
+      counterpartyRules: [
+        v => !!v || 'Контрагент не заполнена',
+        v => (!!v && v.length >= 5 && v.length <= 50) || 'Контрагент может быть длинной от 5 до 50 символов'
+      ],
+      descriptionRules: [
+        v => (!v || v.length <= 300) || 'Описание не может быть болше 300 симворлов'
+      ],
       stateObj: []
     }
   },
@@ -134,11 +166,15 @@ export default {
           })
     },
 
-    addObject(){
-      this.$emit("add", this.obj)
+    async addObject(){
+      const valid = await this.$refs.form.validate()
+      if(valid.valid)
+        this.$emit("add", this.obj)
     },
-    updateObject(){
-      this.$emit("update", this.obj, this.idObject)
+    async updateObject(){
+      const valid = await this.$refs.form.validate()
+      if(valid.valid)
+        this.$emit("update", this.obj, this.idObject)
     },
 
   },

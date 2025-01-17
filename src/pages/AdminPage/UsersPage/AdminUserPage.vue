@@ -2,7 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="12">
-        <CustomUserTable :users="users"/>
+        <CustomUserTable
+            ref="userTable"
+            :users="users"
+            @deleteUser="deleteUser"
+            @updateUser="updateUser"/>
       </v-col>
     </v-row>
     <UserTool ref="userTool" @export="exportUsers" @addUser="addUser" @openProf="openProf"></UserTool>
@@ -56,6 +60,19 @@ export default {
       this.$refs.userTool.close()
       this.$router.push(`/admin/user/add`)
     },
+    deleteUser(uuid){
+      UserService.deleteUser(uuid)
+          .then(()=>{
+            this.message = "Пользователь удален удален"
+            this.snackbar = true
+            this.$refs.userTable.loadItem(1)
+          })
+    },
+    updateUser(uuid){
+      this.$refs.userTool.close()
+      this.$router.push(`/admin/user/edit/${uuid}`)
+    },
+
     openProf(){
       this.$refs.userTool.close()
       this.$router.push(`/admin/user/profession`)

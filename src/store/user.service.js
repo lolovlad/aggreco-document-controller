@@ -155,6 +155,17 @@ class UserService {
                 throw e
             })
     }
+    deleteUser(uuidUser){
+        return axios
+            .delete(`/user/${uuidUser}`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                return e
+            })
+    }
 }
 
 export default new UserService();
