@@ -13,6 +13,19 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="12">
+        <v-select
+            v-model="obj.id_region"
+            :items="regions"
+            item-title="name"
+            item-value="id"
+            label="Регион *"
+            variant="underlined"
+            :rules="regionRules"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="12">
         <v-text-field
             type="text"
             v-model="obj.address"
@@ -115,7 +128,8 @@ export default {
         cy: 0,
         counterparty: null,
         id_state: 1,
-        description: null
+        description: null,
+        id_region: 1
       },
 
       nameRules: [
@@ -132,6 +146,9 @@ export default {
       longitudeRules: [
         v => (!v || /^-?((1[0-7]\d|[1-9]?\d)(\.\d+)?|180(\.0+)?)$/.test(v)) || 'Долгота некорректна',
       ],
+      regionRules: [
+        v => !!v || 'Тип не выбран',
+      ],
 
       counterpartyRules: [
         v => !!v || 'Контрагент не заполнена',
@@ -140,13 +157,20 @@ export default {
       descriptionRules: [
         v => (!v || v.length <= 300) || 'Описание не может быть болше 300 симворлов'
       ],
-      stateObj: []
+      stateObj: [],
+      regions: []
     }
   },
   methods: {
     loadState(){
       ObjectService.getStateObject().then((state) => {
         this.stateObj = state
+      })
+    },
+
+    loadRegion(){
+      ObjectService.getRegion().then((region) => {
+        this.regions = region
       })
     },
 
@@ -177,9 +201,12 @@ export default {
         this.$emit("update", this.obj, this.idObject)
     },
 
+
+
   },
   mounted() {
     this.loadState()
+    this.loadRegion()
     if(this.addMode === false){
       this.getObject()
     }

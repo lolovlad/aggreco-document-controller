@@ -48,7 +48,8 @@
               <label>Время начала *</label>
               <VueDatePicker v-model="accident.datetime_start"
                              locale="ru"
-                             :format="formatDate">
+                             :format="formatDate"
+                             utc="preserve">
                 <template #input-icon>
                   <img/>
                 </template>
@@ -59,9 +60,12 @@
               <VueDatePicker
                   v-model="accident.datetime_end"
                   locale="ru"
-                  :min-date="accident.datetime_start"
+                  :min-date="midDateTime"
                   prevent-min-max-navigation
-                  :format="formatDate">
+                  :format="formatDate"
+                  utc="preserve"
+              >
+              >
                 <template #input-icon>
                   <img/>
                 </template>
@@ -97,7 +101,7 @@
 import FixedButton from "@/components/UI/FixedButton";
 import ObjectService from "@/store/object.service";
 import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
-import moment from "moment";
+import moment from 'moment-timezone';
 export default {
   name: "AddAccidentForm",
   components: {ItemObjectSelection, FixedButton},
@@ -180,6 +184,17 @@ export default {
   mounted() {
     this.getListObject()
   },
+  computed: {
+    midDateTime(){
+      const dateWithTimezone = new Date(this.accident.datetime_start)
+
+      const timezoneOffsetMinutes = dateWithTimezone.getTimezoneOffset()
+      const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000
+
+      const adjustedTime = new Date(dateWithTimezone.getTime() + timezoneOffsetMilliseconds)
+      return adjustedTime
+    }
+  }
 }
 </script>
 

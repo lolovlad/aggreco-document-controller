@@ -65,7 +65,8 @@
                   locale="ru"
                   :min-date="minDataNow"
                   :max-date="maxDataNow"
-                  :format="formatDate"/>
+                  :format="formatDate"
+                  utc="preserve"/>
             </v-col>
           </v-row>
           <v-row>
@@ -113,12 +114,12 @@ export default {
       editItem: {
         uuid: null,
         description: null,
-        time: this.minDate
+        time: this.minDate + "Z"
       },
       defaultItem: {
         uuid: null,
         description: null,
-        time: this.minDate
+        time: this.minDate + "Z"
       },
 
       uuidItem: null

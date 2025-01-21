@@ -1,4 +1,6 @@
 import axios from "axios";
+import moment from 'moment-timezone';
+
 
 class ClaimService{
     getStateClaim(){
@@ -24,8 +26,13 @@ class ClaimService{
             })
     }
     addClaim(claim){
+        const timezone = moment().format("Z");
         return axios
-            .post('/claim', claim)
+            .post('/claim', claim, {
+                headers: {
+                    "X-Timezone": timezone,
+                }
+            })
             .then(response => {
                 if(response.status === 201){
                     return response

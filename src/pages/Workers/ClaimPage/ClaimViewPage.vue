@@ -32,7 +32,6 @@ export default {
       })
     },
     saveClaim(accident){
-      console.log(accident)
       const claimModel = {
         accident: accident,
         datetime: new Date().getTime(),

@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from 'moment-timezone';
 
 
 class AccidentService{
@@ -14,8 +15,14 @@ class AccidentService{
             })
     }
     updateAccident(uuidAccident, accident){
+
+        const timezone = moment().format("Z");
         return axios
-            .put(`accident/${uuidAccident}`, accident)
+            .put(`accident/${uuidAccident}`, accident, {
+                headers: {
+                    "X-Timezone": timezone,
+                }
+            })
             .then((response) => {
                 if(response.status >= 200){
                     return response
@@ -150,6 +157,17 @@ class AccidentService{
                 if(response.status >= 200){
                     return response.data
                 }
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    getListSignsAccident(){
+        return axios
+            .get(`accident/signs_accident/get_all`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
             })
             .catch(function (e){
                 return e

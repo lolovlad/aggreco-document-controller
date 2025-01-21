@@ -58,6 +58,7 @@ export default {
         ClaimService.getPageClaim(page).then(
             response => {
               this.items = response.data
+              console.log(this.items, "claim")
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false

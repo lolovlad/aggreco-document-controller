@@ -18,7 +18,8 @@
         <VueDatePicker v-model="accident.datetime_start"
                        locale="ru"
                        :readonly="readOnly"
-                       :format="formatDate">
+                       :format="formatDate"
+                       utc="preserve">
           <template #input-icon>
             <img/>
           </template>
@@ -28,10 +29,11 @@
         <VueDatePicker
             v-model="accident.datetime_end"
             locale="ru"
-            :min-date="accident.datetime_start"
+            :min-date="midDateTime"
             prevent-min-max-navigation
             :readonly="readOnly"
-            :format="formatDate">
+            :format="formatDate"
+            utc="preserve">
           <template #input-icon>
             <img/>
           </template>
@@ -58,6 +60,21 @@
             v-if="accident.uuid_object !== null"
             :readonly="readOnly"
         />-->
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12">
+        <v-select
+            v-model="accident.signs_accident"
+            :items="listSignsAccident"
+            label="Учетные признаки аварии"
+            variant="underlined"
+            item-title="name"
+            item-value="id"
+            chips
+            multiple
+            :readonly="readOnly"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -123,6 +140,7 @@
 import axios from "axios";
 import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
 import moment from "moment/moment";
+import AccidentService from "@/store/accident.service";
 
 export default {
   name: "EditAccidentForm",
@@ -143,6 +161,8 @@ export default {
       listTypeBrakesOrg: [],
       listTypeBrakesMeh: [],
 
+      listSignsAccident: [],
+
       accident:{
         uuid: null,
         uuid_object: null,
@@ -151,6 +171,7 @@ export default {
         damaged_equipment: [],
         class_org_brake: [],
         class_meh_brake: [],
+        signs_accident: [],
         causes_of_the_emergency: null,
         damaged_equipment_material: null,
         additional_material: null,
@@ -163,13 +184,16 @@ export default {
       axios
           .get(`accident/${this.uuidAccident}`)
           .then((response) => {
-            console.log(response.data)
             const accidentResponse = response.data
             this.accident.uuid = accidentResponse.uuid
             this.accident.uuid_object = accidentResponse.object.uuid
 
-            this.accident.datetime_start = accidentResponse.datetime_start
-            this.accident.datetime_end = accidentResponse.datetime_end
+            this.accident.datetime_start = accidentResponse.datetime_start + "Z"
+            if(accidentResponse.datetime_end === null)
+              this.accident.datetime_end = accidentResponse.datetime_end
+            else
+              this.accident.datetime_end = accidentResponse.datetime_end + "Z"
+
 
             this.accident.damaged_equipment = accidentResponse.damaged_equipment
 
@@ -183,6 +207,7 @@ export default {
             this.accident.causes_of_the_emergency = accidentResponse.causes_of_the_emergency
             this.accident.damaged_equipment_material = accidentResponse.damaged_equipment_material
             this.accident.additional_material = accidentResponse.additional_material
+            this.accident.signs_accident = accidentResponse.signs_accident.map((item) => item.id)
           })
     },
     getListObject(){
@@ -204,6 +229,14 @@ export default {
             this.listTypeBrakesMeh = response.data
           })
     },
+    getSignsAccident(){
+      AccidentService.getListSignsAccident().then((signs) => {
+        this.listSignsAccident = signs
+        for(const item of this.listSignsAccident){
+          item["name"] = `${item["name"].slice(0, 100)}... ${item["code"]}`
+        }
+      })
+    },
     saveChange(){
       this.$emit("saveAccident", {
         uuid_object: this.accident.uuid_object,
@@ -214,7 +247,8 @@ export default {
         causes_of_the_emergency: this.accident.causes_of_the_emergency,
         damaged_equipment_material: this.accident.damaged_equipment_material,
         additional_material: this.accident.additional_material,
-        id_state_accident: this.accident.id_state_accident
+        id_state_accident: this.accident.id_state_accident,
+        signs_accident: this.accident.signs_accident
       })
     },
     formatDate(date){
@@ -222,9 +256,21 @@ export default {
     }
   },
   mounted() {
+    this.getSignsAccident()
     this.getListObject()
     this.getAccident()
     this.getTypeBrakes()
+  },
+  computed: {
+    midDateTime(){
+      const dateWithTimezone = new Date(this.accident.datetime_start)
+
+      const timezoneOffsetMinutes = dateWithTimezone.getTimezoneOffset()
+      const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000
+
+      const adjustedTime = new Date(dateWithTimezone.getTime() + timezoneOffsetMilliseconds)
+      return adjustedTime
+    }
   }
 }
 </script>

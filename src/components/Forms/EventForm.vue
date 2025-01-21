@@ -63,7 +63,8 @@
                 locale="ru"
                 :enable-time-picker="false"
                 :format="formatDate"
-                :min-date="minDate"
+                :min-date="midDateTime"
+                utc="preserve"
             >
               <template #input-icon>
                 <img/>
@@ -212,6 +213,17 @@ export default {
     this.getStateEvent()
     this.getTypeEvent()
     this.getAllEvents()
+  },
+  computed: {
+    midDateTime(){
+      const dateWithTimezone = new Date(this.minDate)
+
+      const timezoneOffsetMinutes = dateWithTimezone.getTimezoneOffset()
+      const timezoneOffsetMilliseconds = timezoneOffsetMinutes * 60 * 1000
+
+      const adjustedTime = new Date(dateWithTimezone.getTime() + timezoneOffsetMilliseconds)
+      return adjustedTime
+    }
   }
 }
 </script>
