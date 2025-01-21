@@ -184,6 +184,7 @@ export default {
             this.obj.counterparty = object.counterparty
             this.obj.id_state = object.id_state
             this.obj.description = object.description
+            this.obj.id_region = object.id_region
           })
           .catch((error) => {
             console.log(error)
