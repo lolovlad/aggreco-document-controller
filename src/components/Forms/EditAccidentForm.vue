@@ -184,6 +184,8 @@ export default {
       axios
           .get(`accident/${this.uuidAccident}`)
           .then((response) => {
+            console.log(response.data)
+
             const accidentResponse = response.data
             this.accident.uuid = accidentResponse.uuid
             this.accident.uuid_object = accidentResponse.object.uuid
@@ -193,7 +195,6 @@ export default {
               this.accident.datetime_end = accidentResponse.datetime_end
             else
               this.accident.datetime_end = accidentResponse.datetime_end + "Z"
-
 
             this.accident.damaged_equipment = accidentResponse.damaged_equipment
 

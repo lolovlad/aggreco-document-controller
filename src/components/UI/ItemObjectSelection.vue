@@ -72,6 +72,7 @@ export default {
     for(let i of this.modelValue){
       this.content[i.uuid] = i
     }
+    this.handleInput()
   }
 }
 </script>
