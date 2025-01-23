@@ -48,18 +48,6 @@
             :uuid-object="accident.uuid_object"
             :readonly="readOnly"
         />
-        <!--<v-select
-            v-model="accident.damaged_equipment"
-            :items="listEquipment"
-            item-title="name"
-            item-value="uuid"
-            label="Оборудованние"
-            chips
-            multiple
-            variant="underlined"
-            v-if="accident.uuid_object !== null"
-            :readonly="readOnly"
-        />-->
       </v-col>
     </v-row>
     <v-row>
@@ -82,7 +70,7 @@
         <v-select
             v-model="accident.class_meh_brake"
             :items="listTypeBrakesMeh"
-            label="Класс повреждений"
+            label="Технические при знаки аварии"
             variant="underlined"
             item-title="name"
             item-value="id"
@@ -95,7 +83,7 @@
         <v-select
             v-model="accident.class_org_brake"
             :items="listTypeBrakesOrg"
-            label="Причины повреждений"
+            label="Организационные признаки аварии"
             variant="underlined"
             item-title="name"
             item-value="id"
@@ -108,7 +96,7 @@
     <v-row>
       <v-col cols="12" sm="12">
         <v-textarea
-            label="краткий пересказ ситуации"
+            label="Описательный блок"
             variant="underlined"
             auto-grow
             v-model="accident.causes_of_the_emergency"
