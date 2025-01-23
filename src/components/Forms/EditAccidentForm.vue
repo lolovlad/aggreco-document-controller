@@ -70,7 +70,7 @@
         <v-select
             v-model="accident.class_meh_brake"
             :items="listTypeBrakesMeh"
-            label="Технические при знаки аварии"
+            label="Технические признаки аварии"
             variant="underlined"
             item-title="name"
             item-value="id"
