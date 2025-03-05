@@ -1,5 +1,5 @@
 <script>
-import UserService from "@/store/user.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: 'ProfessionalTable',
@@ -25,7 +25,7 @@ export default {
     loadItem() {
       this.loading = true
 
-      UserService.getProfUser().then(
+      EnvService.getProfUser().then(
           profs => {
             this.profession = profs
             console.log(this.profession)

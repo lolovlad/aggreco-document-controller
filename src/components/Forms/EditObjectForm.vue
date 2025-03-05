@@ -106,6 +106,7 @@
 <script>
 import ButtonAgrea from "@/components/UI/ButtonAgrea";
 import ObjectService from "@/store/object.service";
+import EnvService from "@/store/env.service";
 export default {
   name: "EditObjectForm",
   components: {ButtonAgrea},
@@ -134,7 +135,7 @@ export default {
 
       nameRules: [
         v => !!v || 'Назывние не заполнена',
-        v => /^[а-яА-ЯёЁ\s-]{2,20}$/.test(v) || 'Назывние может содержать только русские символы и длинной от 2 до 32 символа'
+        v => (!!v && v.length >= 2 && v.length <= 50) || 'Назывние может быть длинной от 2 до 51 символа'
       ],
       addressRules: [
         v => !!v || 'Адресс не заполнена',
@@ -163,13 +164,13 @@ export default {
   },
   methods: {
     loadState(){
-      ObjectService.getStateObject().then((state) => {
+      EnvService.getStateObject().then((state) => {
         this.stateObj = state
       })
     },
 
     loadRegion(){
-      ObjectService.getRegion().then((region) => {
+      EnvService.getRegion().then((region) => {
         this.regions = region
       })
     },

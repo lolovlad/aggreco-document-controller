@@ -1,5 +1,5 @@
 <script>
-import UserService from "@/store/user.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: "EditProfessionForm",
@@ -19,7 +19,7 @@ export default {
   }),
   methods: {
     saveProf(){
-      UserService.addProf(this.prof).then(response => {
+      EnvService.addProf(this.prof).then(response => {
         console.log(response)
 
         this.prof.id = null

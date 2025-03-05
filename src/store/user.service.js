@@ -39,17 +39,6 @@ class UserService {
                 throw e
             })
     }
-    loadTypeUser(){
-        return axios
-            .get(`/user/type_user`)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
-            })
-            .catch(function (e){
-                return e
-            })
-    }
     getUserByUuid(uuid){
         return axios
             .get(`/user/get_one/${uuid}`)
@@ -82,41 +71,6 @@ class UserService {
             })
             .catch(function (e){
                 return e
-            })
-    }
-    getProfUser(){
-        return axios
-            .get(`/user/profession`)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
-            })
-            .catch(function (e){
-                return e
-            })
-    }
-    addProf(prof){
-        return axios
-            .post("/user/profession", prof)
-            .then((response) => {
-                if(response.status === 201)
-                    return response
-            })
-            .catch(function (e){
-                throw e
-            })
-    }
-    deleteProf(id_prof){
-        return axios
-            .delete(`/user/profession/${id_prof}`)
-            .then(
-                (response) => {
-                    if(response.status === 200)
-                        return response
-                }
-            )
-            .catch(function (e){
-                throw e
             })
     }
     getProfile(){

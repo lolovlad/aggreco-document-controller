@@ -24,14 +24,6 @@ class ObjectService{
                 return e
             })
     }
-    getStateObject(){
-        return axios
-            .get(`/object/state_object`)
-            .then((response)=> {
-                if (response.status === 200)
-                    return response.data
-                })
-    }
     getObjectByUuid(uuid){
         return axios
             .get(`/object/one/${uuid}`)
@@ -86,14 +78,6 @@ class ObjectService{
             })
             .catch(function (e){
                 throw e
-            })
-    }
-    getTypeEquipment(){
-        return axios
-            .get(`/object/equipment/type_equip`)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
             })
     }
     getEquipmentByUuid(uuid){
@@ -161,14 +145,6 @@ class ObjectService{
             })
             .catch(function (e){
                 throw e
-            })
-    }
-    getRegion(){
-        return axios
-            .get(`/object/region/get_all`)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
             })
     }
 

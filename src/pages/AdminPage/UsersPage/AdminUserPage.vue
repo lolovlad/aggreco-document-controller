@@ -9,7 +9,7 @@
             @updateUser="updateUser"/>
       </v-col>
     </v-row>
-    <UserTool ref="userTool" @export="exportUsers" @addUser="addUser" @openProf="openProf"></UserTool>
+    <UserTool ref="userTool" @export="exportUsers" @addUser="addUser"></UserTool>
     <v-snackbar
         :timeout="4000"
         v-model="snackbar"
@@ -71,11 +71,6 @@ export default {
     updateUser(uuid){
       this.$refs.userTool.close()
       this.$router.push(`/admin/user/edit/${uuid}`)
-    },
-
-    openProf(){
-      this.$refs.userTool.close()
-      this.$router.push(`/admin/user/profession`)
     }
   }
 

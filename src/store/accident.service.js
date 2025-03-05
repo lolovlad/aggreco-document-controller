@@ -162,17 +162,6 @@ class AccidentService{
                 return e
             })
     }
-    getListSignsAccident(){
-        return axios
-            .get(`accident/signs_accident/get_all`)
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
-            })
-            .catch(function (e){
-                return e
-            })
-    }
 }
 
 export default new AccidentService();

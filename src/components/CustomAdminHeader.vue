@@ -67,6 +67,13 @@
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрация АО" @click="claimPage"/>
       <v-list-item prepend-icon="mdi-chart-bar" title="Статистика" @click="statisticPage"/>
     </v-list>
+
+    <template v-slot:append>
+      <v-divider></v-divider>
+      <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi-cog-outline" title="Настройки" @click="envPage"/>
+      </v-list>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -112,6 +119,9 @@ export default {
     logout(){
       this.$store.dispatch('auth/logout')
       router.push('/')
+    },
+    envPage(){
+      router.push('/admin/env')
     }
   },
   computed: {

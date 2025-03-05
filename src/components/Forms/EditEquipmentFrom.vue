@@ -63,6 +63,7 @@
 <script>
 import ButtonAgrea from "@/components/UI/ButtonAgrea";
 import ObjectService from "@/store/object.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: "EditEquipmentFrom",
@@ -109,7 +110,7 @@ export default {
   },
   methods: {
     loadType(){
-      ObjectService.getTypeEquipment()
+      EnvService.getTypeEquipment()
           .then((types) => {
             this.typeEquip = types
           })

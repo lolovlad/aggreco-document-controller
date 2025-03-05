@@ -1,7 +1,8 @@
 <script>
 import ProfessionalTable from "@/components/Tabels/ProfessionalTable.vue";
 import EditProfessionForm from "@/components/Forms/EditProfessionForm.vue";
-import UserService from "@/store/user.service";
+import EnvService from "@/store/env.service";
+
 export default {
   name: "ProfessionPage",
   components: {EditProfessionForm, ProfessionalTable},
@@ -13,7 +14,7 @@ export default {
       this.$refs.profTable.loadItem()
     },
     deleteProf(id_prof){
-      UserService.deleteProf(id_prof)
+      EnvService.deleteProf(id_prof)
           .then(response => {
         console.log(response)
         this.$refs.profTable.loadItem()

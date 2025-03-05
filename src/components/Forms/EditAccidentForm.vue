@@ -128,7 +128,7 @@
 import axios from "axios";
 import ItemObjectSelection from "@/components/UI/ItemObjectSelection.vue";
 import moment from "moment/moment";
-import AccidentService from "@/store/accident.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: "EditAccidentForm",
@@ -207,19 +207,24 @@ export default {
           })
     },
     getTypeBrakes(){
-      axios
-          .get(`/accident/type_brake_mechanical/org`)
-          .then((response) => {
-            this.listTypeBrakesOrg = response.data
-          })
-      axios
-          .get(`/accident/type_brake_mechanical/meh`)
-          .then((response) => {
-            this.listTypeBrakesMeh = response.data
-          })
+      EnvService.getListMehTypeBrake().then(
+          typeBrake => {
+            this.listTypeBrakesMeh = typeBrake
+          }
+      )
+      EnvService.getListDomesticOrganizationalTypeBrake().then(
+          typeBrake => {
+            this.listTypeBrakesOrg = typeBrake
+          }
+      )
+      EnvService.getListExternalOrganizationalTypeBrake().then(
+          typeBrake => {
+            this.listTypeBrakesOrg = this.listTypeBrakesOrg.concat(typeBrake)
+          }
+      )
     },
     getSignsAccident(){
-      AccidentService.getListSignsAccident().then((signs) => {
+      EnvService.getListSignsAccident().then((signs) => {
         this.listSignsAccident = signs
         for(const item of this.listSignsAccident){
           item["name"] = `${item["name"].slice(0, 100)}... ${item["code"]}`

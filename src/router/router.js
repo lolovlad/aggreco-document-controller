@@ -24,7 +24,7 @@ import InfoAccidentPage from "@/pages/AdminPage/AccidentPage/InfoAccidentPage";
 import MainStatisticPage from "@/pages/AdminPage/StatisticPage/MainStatisticPage.vue";
 import AllStatistic from "@/pages/AdminPage/StatisticPage/AllStatistic.vue";
 import ObjectStatic from "@/pages/AdminPage/StatisticPage/ObjectStatic.vue";
-import ProfessionPage from "@/pages/AdminPage/UsersPage/ProfessionPage.vue";
+import ProfessionPage from "@/pages/AdminPage/EnvPage/ProfessionPage.vue";
 import ProfilePage from "@/pages/AdminPage/ProfilePage/ProfilePage.vue";
 import EditAccountPage from "@/pages/AdminPage/ProfilePage/EditAccountPage.vue";
 import EditSignaturePage from "@/pages/AdminPage/ProfilePage/EditSignaturePage.vue";
@@ -42,6 +42,9 @@ import EditEquipmentWorkerPage from "@/pages/Workers/ObjectPage/EditEquipmentWor
 import BaseAdminBlueprintPage from "@/pages/AdminPage/BlueprintPage/BaseAdminBlueprintPage.vue";
 import ViewBlueprinAdminPage from "@/pages/AdminPage/BlueprintPage/ViewBlueprinAdminPage.vue";
 import EditBlueprintAdminPage from "@/pages/AdminPage/BlueprintPage/EditBlueprintAdminPage.vue";
+import BaseEnvPage from "@/pages/AdminPage/EnvPage/BaseEnvPage.vue";
+import TypeEquipmentPage from "@/pages/AdminPage/EnvPage/TypeEquipmentPage.vue";
+import RegionPage from "@/pages/AdminPage/EnvPage/RegionPage.vue";
 
 const routes = [
     {
@@ -50,7 +53,7 @@ const routes = [
         beforeEnter: (to, from, next) => {
             const initialState = $store.state;
             if(initialState.status.loggedIn){
-                if(initialState.user.type.name === "admin") {
+                if(initialState.user.type.name !== "user") {
                     next("/admin/claim");
                 }
                 else {
@@ -106,10 +109,6 @@ const routes = [
                     {
                         path: "",
                         component: AdminUserPage
-                    },
-                    {
-                        path: "profession",
-                        component: ProfessionPage
                     }
                 ]
             },
@@ -243,13 +242,31 @@ const routes = [
                         component: EditBlueprintAdminPage
                     }
                 ]
+            },
+            {
+                path: "env",
+                component: BaseEnvPage,
+                children: [
+                    {
+                        path: "profession",
+                        component: ProfessionPage
+                    },
+                    {
+                        path: "type_equipment",
+                        component: TypeEquipmentPage
+                    },
+                    {
+                        path: "region",
+                        component: RegionPage
+                    }
+                ]
             }
 
         ],
         beforeEnter: (to, from, next) => {
             const initialState = $store.state;
             if(initialState.status.loggedIn){
-                if(initialState.user.type.name === "admin") {
+                if(initialState.user.type.name !== "user") {
                     next();
                 }
                 else {

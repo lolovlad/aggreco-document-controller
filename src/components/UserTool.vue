@@ -7,7 +7,6 @@
   >
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-account-plus" title="Добавить пользователя" @click="openAddWindow"></v-list-item>
-      <v-list-item prepend-icon="mdi-account-hard-hat" title="Должности" @click="openProfWindow"></v-list-item>
 
       <v-list-item prepend-icon="mdi-plus-box-multiple" title="Импорт csv" @click="openImportWindow"></v-list-item>
     </v-list>
@@ -43,9 +42,6 @@ export default {
     },
     openAddWindow(){
       this.$emit('addUser')
-    },
-    openProfWindow(){
-      this.$emit('openProf')
     }
   }
 }
