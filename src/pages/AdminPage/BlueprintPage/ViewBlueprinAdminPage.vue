@@ -11,7 +11,7 @@ export default {
     },
 
     editBlueprint(id){
-      this.$router.push(`/admin/blueprint/edit/${id}`)
+      this.$router.push(`/admin/env/blueprint/edit/${id}`)
     }
   }
 }
@@ -27,7 +27,7 @@ export default {
        />
      </v-col>
    </v-row>
-   <FixedButton @click="$router.push(`/admin/blueprint/add`)"/>
+   <FixedButton @click="$router.push(`/admin/env/blueprint/add`)"/>
  </v-container>
 </template>
 

@@ -45,17 +45,6 @@ export default {
 <template>
   <v-row>
     <v-col cols="12" md="12">
-      <v-btn
-          class="text-none font-weight-regular"
-          prepend-icon="mdi-text-box-plus-outline"
-          text="Добавить"
-          variant="tonal"
-          @click="$router.push('/admin/blueprint')"
-      ></v-btn>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col cols="12" md="12">
       <claim-table @edit="editClaim"
                    @delete="deleteClaim"
                    @updateStateClaim="updateStateClaim"

@@ -99,6 +99,7 @@
 <script>
 import moment from "moment/moment";
 import accidentService from "@/store/accident.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: "EventForm",
@@ -149,14 +150,14 @@ export default {
 
     },
     getStateEvent(){
-      accidentService.getStateEvent().then(
+      EnvService.getStateEvent().then(
           (stateEvent) => {
             this.listStateEvent = stateEvent
           }
       )
     },
     getTypeEvent(){
-      accidentService.getTypeEvent().then(
+      EnvService.getTypeEvent().then(
           (typeEvent) => {
             this.listTypeEvent = typeEvent
           }

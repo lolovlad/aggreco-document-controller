@@ -3,17 +3,6 @@ import moment from 'moment-timezone';
 
 
 class ClaimService{
-    getStateClaim(){
-        return axios
-            .get('/claim/state_claim')
-            .then((response) => {
-                if(response.status === 200)
-                    return response.data
-            })
-            .catch(function (e){
-                return e
-            })
-    }
     getPageClaim(page){
         return axios
             .get('/claim/page', {params: {page: page}})
@@ -22,7 +11,7 @@ class ClaimService{
                     return response
             })
             .catch(function (e){
-                return e
+                throw e
             })
     }
     addClaim(claim){
@@ -39,7 +28,7 @@ class ClaimService{
                 }
             })
             .catch(function (e){
-                    return e
+                throw e
                 })
     }
     getClaims(uuid){
@@ -51,7 +40,7 @@ class ClaimService{
                 }
             })
             .catch(function (e){
-                return e
+                throw e
             })
     }
     saveFile(uuid, typeFile, file){

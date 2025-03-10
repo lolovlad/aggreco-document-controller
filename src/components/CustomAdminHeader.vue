@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="orange-darken-3"
+  <v-app-bar color="rgb( 253,110,57)"
              prominent>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     <v-app-bar-title @click="$route.push('/')">Aggreko-work-tool</v-app-bar-title>

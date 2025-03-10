@@ -10,7 +10,7 @@ export const auth = {
     state: initialState,
     actions: {
         login( { commit }, payload) {
-            return AuthService.login(payload.url, payload.email, payload.password).then(
+            return AuthService.resolveCodeYandex(payload.code, payload.token).then(
                 response => {
                     if (response.status === 200) {
                         commit('loginSuccess', response);

@@ -45,11 +45,29 @@ import EditBlueprintAdminPage from "@/pages/AdminPage/BlueprintPage/EditBlueprin
 import BaseEnvPage from "@/pages/AdminPage/EnvPage/BaseEnvPage.vue";
 import TypeEquipmentPage from "@/pages/AdminPage/EnvPage/TypeEquipmentPage.vue";
 import RegionPage from "@/pages/AdminPage/EnvPage/RegionPage.vue";
+import YandexAcceptPage from "@/pages/YandexAcceptPage.vue";
 
 const routes = [
     {
         path: '/',
         component: LoginPage,
+        beforeEnter: (to, from, next) => {
+            const initialState = $store.state;
+            if(initialState.status.loggedIn){
+                if(initialState.user.type.name !== "user") {
+                    next("/admin/claim");
+                }
+                else {
+                    next("/worker/object");
+                }
+            }else{
+                next()
+            }
+        }
+    },
+    {
+        path: '/login/yandex',
+        component: YandexAcceptPage,
         beforeEnter: (to, from, next) => {
             const initialState = $store.state;
             if(initialState.status.loggedIn){
@@ -226,24 +244,6 @@ const routes = [
                 ]
             },
             {
-                path: "blueprint",
-                component: BaseAdminBlueprintPage,
-                children: [
-                    {
-                        path: "",
-                        component: ViewBlueprinAdminPage
-                    },
-                    {
-                        path: "add",
-                        component: EditBlueprintAdminPage
-                    },
-                    {
-                        path: "edit/:id",
-                        component: EditBlueprintAdminPage
-                    }
-                ]
-            },
-            {
                 path: "env",
                 component: BaseEnvPage,
                 children: [
@@ -258,7 +258,25 @@ const routes = [
                     {
                         path: "region",
                         component: RegionPage
-                    }
+                    },
+                    {
+                        path: "blueprint",
+                        component: BaseAdminBlueprintPage,
+                        children: [
+                            {
+                                path: "",
+                                component: ViewBlueprinAdminPage
+                            },
+                            {
+                                path: "add",
+                                component: EditBlueprintAdminPage
+                            },
+                            {
+                                path: "edit/:id",
+                                component: EditBlueprintAdminPage
+                            }
+                        ]
+                    },
                 ]
             }
 

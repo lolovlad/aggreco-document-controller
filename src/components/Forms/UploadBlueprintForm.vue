@@ -98,13 +98,6 @@ export default {
 
       <v-card-actions>
         <v-spacer></v-spacer>
-
-        <v-btn
-            text="Закрыть"
-            variant="plain"
-            @click="dialog = false"
-        ></v-btn>
-
         <v-btn v-if="addMode"
             color="primary"
             text="Сохранить"

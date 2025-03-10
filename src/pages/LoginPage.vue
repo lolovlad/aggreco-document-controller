@@ -72,9 +72,10 @@
 </template>
 
 <script>
-import router from "@/router/router";
+//import router from "@/router/router";
 import ButtonAgrea from "@/components/UI/ButtonAgrea";
-import {auth as $store} from "@/store/auth.model";
+//import {auth as $store} from "@/store/auth.model";
+import AuthService from "@/store/auth.service";
 
 export default {
   components: {ButtonAgrea},
@@ -91,27 +92,38 @@ export default {
     }
   },
   methods:{
+    //async login(){
+    //  const valid = await this.$refs.form.validate()
+    //  if(!valid.valid)
+    //    return
+    //  this.$store.dispatch('auth/login', {url: '/login/sign-in', email: this.email, password: this.password})
+    //      .then(
+    //          (response) => {
+    //            if (response.status !== 200){
+    //              this.error = response.message
+    //            }
+    //            else{
+    //              const initialState = $store.state;
+    //              if(initialState.user.type.name === "user"){
+    //                router.push("/worker/object")
+    //              }else{
+    //                router.push('/admin/claim')
+    //              }
+    //            }
+    //          },
+    //      )
+    //}
     async login(){
       const valid = await this.$refs.form.validate()
       if(!valid.valid)
         return
-
-      this.$store.dispatch('auth/login', {url: '/login/sign-in', email: this.email, password: this.password})
-          .then(
-              (response) => {
-                if (response.status !== 200){
-                  this.error = response.message
-                }
-                else{
-                  const initialState = $store.state;
-                  if(initialState.user.type.name === "user"){
-                    router.push("/worker/object")
-                  }else{
-                    router.push('/admin/claim')
-                  }
-                }
-              },
-          )
+      AuthService.loginYandex(this.email, this.password).then(
+          (data) => {
+            location.replace(data.url);
+          },
+      ).catch((response) => {
+        this.error = response.response.data.message
+      })
     }
   },
   name: "LoginPage"
