@@ -6,10 +6,11 @@ import EditAccidentForm from "@/components/Forms/EditAccidentForm.vue";
 import {auth as $store} from "@/store/auth.model";
 import ClaimService from "@/store/claim.service";
 import AccidentService from "@/store/accident.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "EditClaimAdminPage",
-  components: {EditAccidentForm, EventForm, EditClaimFrom, TimeLineForm},
+  components: {ButtonBack, EditAccidentForm, EventForm, EditClaimFrom, TimeLineForm},
   data(){
     return{
       tab: null,
@@ -126,6 +127,7 @@ export default {
 
   </v-container>
   <v-container v-else>
+    <button-back/>
     <v-tabs
         v-model="tab"
         align-tabs="center"

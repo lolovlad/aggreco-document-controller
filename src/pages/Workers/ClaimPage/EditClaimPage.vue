@@ -6,10 +6,11 @@ import ClaimService from "@/store/claim.service";
 import AccidentService from "@/store/accident.service";
 import EditClaimFrom from "@/components/Forms/EditClaimFrom.vue";
 import {auth as $store} from "@/store/auth.model";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "EditClaimPage",
-  components: {EditClaimFrom, EditAccidentForm, EventForm, TimeLineForm},
+  components: {ButtonBack, EditClaimFrom, EditAccidentForm, EventForm, TimeLineForm},
   data(){
     return{
       tab: null,
@@ -138,13 +139,7 @@ export default {
 
   </v-container>
   <v-container v-else>
-    <v-btn
-        class="back-button"
-        @click="$router.back()"
-        icon
-    >
-      <v-icon color="white">mdi-arrow-left</v-icon>
-    </v-btn>
+    <button-back/>
     <v-tabs
         v-model="tab"
         align-tabs="center"
@@ -205,12 +200,5 @@ export default {
 </template>
 
 <style scoped>
-.back-button {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
-  background-color: rgb(45, 53, 64);
-  color: white;
-  z-index: 1000;
-}
+
 </style>
