@@ -11,7 +11,7 @@ axios.interceptors.response.use((response) => {
     return response;
 }, async function (error){
     const originalRequest = error.config
-    if(error.response.status === 403 && !originalRequest._retry){
+    if((error.response.status === 403 || error.response.status === 406) && !originalRequest._retry){
         originalRequest._retry = true;
         const response = await axios.get('/login/refresh', {params: {refresh_token: $store.state.refresh_token}})
 
@@ -21,9 +21,9 @@ axios.interceptors.response.use((response) => {
             originalRequest.headers.authorization = `Bearer ` + response.data.access_token
             return axios(originalRequest)
         }else{
-            await router.push('/')
+            this.$store.dispatch('auth/logout')
+            router.push('/')
         }
-
     }
     return Promise.reject(error);
 })

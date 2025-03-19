@@ -148,7 +148,7 @@ export default {
     validate(){
       if(this.accident.object != null)
         if(Object.keys(this.accident.equipments).length > 0)
-          if(this.accident.datetime_start != null)
+          if(this.accident.datetime_start != null && this.accident.datetime_end != null)
             return true
       return false
     },

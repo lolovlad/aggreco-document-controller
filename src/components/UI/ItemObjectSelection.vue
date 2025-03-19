@@ -72,6 +72,10 @@ export default {
     for(let i of this.modelValue){
       this.content[i.uuid] = i
     }
+    ObjectService.searchEquipmentInObject(this.uuidObject, this.search)
+        .then(equipment => {
+          this.equipment = equipment
+        })
     this.handleInput()
   }
 }
