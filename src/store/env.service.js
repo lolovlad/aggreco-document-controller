@@ -150,6 +150,28 @@ class EnvService{
                 return e
             })
     }
+    exportTypeEquipmentFile(file){
+        return axios
+            .post(`/env/type_equip/import_file`, file)
+            .then(response => {
+                if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    addTypeEquipment(typeEquip){
+        return axios
+            .post("/env/type_equip", typeEquip)
+            .then((response) => {
+                if(response.status === 201)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
 }
 
 export default new EnvService();

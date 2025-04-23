@@ -1,11 +1,15 @@
 <script>
 import moment from "moment";
 import ClaimService from "@/store/claim.service";
-import DeleteButton from "@/components/UI/DeleteButton.vue";
+import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
+import {auth as $store} from "@/store/auth.model";
+import EditButton from "@/components/UI/Buttons/EditButton.vue";
+import SendForwardButton from "@/components/UI/Buttons/SendForwardButton.vue";
+import SendBackButton from "@/components/UI/Buttons/SendBackButton.vue";
 
 export default {
   name: "ClaimTable",
-  components: {DeleteButton},
+  components: {SendBackButton, SendForwardButton, EditButton, DeleteButton},
   data(){
     return{
       headers: [
@@ -31,12 +35,8 @@ export default {
       loading: true,
       search: '',
       itemsPerPage: 20,
-    }
-  },
-  props: {
-    isDowngrade: {
-      type: Boolean,
-      default: false
+
+      typeUser: $store.state.user.type.name,
     }
   },
   methods: {
@@ -58,7 +58,6 @@ export default {
         ClaimService.getPageClaim(page).then(
             response => {
               this.items = response.data
-              console.log(this.items, "claim")
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
@@ -79,6 +78,19 @@ export default {
       else if (state === "На доработку") return 'red'
       else return 'green'
     },
+    isForwardBackUser(item){
+      if(this.typeUser === "user"){
+        let dateNew = new Date(item.datetime)
+        let now = new Date();
+        let diffHours = (now - dateNew) / (1000 * 60 * 60)
+        if(item.state_claim.name === 'under_consideration' && diffHours < 24)
+          return true
+        return false
+
+      }else{
+        return item.state_claim.name !== 'accepted'
+      }
+    }
   }
 }
 </script>
@@ -120,30 +132,18 @@ export default {
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <delete-button @agree="deleteClaim(item)"/>
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="editClaim(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            v-if="item.state_claim.name !== 'accepted'"
-            class="me-2"
-            size="small"
-            @click="updateStateClaim(item)"
-        >
-          mdi-arrow-up-thin
-        </v-icon>
-        <v-icon
-            v-if="(isDowngrade) && item.state_claim.name !== 'accepted'"
-            class="me-2"
-            size="small"
-            @click="downgradeStateClaim(item)"
-        >
-          mdi-arrow-down-thin
-        </v-icon>
+        <edit-button @click="editClaim(item)"/>
 
+        <send-forward-button
+            v-if="item.state_claim.name !== 'accepted'"
+            @click="updateStateClaim(item)"
+            :type-user="typeUser"
+        />
+        <send-back-button
+            v-if="(isForwardBackUser(item)) && item.state_claim.name !== 'accepted' && item.state_claim.name !== 'under_development'"
+            @click="downgradeStateClaim(item)"
+            :type-user="typeUser"
+        />
       </template>
     </v-data-table-server>
   </v-card>

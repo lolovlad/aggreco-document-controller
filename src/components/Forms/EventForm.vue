@@ -42,6 +42,11 @@
       <v-card-text>
         <v-row>
           <v-col cols="12" sm="12">
+            <v-text-field label="Ответственный" variant="underlined" auto-grow v-model="event.responsible"/>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12">
             <v-textarea label="Описание мероприятия" variant="underlined" auto-grow v-model="event.description"/>
           </v-col>
         </v-row>
@@ -115,6 +120,7 @@ export default {
     return{
       headers: [
         {title: 'Мероприятие', key: 'description'},
+        {title: 'Ответсвенный', key: 'responsible'},
         {title: 'Тип', key: 'type_event', value: item => item.type_event.description},
         {title: 'Дата', key: 'date_finish', value: item => {
             const dateNow = new Date(item.date_finish)
@@ -134,14 +140,16 @@ export default {
         date_finish: null,
         description: null,
         id_state_event: 1,
-        id_type_event: 1
+        id_type_event: 1,
+        responsible: ""
       },
       defaultEvent: {
         uuid: null,
         date_finish: null,
         description: null,
         id_state_event: 1,
-        id_type_event: 1
+        id_type_event: 1,
+        responsible: ""
       },
     }
   },
@@ -178,7 +186,7 @@ export default {
         this.event.date_finish = targetEvent.date_finish
         this.event.id_type_event = targetEvent.id_type_event
         this.event.id_state_event = targetEvent.id_state_event
-
+        this.event.responsible = targetEvent.responsible
         this.dialog = true
       })
     },

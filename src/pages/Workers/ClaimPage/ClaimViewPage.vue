@@ -9,7 +9,8 @@ export default {
   data(){
     return{
       snackbar: false,
-      message: ""
+      message: "",
+
     }
   },
   methods: {
@@ -30,6 +31,14 @@ export default {
         this.message = "Заявка отправлена на расмотрение"
         this.$refs.claimTable.loadItem(1)
       })
+    },
+    downgradeStateClaim(uuidClaim){
+      ClaimService.updateStateClaim(uuidClaim, 'draft')
+          .then(() => {
+            this.snackbar = true
+            this.message = "Вы отозвали заявку"
+            this.$refs.claimTable.loadItem(1)
+          })
     },
     saveClaim(accident){
       const claimModel = {
@@ -55,7 +64,8 @@ export default {
       <claim-table @edit="editClaim"
                    @delete="deleteClaim"
                    @updateStateClaim="updateStateClaim"
-                    ref="claimTable"/>
+                   @downgradeStateClaim="downgradeStateClaim"
+                   ref="claimTable"/>
     </v-col>
   </v-row>
   <add-accident-form :title="'Добавить Заявку'" @save="saveClaim"/>

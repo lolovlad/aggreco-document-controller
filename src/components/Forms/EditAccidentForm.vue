@@ -57,12 +57,34 @@
             :items="listSignsAccident"
             label="Учетные признаки аварии"
             variant="underlined"
-            item-title="name"
             item-value="id"
-            chips
+            item-title="name"
             multiple
             :readonly="readOnly"
-        />
+        >
+          <template v-slot:selection="{ item }">
+            <v-tooltip location="end">
+              <template #activator="{ props: tooltipProps }">
+                <v-chip text-color="white" small v-bind="tooltipProps">{{ truncate(item.raw.name, 40) }}</v-chip>
+              </template>
+              <span class="tooltip-text">{{ item.raw.name }}</span>
+            </v-tooltip>
+          </template>
+          <template #item="{ item, props }">
+            <v-tooltip location="end">
+              <template #activator="{ props: tooltipProps }">
+                <div v-bind="tooltipProps">
+                  <v-list-item v-bind="props">
+                    <template #title>
+                      <span>{{ truncate(item.raw.name, 40) }}</span>
+                    </template>
+                  </v-list-item>
+                </div>
+              </template>
+              <span class="tooltip-text">{{ item.raw.name }}</span>
+            </v-tooltip>
+          </template>
+        </v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -227,9 +249,15 @@ export default {
       EnvService.getListSignsAccident().then((signs) => {
         this.listSignsAccident = signs
         for(const item of this.listSignsAccident){
-          item["name"] = `${item["name"].slice(0, 100)}... ${item["code"]}`
+          item["name"] = `${item["name"]} ${item["code"]}`.trim()
         }
       })
+    },
+    truncate(text, length = 30) {
+      if (!text) return ''
+      const parts = text.split(" ")
+      const allButLast = parts.slice(0, -1).join(' ');
+      return allButLast.length > length ? allButLast.slice(0, length) + '...' + parts.at(-1) : text
     },
     saveChange(){
       this.$emit("saveAccident", {
@@ -270,5 +298,10 @@ export default {
 </script>
 
 <style scoped>
-
+.tooltip-text {
+  white-space: normal;
+  max-width: 300px;
+  word-wrap: break-word;
+  display: block;
+}
 </style>

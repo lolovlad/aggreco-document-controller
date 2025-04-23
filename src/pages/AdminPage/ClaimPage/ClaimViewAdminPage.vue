@@ -31,10 +31,10 @@ export default {
           })
     },
     downgradeStateClaim(uuidClaim){
-      ClaimService.updateStateClaim(uuidClaim, 'under_consideration')
+      ClaimService.updateStateClaim(uuidClaim, 'under_development')
           .then(() => {
             this.snackbar = true
-            this.message = "Заявка отправлена на рассмотрение"
+            this.message = "Заявка отправлена на дороботку"
             this.$refs.claimTable.loadItem(1)
           })
     }

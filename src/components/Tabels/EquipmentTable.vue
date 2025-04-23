@@ -46,7 +46,7 @@
 
 <script>
 import ObjectService from "@/store/object.service";
-import DeleteButton from "@/components/UI/DeleteButton.vue";
+import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
 
 export default {
   name: "EquipmentTable",

@@ -84,10 +84,10 @@ export default {
       <v-col cols="12" sm="2">
         <a :href="mainFileClaimRef">Скачать главный файл</a>
       </v-col>
-      <v-col cols="12" sm="2" v-if="!readOnly">
+      <v-col cols="12" sm="3" v-if="!readOnly">
         <MainFileUploader :type-file-upload="'main'"/>
       </v-col>
-      <v-col cols="12" sm="2" v-if="!readOnly">
+      <v-col cols="12" sm="3" v-if="!readOnly">
         <FileGeneratorForm :id-claim="uuidClaim"/>
       </v-col>
     </v-row>

@@ -17,13 +17,19 @@ export default {
       persistent
   >
     <template v-slot:activator="{ props: activatorProps }">
-      <v-icon
-          class="me-2"
-          size="small"
-          v-bind="activatorProps"
-      >
-        mdi-delete
-      </v-icon>
+      <v-tooltip text="Удалить" location="top">
+        <template v-slot:activator="{ props }">
+          <span v-bind="props">
+            <v-icon
+                class="me-2"
+                size="small"
+                v-bind="activatorProps"
+            >
+              mdi-delete
+            </v-icon>
+          </span>
+        </template>
+      </v-tooltip>
     </template>
     <v-card
         prepend-icon="mdi-close"
