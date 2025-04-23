@@ -132,7 +132,7 @@ export default {
         this.$emit("add", this.equip)
     },
     async updateEquipment(){
-      const valid = await this.$refs.from.validate()
+      const valid = await this.$refs.form.validate()
       if(valid.valid)
         this.$emit("update", this.equip, this.idEquipment)
     },
