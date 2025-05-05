@@ -60,7 +60,7 @@ export default {
         { title: 'Название', align: 'start', sortable: false, key: 'name'},
         { title: 'Номер', align: 'start', sortable: false, key: 'code'},
         { title: 'Тип', align: 'start', sortable: false, key: 'type', value: item => `${item.type.name}`},
-        { title: 'Описпание', align: 'start', sortable: false, key: 'description', value: item => {
+        { title: 'Описание', align: 'start', sortable: false, key: 'description', value: item => {
           if(item.description === null)
             return "Нет"
           return item.description

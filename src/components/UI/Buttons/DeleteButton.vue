@@ -34,7 +34,7 @@ export default {
     <v-card
         prepend-icon="mdi-close"
         text="При согласиии запись будет удалена"
-        title="Вы действиетльно хотите удалить запись?"
+        title="Вы действительно хотите удалить запись?"
     >
       <template v-slot:actions>
         <v-spacer></v-spacer>
