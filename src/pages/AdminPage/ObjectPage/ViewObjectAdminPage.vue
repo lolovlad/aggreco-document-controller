@@ -73,7 +73,7 @@ export default {
             this.drawel = false
             this.$nextTick(()=>{
               this.snackbar = true
-              this.$refs.objectTable.loadItem(1)
+              this.$refs.objectTable.loadItem({page: 1, itemsPerPage: 20})
             })
           })
           .catch((response) => {

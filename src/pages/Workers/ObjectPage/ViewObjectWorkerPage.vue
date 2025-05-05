@@ -115,7 +115,7 @@ export default {
           .then(()=>{
             this.message = "Объект удален"
             this.snackbar = true
-            this.$refs.equipmentTable.loadItem()
+            this.$refs.equipmentTable.loadItem({page: 1, itemsPerPage: 20})
           })
     },
     updateEquipment(uuid){

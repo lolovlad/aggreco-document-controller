@@ -19,7 +19,7 @@ export default {
       ClaimService.deleteClaim(uuidClaim).then(() => {
         this.snackbar = true
         this.message = "Заявка удалена"
-        this.$refs.claimTable.loadItem(1)
+        this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
       })
     },
     updateStateClaim(uuidClaim) {
@@ -27,7 +27,7 @@ export default {
           .then(() => {
             this.snackbar = true
             this.message = "Заявка согласована"
-            this.$refs.claimTable.loadItem(1)
+            this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
           })
     },
     downgradeStateClaim(uuidClaim){
@@ -35,7 +35,7 @@ export default {
           .then(() => {
             this.snackbar = true
             this.message = "Заявка отправлена на дороботку"
-            this.$refs.claimTable.loadItem(1)
+            this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
           })
     }
   }
