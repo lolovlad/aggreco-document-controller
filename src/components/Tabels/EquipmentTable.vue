@@ -22,6 +22,7 @@
         v-model:items-per-page="itemsPerPage"
         :items-length="totalItems"
         @update:options="loadItem"
+        :page="page"
 
         :items-per-page-options="[
           {value: 20, title: '20'},
@@ -69,8 +70,12 @@ export default {
       ],
       equipment: [],
       itemsPerPage: 20,
+      page: 1,
       totalItems: 0,
-      loading: false
+      loading: false,
+
+      pageNow: 1,
+      itemsPerPageNow: 20
     }
   },
   methods: {
@@ -85,10 +90,14 @@ export default {
         }
         ObjectService.getEquipmentPage(this.uuidObject, page, itemsPerPage)
             .then(response => {
+              this.page = page
               this.equipment = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
+
+              this.pageNow = page
+              this.itemsPerPageNow = itemsPerPage
             })
             .catch(
                 (response) => {

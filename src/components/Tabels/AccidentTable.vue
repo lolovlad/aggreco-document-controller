@@ -19,6 +19,7 @@
         v-model:items-per-page="itemsPerPage"
         :items-length="totalItems"
         :loading="loading"
+        :page="page"
         :items-per-page-options="[
           {value: 20, title: '20'},
           {value: 40, title: '40'},
@@ -74,6 +75,9 @@ export default {
       loading: true,
       search: '',
       itemsPerPage: 20,
+      page: 1,
+      pageNow: 1,
+      itemsPerPageNow: 20
     }
   },
   methods: {
@@ -99,10 +103,14 @@ export default {
         }
         AccidentService.getPageAccident(page, itemsPerPage).then(
             response => {
+              this.page = page
               this.items = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
+
+              this.pageNow = page
+              this.itemsPerPageNow = itemsPerPage
             }
         ).catch(
             (response) => {

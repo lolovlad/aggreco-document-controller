@@ -21,6 +21,7 @@
         :items-length="totalItems"
         :loading="loading"
         item-value="uuid"
+        :page="page"
         @update:options="loadItem"
         :items-per-page-options="[
           {value: 20, title: '20'},
@@ -68,6 +69,9 @@ export default {
       objects: [],
       totalItems: 0,
       loading: false,
+      pageNow: 1,
+      itemsPerPageNow: 20,
+      page: 1
     }
   },
   methods: {
@@ -82,10 +86,14 @@ export default {
         }
         ObjectService.getPageObject(page, itemsPerPage)
             .then(response => {
+              this.page = page
               this.objects = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
+
+              this.pageNow = page
+              this.itemsPerPageNow = itemsPerPage
             })
             .catch(
             (response) => {
