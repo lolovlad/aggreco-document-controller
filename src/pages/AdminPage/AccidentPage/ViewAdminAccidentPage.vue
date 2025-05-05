@@ -10,12 +10,9 @@
 
 <script>
 import AccidentTable from "@/components/Tabels/AccidentTable";
-import axios from "axios";
-import AddAccidentForm from "@/components/Forms/AddAccidentForm";
-import M from "materialize-css";
 export default {
   name: "ViewAdminAccidentPage",
-  components: {AddAccidentForm, AccidentTable},
+  components: {AccidentTable},
   data(){
     return{
       items: [],
