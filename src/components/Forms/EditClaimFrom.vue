@@ -85,7 +85,7 @@ export default {
         <a :href="mainFileClaimRef">Скачать главный файл</a>
       </v-col>
       <v-col cols="12" sm="3" v-if="!readOnly">
-        <MainFileUploader :type-file-upload="'main'"/>
+        <MainFileUploader :type-file-upload="'main'" :uuid-claim="uuidClaim"/>
       </v-col>
       <v-col cols="12" sm="3" v-if="!readOnly">
         <FileGeneratorForm :id-claim="uuidClaim"/>
@@ -96,7 +96,7 @@ export default {
         <a :href="editFileClaimRef">Скачать файл с правками</a>
       </v-col>
       <v-col cols="12" sm="10" v-if="(isUser === false) && !readOnly">
-        <MainFileUploader :type-file-upload="'edit'"/>
+        <MainFileUploader :type-file-upload="'edit'" :uuid-claim="uuidClaim"/>
       </v-col>
     </v-row>
 

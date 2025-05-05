@@ -6,6 +6,9 @@ export default {
   props: {
     typeFileUpload: {
       type: String,
+    },
+    uuidClaim:{
+      type: String,
     }
   },
   data(){
@@ -22,6 +25,7 @@ export default {
         ClaimService.saveFile(this.uuidClaim, this.typeFileUpload, form).then(()=>{
           this.snackbar = true
           this.message = "Файл сохранен"
+          this.close()
         })
       }
     },

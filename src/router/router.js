@@ -20,15 +20,14 @@ import BaseAdminEquipmentPage from "@/pages/AdminPage/EquipmentPage/BaseAdminEqu
 import BaseAdminAccidentPage from "@/pages/AdminPage/AccidentPage/BaseAdminAccidentPage";
 import ViewAdminAccidentPage from "@/pages/AdminPage/AccidentPage/ViewAdminAccidentPage";
 import EditAccidentAdminPage from "@/pages/AdminPage/AccidentPage/EditAccidentAdminPage";
-import InfoAccidentPage from "@/pages/AdminPage/AccidentPage/InfoAccidentPage";
 import MainStatisticPage from "@/pages/AdminPage/StatisticPage/MainStatisticPage.vue";
 import AllStatistic from "@/pages/AdminPage/StatisticPage/AllStatistic.vue";
 import ObjectStatic from "@/pages/AdminPage/StatisticPage/ObjectStatic.vue";
 import ProfessionPage from "@/pages/AdminPage/EnvPage/ProfessionPage.vue";
-import ProfilePage from "@/pages/AdminPage/ProfilePage/ProfilePage.vue";
-import EditAccountPage from "@/pages/AdminPage/ProfilePage/EditAccountPage.vue";
-import EditSignaturePage from "@/pages/AdminPage/ProfilePage/EditSignaturePage.vue";
-import ViewAccountPage from "@/pages/AdminPage/ProfilePage/ViewAccountPage.vue";
+import ProfilePage from "@/pages/Workers/ProfilePage/ProfilePage.vue";
+import EditAccountPage from "@/pages/Workers/ProfilePage/EditAccountPage.vue";
+import EditSignaturePage from "@/pages/Workers/ProfilePage/EditSignaturePage.vue";
+import ViewAccountPage from "@/pages/Workers/ProfilePage/ViewAccountPage.vue";
 import WorkerMainPage from "@/pages/Workers/WorkerMainPage.vue";
 import ClaimViewPage from "@/pages/Workers/ClaimPage/ClaimViewPage.vue";
 import BasePage from "@/pages/Workers/ClaimPage/BasePage.vue";
@@ -46,6 +45,7 @@ import BaseEnvPage from "@/pages/AdminPage/EnvPage/BaseEnvPage.vue";
 import TypeEquipmentPage from "@/pages/AdminPage/EnvPage/TypeEquipmentPage.vue";
 import RegionPage from "@/pages/AdminPage/EnvPage/RegionPage.vue";
 import YandexAcceptPage from "@/pages/YandexAcceptPage.vue";
+import InfoClaimPage from "@/pages/All/InfoClaimPage.vue";
 
 const routes = [
     {
@@ -351,8 +351,8 @@ const routes = [
         component: AccessDeniedPage,
     },
     {
-        path: '/accident/:uuid_accident',
-        component: InfoAccidentPage,
+        path: '/claim/:uuid_claim',
+        component: InfoClaimPage,
     }
 ]
 

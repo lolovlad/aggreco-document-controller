@@ -3,9 +3,9 @@ import moment from 'moment-timezone';
 
 
 class AccidentService{
-    getPageAccident(page){
+    getPageAccident(page, perItemPage){
         return axios
-            .get('/accident/page', {params: {page: page}})
+            .get('/accident/page', {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response

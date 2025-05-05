@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <button-back/>
     <v-tabs
         v-model="tab"
         align-tabs="center"
@@ -59,9 +60,10 @@ import EventForm from "@/components/Forms/EventForm";
 import axios from "axios";
 import TimeLineForm from "@/components/Forms/TimeLineForm";
 import AccidentService from "@/store/accident.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 export default {
   name: "EditAccidentAdminPage",
-  components: {TimeLineForm, EventForm, EditAccidentForm},
+  components: {ButtonBack, TimeLineForm, EventForm, EditAccidentForm},
   data(){
     return{
       tab: null,

@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import DefaultHeader from "@/components/DefaultHeader";
+import DefaultHeader from "@/components/DefaultHeader.vue";
 import moment from 'moment'
 import axios from "axios";
 export default {

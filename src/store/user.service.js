@@ -1,9 +1,9 @@
 import axios from "axios";
 
 class UserService {
-    getPageUser(page, typeUser=""){
+    getPageUser(page, perItemPage, typeUser=""){
         return axios
-            .get('/user/page_user', {params: {page: page, type_user: typeUser}})
+            .get('/user/page_user', {params: {page: page, type_user: typeUser, per_item_page: perItemPage}})
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -114,6 +114,17 @@ class UserService {
             .delete(`/user/${uuidUser}`)
             .then((response) => {
                 if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                return e
+            })
+    }
+    updateProfileUser(uuid, user){
+        return axios
+            .put(`/user/profile/update/${uuid}`, user)
+            .then((response) => {
+                if(response.status === 205)
                     return response
             })
             .catch(function (e){

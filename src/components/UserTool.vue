@@ -8,11 +8,10 @@
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-account-plus" title="Добавить пользователя" @click="openAddWindow"></v-list-item>
 
-      <v-list-item prepend-icon="mdi-plus-box-multiple" title="Импорт csv" @click="openImportWindow"></v-list-item>
+      <v-list-item @click="openImportWindow"><ExportCsvForm ref="exportForm" @export="exportSubmit"/></v-list-item>
     </v-list>
   </v-navigation-drawer>
 
-  <ExportCsvForm ref="exportForm" @export="exportSubmit"/>
 </template>
 
 <script>

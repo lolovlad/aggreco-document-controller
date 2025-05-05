@@ -16,6 +16,7 @@
 
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
+      :page="page"
       :headers="headers"
       :items="users"
       :items-length="totalItems"
@@ -23,23 +24,17 @@
       item-value="uuid"
       @update:options="loadItem"
       :items-per-page-options="[
-          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+          {value: 20, title: '20'},
+          {value: 40, title: '40'},
+          {value: 100, title: '100'},
       ]"
       :items-per-page-text="'Количество элементов'"
       :loading-text="'Закгрузка данных'"
       :no-data-text="'Данных не обнаружено'"
   >
     <template v-slot:[`item.actions`]="{ item }">
-      <delete-button
-          @agree="deleteUser(item.uuid)"
-      />
-      <v-icon
-          class="me-2"
-          size="small"
-          @click="updateUser(item.uuid)"
-      >
-        mdi-pencil
-      </v-icon>
+      <delete-button @agree="deleteUser(item.uuid)" />
+      <edit-button @click="updateUser(item.uuid)" />
     </template>
   </v-data-table-server>
   </v-card>
@@ -49,10 +44,12 @@
 
 import UserService from "@/store/user.service";
 import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
+import EditButton from "@/components/UI/Buttons/EditButton.vue";
+import {page as $store} from "@/store/page.model";
 
 export default {
   name: "CustomUserTable",
-  components: {DeleteButton},
+  components: {EditButton, DeleteButton},
   data(){
     return{
       itemsPerPage: 20,
@@ -82,19 +79,31 @@ export default {
       totalItems: 0,
       loading: true,
       search: '',
+      page: 1,
+
+      pageNow: 1,
+      itemsPerPageNow: 20
     }
   },
   methods: {
-    loadItem({page}){
-      this.loading = true
+    loadItem({page=1, itemsPerPage=20}){
       if(this.search.length === 0){
-        UserService.getPageUser(page).then(
+        const initialState = $store.state;
+        if(initialState.nameTable === "user"){
+          page = initialState.pageNow
+          itemsPerPage = initialState.perItemPage
+          this.$store.dispatch('page/dropState')
+        }
+        UserService.getPageUser(page, itemsPerPage).then(
             response => {
+              this.page = page
               this.users = response.data
-              console.log(this.users)
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false
+
+              this.pageNow = page
+              this.itemsPerPageNow = itemsPerPage
             }
         ).catch(
             (response) => {
@@ -114,17 +123,31 @@ export default {
         )
       }
     },
+    saveState(){
+      this.$store.dispatch('page/saveState', {name: "user", page: this.pageNow, perItemPage: this.itemsPerPageNow})
+    },
     updateUser(uuid){
+      this.saveState()
+
       this.$emit("updateUser", uuid)
     },
     deleteUser(uuid){
+      this.saveState()
+
       this.$emit("deleteUser", uuid)
     },
   },
   watch: {
     search(){
-      this.loadItem(1)
+      this.loadItem()
 
+    }
+  },
+  mounted() {
+    const initialState = $store.state;
+    if(initialState.nameTable === "user"){
+      this.loadItem({page: initialState.pageNow, itemsPerPage: initialState.perItemPage})
+      this.$store.dispatch('page/dropData')
     }
   }
 

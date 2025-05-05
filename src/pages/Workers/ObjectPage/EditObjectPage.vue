@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <button-back/>
     <v-row>
       <v-col cols="12" md="12">
         <v-alert
@@ -34,10 +35,11 @@
 <script>
 import EditObjectForm from "@/components/Forms/EditObjectForm";
 import ObjectService from "@/store/object.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "EditObjectPage",
-  components: {EditObjectForm},
+  components: {ButtonBack, EditObjectForm},
   data(){
     return{
       idObject: this.$route.params.uuid,

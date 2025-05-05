@@ -5,7 +5,6 @@
         <AccidentTable @edit="editAccident" @information="infoAccident" ref="accidentTable"/>
       </v-col>
     </v-row>
-    <AddAccidentForm @save="addAccident"/>
   </v-container>
 </template>
 
@@ -26,19 +25,6 @@ export default {
     }
   },
   methods: {
-    addAccident(entity){
-      axios
-          .post('/accident', entity)
-          .then((response) => {
-            if(response.status >= 200){
-              M.toast({html: response.data.message})
-            }
-          })
-          .catch((response) => {
-            console.log(response.data)
-            M.toast({html: response.code})
-          })
-    },
     editAccident(uuidAccident){
       this.$router.push(`accident/edit/${uuidAccident}`)
     },

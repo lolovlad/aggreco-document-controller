@@ -146,7 +146,7 @@ export default {
         color="deep-purple-accent-4"
     >
       <v-tab value="claim">Информация о регистрации</v-tab>
-      <v-tab value="accident">Информация инциндента</v-tab>
+      <v-tab value="accident">Информация инцидента</v-tab>
       <v-tab value="timeLine">Хронология событий</v-tab>
       <v-tab value="eventAccident">Мероприятия</v-tab>
     </v-tabs>

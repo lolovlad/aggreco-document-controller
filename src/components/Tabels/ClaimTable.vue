@@ -6,10 +6,11 @@ import {auth as $store} from "@/store/auth.model";
 import EditButton from "@/components/UI/Buttons/EditButton.vue";
 import SendForwardButton from "@/components/UI/Buttons/SendForwardButton.vue";
 import SendBackButton from "@/components/UI/Buttons/SendBackButton.vue";
+import InformationButton from "@/components/UI/Buttons/InformationButton.vue";
 
 export default {
   name: "ClaimTable",
-  components: {SendBackButton, SendForwardButton, EditButton, DeleteButton},
+  components: {InformationButton, SendBackButton, SendForwardButton, EditButton, DeleteButton},
   data(){
     return{
       headers: [
@@ -40,22 +41,35 @@ export default {
     }
   },
   methods: {
+    saveState(){
+      this.$store.dispatch('page/saveState', {name: "claim", page: this.pageNow, perItemPage: this.itemsPerPageNow})
+    },
     deleteClaim(item){
+      this.saveState()
       this.$emit("delete", item.uuid)
     },
     editClaim(item){
+      this.saveState()
       this.$emit("edit", item.uuid)
     },
     updateStateClaim(item){
+      this.saveState()
       this.$emit("updateStateClaim", item.uuid)
     },
     downgradeStateClaim(item){
+      this.saveState()
       this.$emit("downgradeStateClaim", item.uuid)
     },
-    loadItem({page}){
+    loadItem({page=1, itemsPerPage=20}){
       this.loading = true
       if(this.search.length >= 0){
-        ClaimService.getPageClaim(page).then(
+        const initialState = $store.state;
+        if(initialState.nameTable === "claim"){
+          page = initialState.pageNow
+          itemsPerPage = initialState.perItemPage
+          this.$store.dispatch('page/dropState')
+        }
+        ClaimService.getPageClaim(page, itemsPerPage).then(
             response => {
               this.items = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
@@ -119,8 +133,10 @@ export default {
         item-value="uuid"
         @update:options="loadItem"
         :items-per-page-options="[
-          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
-      ]"
+          {value: 20, title: '20'},
+          {value: 40, title: '40'},
+          {value: 100, title: '100'}
+        ]"
         :items-per-page-text="'Количество элементов'"
         :loading-text="'Закгрузка данных'"
         :no-data-text="'Данных не обнаружено'"
@@ -133,7 +149,6 @@ export default {
       <template v-slot:[`item.actions`]="{ item }">
         <delete-button @agree="deleteClaim(item)"/>
         <edit-button @click="editClaim(item)"/>
-
         <send-forward-button
             v-if="item.state_claim.name !== 'accepted'"
             @click="updateStateClaim(item)"
@@ -144,6 +159,7 @@ export default {
             @click="downgradeStateClaim(item)"
             :type-user="typeUser"
         />
+        <information-button @click="$router.push(`/claim/${item.uuid}`)"/>
       </template>
     </v-data-table-server>
   </v-card>

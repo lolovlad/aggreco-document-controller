@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <button-back/>
     <v-row>
       <v-alert
           density="compact"
@@ -26,10 +27,11 @@
 <script>
 import EditEquipmentFrom from "@/components/Forms/EditEquipmentFrom";
 import ObjectService from "@/store/object.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "EditEquipmentPage",
-  components: {EditEquipmentFrom},
+  components: {ButtonBack, EditEquipmentFrom},
   data(){
     return{
       idObject: this.$route.params.uuid,

@@ -19,31 +19,17 @@
         v-model:items-per-page="itemsPerPage"
         :items-length="totalItems"
         :loading="loading"
+        :items-per-page-options="[
+          {value: 20, title: '20'},
+          {value: 40, title: '40'},
+          {value: 100, title: '100'},
+      ]"
         item-value="uuid"
         @update:options="loadItem"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="deleteAccident(item)"
-        >
-          mdi-delete
-        </v-icon>
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="editAccident(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="infoAccident(item)"
-        >
-          mdi-information
-        </v-icon>
+        <delete-button @agree="deleteAccident(item)"/>
+        <edit-button @click="editAccident(item)"/>
       </template>
     </v-data-table-server>
   </v-card>
@@ -53,9 +39,13 @@
 import UserService from "@/store/user.service";
 import AccidentService from "@/store/accident.service";
 import moment from "moment/moment";
+import EditButton from "@/components/UI/Buttons/EditButton.vue";
+import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
+import {page as $store} from "@/store/page.model";
 
 export default {
   name: "AccidentTable",
+  components: {DeleteButton, EditButton},
   data(){
     return{
       headers: [
@@ -88,18 +78,26 @@ export default {
   },
   methods: {
     deleteAccident(item){
+      this.saveState()
       this.$emit("delete", item.uuid)
     },
     editAccident(item){
+      this.saveState()
       this.$emit("edit", item.uuid)
     },
     infoAccident(item){
       this.$emit("information", item.uuid)
     },
-    loadItem({page}){
+    loadItem({page=1, itemsPerPage=20}){
       this.loading = true
       if(this.search.length === 0){
-        AccidentService.getPageAccident(page).then(
+        const initialState = $store.state;
+        if(initialState.nameTable === "accident"){
+          page = initialState.pageNow
+          itemsPerPage = initialState.perItemPage
+          this.$store.dispatch('page/dropState')
+        }
+        AccidentService.getPageAccident(page, itemsPerPage).then(
             response => {
               this.items = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
@@ -125,6 +123,9 @@ export default {
             }
         )
       }
+    },
+    saveState(){
+      this.$store.dispatch('page/saveState', {name: "accident", page: this.pageNow, perItemPage: this.itemsPerPageNow})
     },
   }
 }

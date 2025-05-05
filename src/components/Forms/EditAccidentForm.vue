@@ -51,7 +51,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="12">
+      <v-col cols="12" sm="7">
         <v-select
             v-model="accident.signs_accident"
             :items="listSignsAccident"

@@ -2,9 +2,9 @@ import axios from "axios";
 
 
 class ObjectService{
-    getPageObject(page){
+    getPageObject(page, perItemPage){
         return axios
-            .get('/object/page', {params: {page: page}})
+            .get('/object/page', {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -57,9 +57,9 @@ class ObjectService{
                 throw e
             })
     }
-    getEquipmentPage(uuidObject, page){
+    getEquipmentPage(uuidObject, page, perItemPage){
         return axios
-            .get(`/object/${uuidObject}/equipment/page`, {params: {page: page}})
+            .get(`/object/${uuidObject}/equipment/page`, {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response

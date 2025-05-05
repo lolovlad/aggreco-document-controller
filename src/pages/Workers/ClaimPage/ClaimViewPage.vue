@@ -48,10 +48,11 @@ export default {
         edit_document: null,
         comment: ""
       }
+      this.$refs.claimTable.saveState()
       ClaimService.addClaim(claimModel).then(() => {
         this.snackbar = true
         this.message = "Заявка добавлена"
-        this.$refs.claimTable.loadItem(1)
+        this.$refs.claimTable.loadItem()
       })
     }
   }

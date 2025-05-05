@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <button-back/>
     <v-row>
       <v-col cols="12" md="12">
         <EquipmentTable
@@ -50,9 +51,10 @@
 import EquipmentTable from "@/components/Tabels/EquipmentTable";
 import FixedButton from "@/components/UI/FixedButton";
 import ObjectService from "@/store/object.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 export default {
   name: "ViewEquipmentAdminPage",
-  components: {FixedButton, EquipmentTable},
+  components: {ButtonBack, FixedButton, EquipmentTable},
   data(){
     return{
       idObject: this.$route.params.uuid,
@@ -74,6 +76,7 @@ export default {
           })
     },
     openAddEquipPage(){
+      this.$refs.equipmentTable.saveState()
       this.$router.push(`/admin/object/${this.idObject}/equip/add`)
     }
   }

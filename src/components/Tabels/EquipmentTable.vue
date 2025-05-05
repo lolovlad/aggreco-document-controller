@@ -1,6 +1,6 @@
 <template>
   <v-card
-      title="Оборудованние"
+      title="Оборудование"
       flat
   >
     <template v-slot:text>
@@ -24,21 +24,17 @@
         @update:options="loadItem"
 
         :items-per-page-options="[
-          {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
-      ]"
+          {value: 20, title: '20'},
+          {value: 40, title: '40'},
+          {value: 100, title: '100'}
+        ]"
         :items-per-page-text="'Количество элементов'"
         :loading-text="'Закгрузка данных'"
         :no-data-text="'Данных не обнаружено'"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon
-            class="me-2"
-            size="small"
-            @click="$emit('update', item.uuid)"
-        >
-          mdi-pencil
-        </v-icon>
-        <delete-button @agree="$emit('delete', item.uuid)"/>
+        <edit-button @click="updateEquipment(item.uuid)"/>
+        <delete-button @agree="deleteEquipment(item.uuid)"/>
       </template>
     </v-data-table-server>
   </v-card>
@@ -47,10 +43,12 @@
 <script>
 import ObjectService from "@/store/object.service";
 import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
+import {page as $store} from "@/store/page.model";
+import EditButton from "@/components/UI/Buttons/EditButton.vue";
 
 export default {
   name: "EquipmentTable",
-  components: {DeleteButton},
+  components: {EditButton, DeleteButton},
   props: {
     uuidObject: null
   },
@@ -76,10 +74,16 @@ export default {
     }
   },
   methods: {
-    loadItem({page}){
+    loadItem({page=1, itemsPerPage=20}){
       this.loading = true
       if(this.search.length === 0){
-        ObjectService.getEquipmentPage(this.uuidObject, page)
+        const initialState = $store.state;
+        if(initialState.nameTable === `equipment_${this.uuidObject}`){
+          page = initialState.pageNow
+          itemsPerPage = initialState.perItemPage
+          this.$store.dispatch('page/dropState')
+        }
+        ObjectService.getEquipmentPage(this.uuidObject, page, itemsPerPage)
             .then(response => {
               this.equipment = response.data
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
@@ -103,6 +107,17 @@ export default {
             }
         )
       }
+    },
+    saveState(){
+      this.$store.dispatch('page/saveState', {name: `equipment_${this.uuidObject}`, page: this.pageNow, perItemPage: this.itemsPerPageNow})
+    },
+    updateEquipment(uuid){
+      this.saveState()
+      this.$emit('update', uuid)
+    },
+    deleteEquipment(uuid){
+      this.saveState()
+      this.$emit('delete', uuid)
     }
   },
   watch: {

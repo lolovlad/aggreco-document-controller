@@ -1,6 +1,7 @@
 <script>
 import ButtonAgrea from "@/components/UI/ButtonAgrea.vue";
 import UserService from "@/store/user.service";
+import EnvService from "@/store/env.service";
 
 export default {
   name: "EditAccountForm",
@@ -41,7 +42,7 @@ export default {
   },
   methods: {
     loadType(){
-      UserService.loadTypeUser()
+      EnvService.loadTypeUser()
           .then(
               (userType) => {
                 this.typeUser = userType
@@ -50,7 +51,7 @@ export default {
     },
 
     loadProf(){
-      UserService.getProfUser()
+      EnvService.getProfUser()
           .then(
               (profUSer) => {
                 this.profUser = profUSer

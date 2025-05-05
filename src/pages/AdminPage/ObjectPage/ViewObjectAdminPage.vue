@@ -63,6 +63,7 @@ export default {
       this.drawel = true
     },
     openEditPage(){
+      this.$refs.objectTable.saveState()
       this.$router.push(`/admin/object/edit/${this.targetObject}`)
     },
     deleteObj(uuid){

@@ -1,9 +1,10 @@
 <script>
 import UploadBlueprintForm from "@/components/Forms/UploadBlueprintForm.vue";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "EditBlueprintAdminPage",
-  components: {UploadBlueprintForm},
+  components: {ButtonBack, UploadBlueprintForm},
   data(){
     return{
       idBlueprint: this.$route.params.id,
@@ -20,6 +21,7 @@ export default {
 
 <template>
   <v-container>
+    <button-back/>
     <v-row>
       <v-col cols="12" md="12">
         <UploadBlueprintForm @fileUpload="fileUpload"

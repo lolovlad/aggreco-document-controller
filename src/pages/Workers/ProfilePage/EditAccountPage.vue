@@ -24,7 +24,7 @@ export default {
       )
     },
     updateUser(user){
-      UserService.updateUser(user.uuid, user)
+      UserService.updateProfileUser(user.uuid, user)
           .then(() => {
             this.getProfile()
             this.message = "Успешно ссохранено"

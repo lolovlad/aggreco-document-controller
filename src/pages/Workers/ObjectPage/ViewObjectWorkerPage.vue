@@ -24,7 +24,7 @@
                 <p>Широта: {{targetObject.cy}}</p>
               </v-col>
               <v-col cols="12" md="12">
-                <p>Полный Адресс: {{targetObject.address}}</p>
+                <p>Полный Адрес: {{targetObject.address}}</p>
               </v-col>
             </v-row>
             <v-row>
@@ -115,13 +115,14 @@ export default {
           .then(()=>{
             this.message = "Объект удален"
             this.snackbar = true
-            this.$refs.equipmentTable.loadItem(1)
+            this.$refs.equipmentTable.loadItem()
           })
     },
     updateEquipment(uuid){
       this.$router.push(`/worker/object/${this.targetObject.uuid}/equip/edit/${uuid}`)
     },
     openAddEquipPage(){
+      this.$refs.equipmentTable.saveState()
       this.$router.push(`/worker/object/${this.targetObject.uuid}/equip/add`)
     }
 

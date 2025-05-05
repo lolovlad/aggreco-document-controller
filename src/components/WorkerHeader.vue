@@ -116,7 +116,7 @@ export default {
       temporary
   >
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-bank-outline" title="Объеты" @click="objectPage"/>
+      <v-list-item prepend-icon="mdi-bank-outline" title="Объекты" @click="objectPage"/>
       <!--<v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>-->
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрации АО" @click="claimPage"/>
     </v-list>

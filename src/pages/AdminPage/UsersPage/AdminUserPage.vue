@@ -23,6 +23,7 @@
 import UserService from "@/store/user.service";
 import CustomUserTable from "@/components/Tabels/CustomUserTable.vue";
 import UserTool from "@/components/UserTool.vue";
+
 export default {
   name: "AdminUserPage",
   components: {UserTool, CustomUserTable},
@@ -57,6 +58,7 @@ export default {
       )
     },
     addUser(){
+      this.$refs.userTable.saveState()
       this.$refs.userTool.close()
       this.$router.push(`/admin/user/add`)
     },
@@ -65,7 +67,7 @@ export default {
           .then(()=>{
             this.message = "Пользователь удален удален"
             this.snackbar = true
-            this.$refs.userTable.loadItem(1)
+            this.$refs.userTable.loadItem()
           })
     },
     updateUser(uuid){
