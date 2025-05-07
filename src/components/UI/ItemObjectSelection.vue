@@ -4,7 +4,6 @@ import ObjectService from "@/store/object.service";
 
 export default {
   name: "ItemObjectSelection",
-  components: {},
   props: {
     uuidObject: {
       type: String
@@ -28,7 +27,14 @@ export default {
     search: '',
     selected: [],
 
-    content: {}
+    content: {},
+    headers: [
+      { title: 'Название', align: 'start', sortable: false, key: 'name'},
+      { title: 'Номер', align: 'start', sortable: false, key: 'code'},
+    ],
+    itemsPerPage: 20,
+    page: 1,
+    totalItems: 0,
 
   }),
   computed: {
@@ -67,6 +73,38 @@ export default {
     handleInput(){
       this.$emit("update:modelValue", this.content)
     },
+    loadItem({page=1, itemsPerPage=20}){
+      this.loading = true
+      if(this.search.length === 0){
+        ObjectService.getEquipmentPage(this.uuidObject, page, itemsPerPage)
+            .then(response => {
+              this.page = page
+              this.equipment = response.data
+              this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
+              this.itemsPerPage = parseInt(response.headers["x-count-item"])
+              this.loading = false
+
+              this.pageNow = page
+              this.itemsPerPageNow = itemsPerPage
+            })
+            .catch(
+                (response) => {
+                  console.log(response)
+                }
+            )
+      }else{
+        ObjectService.searchEquipmentInObject(this.uuidObject, this.search).then(
+            response => {
+              this.equipment = response
+              this.loading = false
+            }
+        ).catch(
+            (response) => {
+              console.log(response)
+            }
+        )
+      }
+    },
   },
   mounted() {
     for(let i of this.modelValue){
@@ -85,7 +123,7 @@ export default {
   <v-dialog
       v-model="dialog"
       transition="dialog-bottom-transition"
-      max-width="500"
+      max-width="800"
   >
     <template v-slot:activator="{ props: activatorProps }">
       <v-row align="center" justify="start">
@@ -136,7 +174,35 @@ export default {
         <v-divider v-if="!allSelected"></v-divider>
         <v-row>
           <v-col cols="12" md="12">
-            <v-list v-if="equipment.length > 0">
+            <v-data-table-server
+                :headers="headers"
+                :items="equipment"
+                :loading="loading"
+                item-value="uuid"
+                v-model:items-per-page="itemsPerPage"
+                :items-length="totalItems"
+                @update:options="loadItem"
+                :page="page"
+
+                :items-per-page-options="[
+                  {value: 20, title: '20'},
+                  {value: 40, title: '40'},
+                  {value: 100, title: '100'}
+                ]"
+                :items-per-page-text="'Количество элементов'"
+                :loading-text="'Закгрузка данных'"
+                :no-data-text="'Данных не обнаружено'"
+                hover
+                >
+              <template #item="{item}">
+                <tr @click="addEquipment(item)" style="cursor: pointer;">
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.сode }}</td>
+                </tr>
+              </template>
+            </v-data-table-server>
+
+            <!--<v-list v-if="equipment.length > 0">
               <template v-for="equip in equipment" :key="equip.uuid">
                 <v-list-item
                     :disabled="loading"
@@ -146,7 +212,10 @@ export default {
 
                 </v-list-item>
               </template>
-            </v-list>
+            </v-list>-->
+
+
+
           </v-col>
         </v-row>
       </v-container>

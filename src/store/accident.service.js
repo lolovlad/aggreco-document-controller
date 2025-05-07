@@ -32,6 +32,18 @@ class AccidentService{
                 return e
             })
     }
+    deleteAccident(uuidAccident){
+        return axios
+            .delete(`accident/${uuidAccident}`)
+            .then((response) => {
+                if(response.status >= 200){
+                    return response
+                }
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
     getTimeLine(uuidAccident){
         return axios
             .get(`accident/${uuidAccident}/time_line`)
