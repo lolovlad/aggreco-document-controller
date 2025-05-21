@@ -2,10 +2,11 @@
 import DefaultHeader from "@/components/DefaultHeader.vue";
 import moment from "moment/moment";
 import ClaimService from "@/store/claim.service";
+import ButtonBack from "@/components/UI/ButtonBack.vue";
 
 export default {
   name: "InfoClaimPage",
-  components: {DefaultHeader},
+  components: {ButtonBack, DefaultHeader},
   data(){
     return{
       uuidClaim: this.$route.params.uuid_claim,
@@ -72,7 +73,7 @@ export default {
       <v-container>
         <v-row>
           <v-col cols="12" md="12">
-            <p class="text-h3"> Случий АО от {{ dateConvert }}</p>
+            <p class="text-h3">АО от {{ dateConvert }}</p>
           </v-col>
         </v-row>
         <v-row>
@@ -178,6 +179,7 @@ export default {
           </v-col>
         </v-row>
       </v-container>
+      <button-back/>
     </v-main>
   </v-app>
 </template>

@@ -27,11 +27,14 @@
       ]"
         item-value="uuid"
         @update:options="loadItem"
+        :items-per-page-text="'Количество элементов'"
+        :loading-text="'Загрузка данных'"
+        :no-data-text="'Данных не обнаружено'"
     >
-      <template v-slot:[`item.actions`]="{ item }">
+      <!--<template v-slot:[`item.actions`]="{ item }">
         <delete-button @agree="deleteAccident(item)"/>
         <edit-button @click="editAccident(item)"/>
-      </template>
+      </template>-->
     </v-data-table-server>
   </v-card>
 </template>
@@ -40,17 +43,15 @@
 import UserService from "@/store/user.service";
 import AccidentService from "@/store/accident.service";
 import moment from "moment/moment";
-import EditButton from "@/components/UI/Buttons/EditButton.vue";
-import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
 import {page as $store} from "@/store/page.model";
 
 export default {
   name: "AccidentTable",
-  components: {DeleteButton, EditButton},
+  components: {},
   data(){
     return{
       headers: [
-        { title: 'Объект', key: 'object', value: item => `${item.object.name}`},
+        { title: 'Объект', key: 'object', sortable: false, value: item => `${item.object.name}`},
         { title: 'Время начала', key: 'datetime_start', sortable: false, value: item => {
             let dateNew = new Date(item.datetime_start)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
@@ -61,14 +62,14 @@ export default {
               return moment(dateNew).format('DD.MM.YYYY HH:mm')
           }
         },
-        { title: 'Поврежденное оборудование', key: 'damaged_equipment', value: item => {
+        { title: 'Поврежденное оборудование', key: 'damaged_equipment', sortable: false, value: item => {
             if(item.damaged_equipment.length > 0){
               return item.damaged_equipment.map((item) => item.name).join(",")
             }
             return "Нет"
           }
         },
-        {title: 'Действия', key: "actions"}
+        {title: 'Действия', key: "actions", sortable: false}
       ],
       items: [],
       totalItems: 0,

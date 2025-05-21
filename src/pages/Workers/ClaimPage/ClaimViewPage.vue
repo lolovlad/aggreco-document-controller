@@ -52,7 +52,7 @@ export default {
       ClaimService.addClaim(claimModel).then(() => {
         this.snackbar = true
         this.message = "Заявка добавлена"
-        this.$refs.claimTable.loadItem()
+        this.$refs.claimTable.loadItem(1)
       })
     }
   }

@@ -60,20 +60,20 @@ export default {
             return "Нет"
           }
         },
-        { title: 'Почта', key: 'email', align: 'start', value: item => {
+        { title: 'Почта', key: 'email', align: 'start', sortable: false, value: item => {
             if(item.email === null)
               return "Нет"
             return item.email
           }
         },
-        { title: 'Роль', key: 'type', align: 'start', value: item => `${item.type.name}` },
-        { title: 'Должность', key: 'profession', align: 'start', value: item => {
+        { title: 'Роль', key: 'type', align: 'start', sortable: false, value: item => `${item.type.name}` },
+        { title: 'Должность', key: 'profession', align: 'start', sortable: false, value: item => {
               if(item.profession === null)
                 return "Нет"
               return item.profession.description
             }
           },
-        { title: 'Действия', key: "actions", align: 'center' }
+        { title: 'Действия', key: "actions", sortable: false, align: 'center' }
       ],
       users: [],
       totalItems: 0,

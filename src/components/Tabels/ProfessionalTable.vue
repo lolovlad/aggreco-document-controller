@@ -10,12 +10,12 @@ export default {
             return item.id
           }
         },
-        { title: 'Системное имя', key: 'name', align: 'start', value: item => {
+        { title: 'Системное имя', key: 'name', sortable: false, align: 'start', value: item => {
             return item.name
           }
         },
-        { title: 'Название', key: 'description', align: 'start', value: item => `${item.description}` },
-        { title: 'Действия', key: "actions", align: 'center' }
+        { title: 'Название', key: 'description', sortable: false, align: 'start', value: item => `${item.description}` },
+        { title: 'Действия', key: "actions", sortable: false, align: 'center' }
       ],
       profession: [],
       loading: true,

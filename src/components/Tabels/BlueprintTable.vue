@@ -7,15 +7,14 @@ export default {
   data(){
     return{
       headers: [
-        {title: 'Название', key: 'name'},
-        {title: 'Дата редактирования', key: 'datetime', value: item => {
+        {title: 'Название', sortable: false, key: 'name'},
+        {title: 'Дата редактирования', sortable: false, key: 'datetime', value: item => {
             let dateNew = new Date(item.datetime)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
           }},
-        {title: 'Размер', key: 'size', value: item => {
-
+        {title: 'Размер', sortable: false, key: 'size', value: item => {
             return `${item.size} МБ`}},
-        {title: 'Управление', key: 'actions'}
+        {title: 'Управление', sortable: false, key: 'actions'}
       ],
       blueprint: []
     }

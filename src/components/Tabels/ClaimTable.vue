@@ -15,7 +15,7 @@ export default {
   data(){
     return{
       headers: [
-        { title: 'UUID', key: 'uuid', value: item => `${item.uuid}`},
+        { title: 'UUID', key: 'uuid', sortable: false, value: item => `${item.uuid}`},
         { title: 'Время', key: 'datetime', sortable: false, value: item => {
             let dateNew = new Date(item.datetime)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
@@ -26,11 +26,11 @@ export default {
             return `${user.surname} ${user.name} ${user.patronymic}`
           }
         },
-        { title: 'Состояние заявки', key: 'state_claim', value: item => {
+        { title: 'Состояние заявки', sortable: false, key: 'state_claim', value: item => {
             return `${item.state_claim.description}`
           }
         },
-        {title: 'Действия', key: "actions"}
+        {title: 'Действия', sortable: false, key: "actions"}
       ],
       items: [],
       totalItems: 0,
@@ -121,6 +121,18 @@ export default {
       }else{
         return item.state_claim.name !== 'accepted'
       }
+    },
+
+    isUser(item){
+      if(this.typeUser === "user"){
+        if(item.state_claim.name === 'draft' || item.state_claim.name === 'under_development'){
+          return true
+        }else{
+          return false
+        }
+      }else{
+        return item.state_claim.name !== 'accepted'
+      }
     }
   }
 }
@@ -168,15 +180,15 @@ export default {
         </v-chip>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <delete-button @agree="deleteClaim(item)"/>
+        <delete-button @agree="deleteClaim(item)" v-if="isUser(item)"/>
         <edit-button @click="editClaim(item)"/>
         <send-forward-button
-            v-if="item.state_claim.name !== 'accepted'"
+            v-if="isUser(item)"
             @click="updateStateClaim(item)"
             :type-user="typeUser"
         />
         <send-back-button
-            v-if="(isForwardBackUser(item)) && item.state_claim.name !== 'accepted' && item.state_claim.name !== 'under_development'"
+            v-if="isForwardBackUser(item)"
             @click="downgradeStateClaim(item)"
             :type-user="typeUser"
         />
