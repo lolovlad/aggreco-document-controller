@@ -7,10 +7,11 @@ import EditButton from "@/components/UI/Buttons/EditButton.vue";
 import SendForwardButton from "@/components/UI/Buttons/SendForwardButton.vue";
 import SendBackButton from "@/components/UI/Buttons/SendBackButton.vue";
 import InformationButton from "@/components/UI/Buttons/InformationButton.vue";
+import SearchClaimForm from "@/components/Forms/Search/SearchClaimForm.vue";
 
 export default {
   name: "ClaimTable",
-  components: {InformationButton, SendBackButton, SendForwardButton, EditButton, DeleteButton},
+  components: {SearchClaimForm, InformationButton, SendBackButton, SendForwardButton, EditButton, DeleteButton},
   data(){
     return{
       headers: [
@@ -41,7 +42,10 @@ export default {
       typeUser: $store.state.user.type.name,
 
       pageNow: 1,
-      itemsPerPageNow: 20
+      itemsPerPageNow: 20,
+
+      selectObject: "all",
+      selectState: 0
     }
   },
   methods: {
@@ -64,6 +68,11 @@ export default {
       this.saveState()
       this.$emit("downgradeStateClaim", item.uuid)
     },
+    updateSearchClaim(selectObject, selectState){
+      this.selectObject = selectObject
+      this.selectState = selectState
+      this.loadItem(1)
+    },
     loadItem({page=1, itemsPerPage=20}){
       this.loading = true
       if(this.search.length >= 0){
@@ -73,7 +82,7 @@ export default {
           itemsPerPage = initialState.perItemPage
           this.$store.dispatch('page/dropState')
         }
-        ClaimService.getPageClaim(page, itemsPerPage).then(
+        ClaimService.getPageClaim(page, itemsPerPage, this.selectState, this.selectObject).then(
             response => {
               this.page = page
               this.items = response.data
@@ -122,16 +131,19 @@ export default {
       title="Заявки аварийных остановок"
       flat
   >
-    <!--<template v-slot:text>
-      <v-text-field
+    <template v-slot:text>
+      <!--<v-text-field
           v-model="search"
           label="Поиск"
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
           hide-details
           single-line
-      ></v-text-field>
-    </template>-->
+      ></v-text-field>-->
+      <search-claim-form
+        @updateSelect="updateSearchClaim"
+      />
+    </template>
     <v-data-table-server
         :items="items"
         :headers="headers"
@@ -147,7 +159,7 @@ export default {
           {value: 100, title: '100'}
         ]"
         :items-per-page-text="'Количество элементов'"
-        :loading-text="'Закгрузка данных'"
+        :loading-text="'Загрузка данных'"
         :no-data-text="'Данных не обнаружено'"
     >
       <template v-slot:[`item.state_claim`]="{ value }">

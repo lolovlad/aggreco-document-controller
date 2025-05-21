@@ -139,7 +139,7 @@ export default {
   },
   watch: {
     search(){
-      this.loadItem()
+      this.loadItem({page: 1, itemsPerPage: 20})
 
     }
   },

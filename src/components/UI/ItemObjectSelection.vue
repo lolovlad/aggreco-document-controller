@@ -197,7 +197,7 @@ export default {
               <template #item="{item}">
                 <tr @click="addEquipment(item)" style="cursor: pointer;">
                   <td>{{ item.name }}</td>
-                  <td>{{ item.сode }}</td>
+                  <td>{{ item.code || 'Нет данных'}}</td>
                 </tr>
               </template>
             </v-data-table-server>

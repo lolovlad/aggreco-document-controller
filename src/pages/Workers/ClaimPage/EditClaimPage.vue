@@ -52,7 +52,7 @@ export default {
     addTimeLine(item){
       AccidentService.addTimeLine(this.claim.accident.uuid, item)
           .then(timeline =>{
-            this.$refs.timeLineForm.timeLineSeries = timeline
+            this.$refs.timeLineForm.updateTimeLineTable(timeline)
             this.snackbar = true
             this.message = "Событие добавлено"
           }).catch((response) => {
@@ -63,7 +63,7 @@ export default {
     deleteTimeLine(uuidItem){
       AccidentService.deleteTimeLine(this.claim.accident.uuid, uuidItem)
           .then((data) => {
-            this.$refs.timeLineForm.timeLineSeries = data
+            this.$refs.timeLineForm.updateTimeLineTable(data)
             this.snackbar = true
             this.message = "Событие удалено"
           })
@@ -75,7 +75,7 @@ export default {
     updateTimeLine(item){
       AccidentService.updateTimeLine(this.claim.accident.uuid, item)
           .then((data) => {
-            this.$refs.timeLineForm.timeLineSeries = data
+            this.$refs.timeLineForm.updateTimeLineTable(data)
             this.snackbar = true
             this.message = "Событие обновлено"
           })

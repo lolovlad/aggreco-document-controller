@@ -3,9 +3,14 @@ import moment from 'moment-timezone';
 
 
 class ClaimService{
-    getPageClaim(page, perItemPage){
+    getPageClaim(page, perItemPage, idStateClaim, uuidObject){
         return axios
-            .get('/claim/page', {params: {page: page, per_item_page: perItemPage}})
+            .get('/claim/page', {params: {
+                    page: page,
+                    per_item_page: perItemPage,
+                    id_state_claim: idStateClaim,
+                    uuid_object: uuidObject
+            }})
             .then((response) => {
                 if(response.status === 200)
                     return response

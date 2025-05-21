@@ -1,5 +1,31 @@
 <template>
   <v-container v-if="loader">
+    <v-row class="mb-4" v-if="objects.length > 1">
+      <v-col cols="12">
+        <v-slide-group
+            class="pa-2"
+            v-model="selectedIndex"
+            show-arrows
+            center-active
+        >
+          <v-slide-group-item
+              v-for="(item, index) in objects"
+              :key="item.uuid"
+              :value="index"
+          >
+            <v-chip
+                class="ma-2"
+                :color="targetObject.uuid === item.uuid ? 'primary' : ''"
+                @click="selectObject(item, index)"
+                outlined
+            >
+              {{ item.name }}
+            </v-chip>
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col cols="12" md="12">
         <v-card>
@@ -96,7 +122,9 @@ export default {
       snackbar: false,
       message: "",
       dialogDelete: false,
-      loader: false
+      loader: false,
+      selectedIndex: 0,
+      objects: []
     }
   },
 
@@ -104,11 +132,18 @@ export default {
 
     getObject(){
       ObjectService.getObjectByUser().then((obj) => {
-        this.targetObject = obj
+        this.objects = obj
+        this.targetObject = obj[0]
         this.loader = true
       })
     },
-
+    selectObject(obj, index) {
+      this.targetObject = obj;
+      this.selectedIndex = index;
+      this.$nextTick(() => {
+        this.$refs.equipmentTable.loadItem({page: 1, itemsPerPage: 20})
+      })
+    },
 
     deleteEquipment(uuid){
       ObjectService.deleteEquipment(uuid)

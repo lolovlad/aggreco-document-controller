@@ -20,6 +20,7 @@ export default {
           user => {
             this.user = user
             this.load = true
+            this.this.$store.dispatch('auth/saveUser', {user: this.user})
           }
       )
     },
@@ -27,7 +28,7 @@ export default {
       UserService.updateProfileUser(user.uuid, user)
           .then(() => {
             this.getProfile()
-            this.message = "Успешно ссохранено"
+            this.message = "Успешно сохранено"
             this.snackbar = true
           })
           .catch((response) => {

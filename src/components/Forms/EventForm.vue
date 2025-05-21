@@ -120,7 +120,7 @@ export default {
     return{
       headers: [
         {title: 'Мероприятие', key: 'description'},
-        {title: 'Ответсвенный', key: 'responsible'},
+        {title: 'Ответственный', key: 'responsible'},
         {title: 'Тип', key: 'type_event', value: item => item.type_event.description},
         {title: 'Дата', key: 'date_finish', value: item => {
             const dateNow = new Date(item.date_finish)

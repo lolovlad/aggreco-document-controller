@@ -1,6 +1,6 @@
 <template>
   <v-card
-      title="Аварийныйе остановки"
+      title="Аварийные остановки и отключения"
       flat
   >
     <template v-slot:text>
@@ -51,17 +51,17 @@ export default {
     return{
       headers: [
         { title: 'Объект', key: 'object', value: item => `${item.object.name}`},
-        { title: 'Время', key: 'datetime_start', sortable: false, value: item => {
+        { title: 'Время начала', key: 'datetime_start', sortable: false, value: item => {
             let dateNew = new Date(item.datetime_start)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
           }
         },
-        { title: 'Время конца', key: 'datetime_end', sortable: false, value: item => {
+        { title: 'Время окончания', key: 'datetime_end', sortable: false, value: item => {
               let dateNew = new Date(item.datetime_end)
               return moment(dateNew).format('DD.MM.YYYY HH:mm')
           }
         },
-        { title: 'Поврежденное оборудованние', key: 'damaged_equipment', value: item => {
+        { title: 'Поврежденное оборудование', key: 'damaged_equipment', value: item => {
             if(item.damaged_equipment.length > 0){
               return item.damaged_equipment.map((item) => item.name).join(",")
             }

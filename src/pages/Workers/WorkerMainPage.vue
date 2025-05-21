@@ -1,9 +1,10 @@
 <script>
 import WorkerHeader from "@/components/WorkerHeader.vue";
+import ScrollToTopButton from "@/components/UI/Buttons/ScrollToTopButton.vue";
 
 export default {
   name: "WorkerMainPage",
-  components: {WorkerHeader}
+  components: {ScrollToTopButton, WorkerHeader}
 }
 </script>
 
@@ -13,6 +14,7 @@ export default {
     <router-view>
 
     </router-view>
+    <scroll-to-top-button/>
   </v-main>
 </template>
 

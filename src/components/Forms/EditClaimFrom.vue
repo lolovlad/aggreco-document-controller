@@ -38,10 +38,12 @@ export default {
   methods:{
     getClaim(){
       ClaimService.getClaims(this.uuidClaim).then((claim) => {
+        if(claim.edit_document.includes('/'))
+          this.editFileClaimRef = `${axios.defaults.baseURL}claim/file/edit/${claim.uuid}`
+        if(claim.main_document.includes('/'))
             this.mainFileClaimRef = `${axios.defaults.baseURL}claim/file/main/${claim.uuid}`
-            this.editFileClaimRef = `${axios.defaults.baseURL}claim/file/edit/${claim.uuid}`
-            this.comment = claim.comment
-            this.datetime = claim.datetime
+        this.comment = claim.comment
+        this.datetime = claim.datetime
       })
     },
     saveEditFile(){
@@ -81,8 +83,11 @@ export default {
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="2">
+      <v-col cols="12" sm="2" v-if="mainFileClaimRef">
         <a :href="mainFileClaimRef">Скачать главный файл</a>
+      </v-col>
+      <v-col cols="12" sm="2" v-else>
+        <p>Файл не загружен</p>
       </v-col>
       <v-col cols="12" sm="3" v-if="!readOnly">
         <MainFileUploader :type-file-upload="'main'" :uuid-claim="uuidClaim"/>
@@ -92,8 +97,11 @@ export default {
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="2">
+      <v-col cols="12" sm="2" v-if="editFileClaimRef">
         <a :href="editFileClaimRef">Скачать файл с правками</a>
+      </v-col>
+      <v-col cols="12" sm="2" v-else>
+        <p>Файл не загружен</p>
       </v-col>
       <v-col cols="12" sm="10" v-if="(isUser === false) && !readOnly">
         <MainFileUploader :type-file-upload="'edit'" :uuid-claim="uuidClaim"/>

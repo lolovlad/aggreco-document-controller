@@ -68,20 +68,16 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="12">
-        <v-text-field
+        <password-field
             v-if="addMode"
-            type="password"
             v-model="user.password"
-            label="Пароль *"
-            variant="underlined"
+            :label="'Пароль *'"
             :rules="passwordAddRule"
         />
-        <v-text-field
+        <password-field
             v-else
-            type="password"
             v-model="user.password"
-            label="Пароль *"
-            variant="underlined"
+            :label="'Пароль *'"
             :rules="passwordUpdateRule"
         />
       </v-col>
@@ -104,9 +100,10 @@
 import ButtonAgrea from "@/components/UI/ButtonAgrea";
 import UserService from "@/store/user.service";
 import EnvService from "@/store/env.service";
+import PasswordField from "@/components/UI/Fields/PasswordField.vue";
 export default {
   name: "EditUserForm",
-  components: {ButtonAgrea},
+  components: {PasswordField, ButtonAgrea},
   props: {
     addMode: {
       type: Boolean,

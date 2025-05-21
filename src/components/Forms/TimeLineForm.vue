@@ -156,10 +156,20 @@ export default {
 
     getTimeLine(){
       AccidentService.getTimeLine(this.uuidAccident).then((timeline) => {
-        this.timeLineSeries = timeline
+        this.updateTimeLineTable(timeline)
       }).catch((error) => {
         console.log(error)
       })
+    },
+    updateTimeLineTable(timeLineSeries){
+      this.timeLineSeries = timeLineSeries
+      if(timeLineSeries.length > 0){
+        this.editItem.time = timeLineSeries[timeLineSeries.length - 1].time
+        this.defaultItem.time = timeLineSeries[timeLineSeries.length - 1].time
+      }else{
+        this.editItem.time = this.minDate + "Z"
+        this.defaultItem.time = this.minDate + "Z"
+      }
     },
 
     formatDate(date){

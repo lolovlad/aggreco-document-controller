@@ -23,12 +23,11 @@ class UserService {
                 throw e
             })
     }
-    searchUsers(search, count=5){
+    searchUsers(search){
         return axios
             .get('/user/search', {
                 params: {
                     search_field: search,
-                    count: count
                 }
             })
             .then(response => {

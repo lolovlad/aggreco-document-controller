@@ -38,12 +38,18 @@ export const auth = {
                 }
             )
         },
+        saveUser({commit}, payload) {
+            commit('setUser', payload.user)
+        },
         logout({ commit }) {
             AuthService.logout();
             commit('logout');
         },
     },
     mutations: {
+        setUser(state, user){
+            state.user = user;
+        },
         loginSuccess(state, response) {
             state.status.loggedIn = true
             state.user = response.data.user
