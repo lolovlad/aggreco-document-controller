@@ -12,7 +12,6 @@ import * as directives from 'vuetify/directives'
 
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import DatetimePicker from 'vuetify-datetime-picker'
 
 const vuetify = createVuetify({
     components,
@@ -28,4 +27,4 @@ const app = createApp(App)
 
 app.component('VueDatePicker', VueDatePicker);
 
-app.use(router).use(store).use(vuetify).use(DatetimePicker).mount('#app')
+app.use(router).use(store).use(vuetify).mount('#app')

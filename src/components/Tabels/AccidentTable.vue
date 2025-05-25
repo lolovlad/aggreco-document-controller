@@ -14,9 +14,10 @@
       ></v-text-field>
     </template>
     <v-data-table-server
-        :items="items"
         :headers="headers"
+        :items="items"
         v-model:items-per-page="itemsPerPage"
+        @update:options="loadItem"
         :items-length="totalItems"
         :loading="loading"
         :page="page"
@@ -24,18 +25,17 @@
           {value: 20, title: '20'},
           {value: 40, title: '40'},
           {value: 100, title: '100'},
-      ]"
+        ]"
         item-value="uuid"
-        @update:options="loadItem"
         :items-per-page-text="'Количество элементов'"
         :loading-text="'Загрузка данных'"
         :no-data-text="'Данных не обнаружено'"
     >
-      <!--<template v-slot:[`item.actions`]="{ item }">
-        <delete-button @agree="deleteAccident(item)"/>
-        <edit-button @click="editAccident(item)"/>
-      </template>-->
     </v-data-table-server>
+    <!--<template v-slot:[`item.actions`]="{ item }">
+  <delete-button @agree="deleteAccident(item)"/>
+  <edit-button @click="editAccident(item)"/>
+</template>-->
   </v-card>
 </template>
 
@@ -69,7 +69,6 @@ export default {
             return "Нет"
           }
         },
-        {title: 'Действия', key: "actions", sortable: false}
       ],
       items: [],
       totalItems: 0,
@@ -106,6 +105,7 @@ export default {
             response => {
               this.page = page
               this.items = response.data
+              console.log(this.items)
               this.totalItems = parseInt(response.headers["x-count-page"]) * parseInt(response.headers["x-count-item"])
               this.itemsPerPage = parseInt(response.headers["x-count-item"])
               this.loading = false

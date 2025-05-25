@@ -3,7 +3,7 @@ import {auth as $store} from "@/store/auth.model";
 import router from "@/router/router";
 
 
-axios.defaults.baseURL = `http://${process.env.VUE_APP_HOST_SERVER}:${process.env.VUE_APP_PORT_SERVER}/v1/`;
+axios.defaults.baseURL = `http://${import.meta.env.VITE_HOST_SERVER}:${import.meta.env.VITE_PORT_SERVER}/v1/`;
 axios.defaults.headers.common.authorization = `Bearer ` + $store.state.token;
 
 
