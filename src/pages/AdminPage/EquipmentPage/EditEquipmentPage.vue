@@ -2,15 +2,6 @@
   <v-container>
     <button-back/>
     <v-row>
-      <v-alert
-          density="compact"
-          :text="error"
-          title="Ошибка"
-          type="warning"
-          v-if="error !== null"
-      />
-    </v-row>
-    <v-row>
       <v-col cols="12" md="12">
         <EditEquipmentFrom
             :add-mode="addMode"
@@ -37,7 +28,6 @@ export default {
       idObject: this.$route.params.uuid,
       idEquipment: this.$route.params.uuid_equip,
       addMode: (this.$route.params.uuid_equip === undefined),
-      error: null
     }
   },
   methods:{
@@ -46,17 +36,11 @@ export default {
           .then(() => {
             this.$router.go(-1)
           })
-          .catch((message) => {
-            this.error = message
-          })
     },
     updateEquipment(obj, uuid){
       ObjectService.updateEquipment(uuid, obj)
           .then(()=>{
             this.$router.go(-1)
-          })
-          .catch((message) => {
-            this.error = message
           })
     }
   }

@@ -96,13 +96,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <v-snackbar
-        :timeout="4000"
-        v-model="snackbar"
-    >
-      {{message}}
-    </v-snackbar>
   </v-container>
   <loader-page v-else/>
 </template>
@@ -119,8 +112,6 @@ export default {
       targetObject: null,
       dataChip: [{tag: 'Apple'}],
       drawel: false,
-      snackbar: false,
-      message: "",
       dialogDelete: false,
       loader: false,
       selectedIndex: 0,
@@ -148,8 +139,6 @@ export default {
     deleteEquipment(uuid){
       ObjectService.deleteEquipment(uuid)
           .then(()=>{
-            this.message = "Объект удален"
-            this.snackbar = true
             this.$refs.equipmentTable.loadItem({page: 1, itemsPerPage: 20})
           })
     },

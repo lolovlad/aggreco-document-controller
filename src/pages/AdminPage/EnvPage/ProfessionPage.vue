@@ -35,16 +35,6 @@ export default {
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="12">
-        <v-alert v-if="errorMessage !== null"
-            density="compact"
-            :text="errorMessage"
-            title="Ошибка"
-            type="warning"
-        ></v-alert>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col cols="12" md="12">
         <ProfessionalTable ref="profTable" @deleteProf="deleteProf"/>
       </v-col>

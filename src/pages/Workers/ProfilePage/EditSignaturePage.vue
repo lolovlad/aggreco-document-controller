@@ -13,8 +13,6 @@ export default {
           return !value || !value.length || value[0].size < 2000000 || 'Подпись не может весить больше 2 MB!'
         },
       ],
-      snackbar: false,
-      message: "",
       img: null
     }
   },
@@ -24,15 +22,8 @@ export default {
       form.append("file", this.file)
       UserService.saveSignature(form).then(
           () => {
-            this.snackbar = true
-            this.message = "Подпись сохранена"
             this.file = null
             this.getSig()
-          }
-      ).catch(
-          (request) => {
-            this.snackbar = true
-            this.error = request.response.data.message
           }
       )
     },
@@ -42,11 +33,6 @@ export default {
             if (data.file !== null) {
               this.img = `data:image/${data.exp};base64, ${data.file}`
             }
-          }
-      ).catch(
-          (request) => {
-            this.snackbar = true
-            this.error = request.response.data.message
           }
       )
     }
@@ -84,12 +70,6 @@ export default {
       <ButtonAgrea @click="saveSig">Сохранить</ButtonAgrea>
     </v-row>
   </v-container>
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
 </template>
 
 <style scoped>

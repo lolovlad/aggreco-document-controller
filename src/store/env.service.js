@@ -48,6 +48,19 @@ class EnvService{
                 throw e
             })
     }
+    deleteTypeEquipment(idTypeEquip){
+        return axios
+            .delete(`/env/type_equip/${idTypeEquip}`)
+            .then(
+                (response) => {
+                    if(response.status === 200)
+                        return response
+                }
+            )
+            .catch(function (e){
+                throw e
+            })
+    }
     getTypeEquipment(){
         return axios
             .get(`/env/type_equip`)
@@ -164,6 +177,28 @@ class EnvService{
     addTypeEquipment(typeEquip){
         return axios
             .post("/env/type_equip", typeEquip)
+            .then((response) => {
+                if(response.status === 201)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    exportRegionFile(file){
+        return axios
+            .post(`/env/region/import_file`, file)
+            .then(response => {
+                if(response.status === 200)
+                    return response
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+    addRegion(prof){
+        return axios
+            .post("/env/region", prof)
             .then((response) => {
                 if(response.status === 201)
                     return response

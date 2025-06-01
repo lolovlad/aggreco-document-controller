@@ -33,7 +33,6 @@ export default {
     getTypeStateClaim(){
       EnvService.getStateClaim().then(
           data => {
-            console.log(this.userType)
             if(this.userType !== "user"){
               for(let i of data) {
                 if (i.name !== "draft" && i.name !== "under_development")

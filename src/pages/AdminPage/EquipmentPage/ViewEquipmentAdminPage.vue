@@ -13,12 +13,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
   <FixedButton @click="openAddEquipPage"/>
 </template>
 
@@ -33,8 +27,6 @@ export default {
   data(){
     return{
       idObject: this.$route.params.uuid,
-      message: "",
-      snackbar: false,
       dialogDelete: false
     }
   },
@@ -45,8 +37,6 @@ export default {
     deleteEquipment(uuid){
       ObjectService.deleteEquipment(uuid)
           .then(()=>{
-            this.message = "Объект удален"
-            this.snackbar = true
             this.$refs.equipmentTable.loadItem({page: 1, itemsPerPage: 20})
           })
     },

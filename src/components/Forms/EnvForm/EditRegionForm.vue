@@ -2,7 +2,7 @@
 import EnvService from "@/store/env.service";
 
 export default {
-  name: "EditTypeEquipmentForm",
+  name: "EditRegionForm",
   props: {
     addMode: {
       type: Boolean,
@@ -11,32 +11,26 @@ export default {
   },
   data: () => ({
     dialog: false,
-    typeEquipment: {
+    region: {
       id: null,
       name: null,
       code: null,
-      description: null
     },
-    scemaTypeEquipment: {
+    scemaRegion: {
       id: null,
       name: null,
       code: null,
-      description: null
     }
   }),
   methods: {
-    saveEquip(){
-      EnvService.addTypeEquipment(this.typeEquipment).then(() => {
-
+    saveRegion(){
+      EnvService.addRegion(this.region).then(() => {
         this.clearForm()
-
-        this.$emit("addProf")
-      }).catch((e) => {
-        console.log(e)
+        this.$emit("addRegion")
       })
     },
     clearForm(){
-      Object.assign(this.typeEquipment, this.scemaTypeEquipment)
+      Object.assign(this.region, this.scemaRegion)
       this.dialog = false
     }
   }
@@ -60,7 +54,7 @@ export default {
 
     <v-card
         prepend-icon="mdi-plus"
-        title="Тип оборудованния"
+        title="Регион"
     >
       <v-card-text>
         <v-row dense>
@@ -69,9 +63,9 @@ export default {
               md="12"
           >
             <v-text-field
-                label="Название"
+                label="Название *"
                 type="text"
-                v-model="typeEquipment.name"
+                v-model="region.name"
                 required
             ></v-text-field>
           </v-col>
@@ -80,27 +74,15 @@ export default {
               md="12"
           >
             <v-text-field
-                label="код*"
-                v-model="typeEquipment.code"
-                type="text"
-                required
-            ></v-text-field>
-          </v-col>
-
-          <v-col
-              cols="12"
-              md="12"
-          >
-            <v-text-field
-                label="На русском языке*"
-                v-model="typeEquipment.description"
+                label="код *"
+                v-model="region.code"
                 type="text"
                 required
             ></v-text-field>
           </v-col>
         </v-row>
 
-        <small class="text-caption text-medium-emphasis">*Поле обязательное</small>
+        <small class="text-caption text-medium-emphasis">* - Поле обязательное</small>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -118,7 +100,7 @@ export default {
             color="primary"
             text="Сохранить"
             variant="tonal"
-            @click="saveEquip"
+            @click="saveRegion"
         ></v-btn>
       </v-card-actions>
     </v-card>

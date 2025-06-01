@@ -7,7 +7,7 @@
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
           class="text-none font-weight-regular"
-          prepend-icon="mdi-account"
+          prepend-icon="mdi-file-export-outline"
           text="Экспортировать"
           variant="tonal"
           v-bind="activatorProps"

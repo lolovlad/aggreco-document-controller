@@ -2,10 +2,11 @@
 import EnvService from "@/store/env.service";
 import ExportCsvForm from "@/components/Forms/ExportCsvForm.vue";
 import EditTypeEquipmentForm from "@/components/Forms/EnvForm/EditTypeEquipmentForm.vue";
+import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
 
 export default {
   name: "TypeEquipmentPage",
-  components: {EditTypeEquipmentForm, ExportCsvForm},
+  components: {DeleteButton, EditTypeEquipmentForm, ExportCsvForm},
   data(){
     return{
       headers: [
@@ -21,10 +22,14 @@ export default {
     loadTypeEquipment(){
       EnvService.getTypeEquipment().then(
           (typeEquipment) => {
-            console.log(typeEquipment)
             this.typeEquipment = typeEquipment
           }
       )
+    },
+    deleteEquipment(idEquip){
+      EnvService.deleteTypeEquipment(idEquip).then(() => {
+            this.loadTypeEquipment()
+      })
     },
     exportCsvFile(file){
       let form = new FormData()
@@ -59,19 +64,7 @@ export default {
             hide-default-footer
         >
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-                size="small"
-                @click="$emit('delete', item.id)"
-            >
-              mdi-delete
-            </v-icon>
-            <v-icon
-                class="me-2"
-                size="small"
-                @click="$emit('edit', item.id)"
-            >
-              mdi-pencil
-            </v-icon>
+            <delete-button @agree="deleteEquipment(item.id)"/>
           </template>
         </v-data-table-virtual>
       </v-col>

@@ -26,14 +26,6 @@
   <FixedButton @click="addObject"/>
 
   <UserObjectAddForm :uuidObject="targetObject" ref="userAddForm"/>
-
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
-
 </template>
 
 <script>
@@ -48,9 +40,7 @@ export default {
     return{
       targetObject: null,
       dataChip: [],
-      drawel: false,
-      snackbar: false,
-      message: ""
+      drawel: false
     }
   },
 
@@ -69,16 +59,10 @@ export default {
     deleteObj(uuid){
       ObjectService.deleteObject(uuid)
           .then(() => {
-            this.message = "Объект удален"
             this.drawel = false
             this.$nextTick(()=>{
-              this.snackbar = true
               this.$refs.objectTable.loadItem({page: 1, itemsPerPage: 20})
             })
-          })
-          .catch((response) => {
-            this.message = response.response
-            this.snackbar = true
           })
     },
     openEquipPage(){

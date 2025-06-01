@@ -4,7 +4,14 @@ export default {
   data(){
     return {
       dialogDelete: false,
-
+    }
+  },
+  methods: {
+    agree(){
+      this.$emit('agree')
+      this.$nextTick(() => {
+        this.dialogDelete = false
+      })
     }
   }
 }
@@ -43,7 +50,7 @@ export default {
           Отмена
         </v-btn>
 
-        <v-btn @click="$emit('agree')">
+        <v-btn @click="agree">
           Подтвердить
         </v-btn>
       </template>

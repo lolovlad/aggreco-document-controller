@@ -10,12 +10,6 @@
       </v-col>
     </v-row>
     <UserTool ref="userTool" @export="exportUsers" @addUser="addUser"></UserTool>
-    <v-snackbar
-        :timeout="4000"
-        v-model="snackbar"
-    >
-      {{error}}
-    </v-snackbar>
   </v-container>
 </template>
 
@@ -32,9 +26,7 @@ export default {
       numPage: 1,
       currentPage: 1,
       countItem: 20,
-      users: [],
-      snackbar: false,
-      error: ""
+      users: []
     }
   },
   methods:{
@@ -50,11 +42,6 @@ export default {
             if (request.status === 201)
               this.$refs.userTool.close()
           }
-      ).catch(
-          (request) => {
-            this.snackbar = true
-            this.error = request.response.data.message
-          }
       )
     },
     addUser(){
@@ -65,9 +52,7 @@ export default {
     deleteUser(uuid){
       UserService.deleteUser(uuid)
           .then(()=>{
-            this.message = "Пользователь удален удален"
-            this.snackbar = true
-            this.$refs.userTable.loadItem()
+            this.$refs.userTable.loadItem(1)
           })
     },
     updateUser(uuid){

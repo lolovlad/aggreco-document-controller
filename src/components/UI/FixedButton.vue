@@ -6,7 +6,7 @@
       size="64"
       fixed
       app
-  color="deep-orange-accent-4">
+  color="rgb(45,53,64)">
   </v-fab>
 </template>
 

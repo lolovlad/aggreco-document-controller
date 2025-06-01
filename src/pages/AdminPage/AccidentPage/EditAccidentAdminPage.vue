@@ -44,14 +44,6 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-container>
-
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
-
 </template>
 
 <script>
@@ -70,8 +62,6 @@ export default {
       uuidAccident: this.$route.params.uuid,
       datetimeStart: null,
       datetimeEnd: null,
-      snackbar: false,
-      message: ""
     }
   },
   methods:{
@@ -87,38 +77,19 @@ export default {
 
     saveAccident(accident){
       AccidentService.updateAccident(this.uuidAccident, accident)
-          .then(response => {
-            if(response.status >= 200){
-              this.snackbar = true
-              this.message = "Основная информация обновлена"
-              console.log(response.status)
-            }
-          })
-          .catch(response => {
-            console.log(response.data)
-          })
     },
 
     addTimeLine(item){
       AccidentService.addTimeLine(this.uuidAccident, item)
           .then(timeline =>{
             this.$refs.timeLineForm.timeLineSeries = timeline
-            this.snackbar = true
-            this.message = "Событие добавлено"
-          }).catch((response) => {
-        console.log(response.data)
-      })
+          })
     },
 
     deleteTimeLine(uuidItem){
       AccidentService.deleteTimeLine(this.uuidAccident, uuidItem)
           .then((data) => {
             this.$refs.timeLineForm.timeLineSeries = data
-            this.snackbar = true
-            this.message = "Событие удалено"
-          })
-          .catch(response => {
-            console.log(response.data)
           })
     },
 
@@ -126,11 +97,6 @@ export default {
       AccidentService.updateTimeLine(this.uuidAccident, item)
           .then((data) => {
             this.$refs.timeLineForm.timeLineSeries = data
-            this.snackbar = true
-            this.message = "Событие обновлено"
-          })
-          .catch(response => {
-            console.log(response.data)
           })
     },
 
@@ -138,11 +104,6 @@ export default {
       AccidentService.addEvent(this.uuidAccident, item)
           .then((data) => {
             this.$refs.eventForm.events = data
-            this.snackbar = true
-            this.message = "Мероприятие добавлено"
-          })
-          .catch(response => {
-            console.log(response.data)
           })
     },
 
@@ -150,11 +111,6 @@ export default {
       AccidentService.deleteEvent(this.uuidAccident, uuidEvent)
           .then((data) => {
             this.$refs.eventForm.events = data
-            this.snackbar = true
-            this.message = "Мероприятие добавлено"
-          })
-          .catch(response => {
-            console.log(response.data)
           })
     },
 
@@ -162,11 +118,6 @@ export default {
       AccidentService.updateEvent(this.uuidAccident, item)
           .then((data) => {
             this.$refs.eventForm.events = data
-            this.snackbar = true
-            this.message = "Мероприятие добавлено"
-          })
-          .catch(response => {
-            console.log(response.data)
           })
     }
 

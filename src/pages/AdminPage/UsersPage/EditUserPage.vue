@@ -3,17 +3,6 @@
     <button-back/>
     <v-row>
       <v-col cols="12" md="12">
-        <v-alert
-            density="compact"
-            :text="error"
-            title="Ошибка"
-            type="warning"
-            v-if="error !== null"
-        />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" md="12">
         <EditUserForm
             :add-mode="addMode"
             :id-user="idUser"
@@ -36,7 +25,6 @@ export default {
     return{
       idUser: this.$route.params.uuid,
       addMode: (this.$route.params.uuid === undefined),
-      error: null
     }
   },
   methods:{

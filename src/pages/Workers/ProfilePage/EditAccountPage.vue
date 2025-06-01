@@ -20,7 +20,7 @@ export default {
           user => {
             this.user = user
             this.load = true
-            this.this.$store.dispatch('auth/saveUser', {user: this.user})
+            this.$store.dispatch('auth/saveUser', {user: this.user})
           }
       )
     },

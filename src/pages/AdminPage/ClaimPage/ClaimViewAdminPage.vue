@@ -7,8 +7,6 @@ export default {
   components: {ClaimTable},
   data(){
     return{
-      snackbar: false,
-      message: ""
     }
   },
   methods: {
@@ -17,24 +15,18 @@ export default {
     },
     deleteClaim(uuidClaim) {
       ClaimService.deleteClaim(uuidClaim).then(() => {
-        this.snackbar = true
-        this.message = "Заявка удалена"
         this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
       })
     },
     updateStateClaim(uuidClaim) {
       ClaimService.updateStateClaim(uuidClaim, 'accepted')
           .then(() => {
-            this.snackbar = true
-            this.message = "Заявка согласована"
             this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
           })
     },
     downgradeStateClaim(uuidClaim){
       ClaimService.updateStateClaim(uuidClaim, 'under_development')
           .then(() => {
-            this.snackbar = true
-            this.message = "Заявка отправлена на дороботку"
             this.$refs.claimTable.loadItem({page: 1, itemsPerPage: 20})
           })
     }
@@ -53,12 +45,6 @@ export default {
                    ref="claimTable"/>
     </v-col>
   </v-row>
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
 </template>
 
 <style scoped>
