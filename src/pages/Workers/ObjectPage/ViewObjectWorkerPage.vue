@@ -44,7 +44,7 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <p>Долгода: {{targetObject.cx}}</p>
+                <p>Долгота: {{targetObject.cx}}</p>
               </v-col>
               <v-col cols="12" md="6">
                 <p>Широта: {{targetObject.cy}}</p>

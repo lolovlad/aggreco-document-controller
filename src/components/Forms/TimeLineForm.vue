@@ -4,7 +4,6 @@
       <v-data-table
           :headers="headers"
           :items="timeLineSeries"
-          hide-default-footer
       >
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon
