@@ -125,7 +125,7 @@ export default {
         {title: 'Дата', key: 'date_finish', value: item => {
 
             const dateNow = new Date(item.date_finish)
-            return moment(dateNow).format('DD.MM.YYYY HH:mm')}},
+            return moment(dateNow).format('DD.MM.YYYY')}},
         {title: 'Состояние', key: 'state_event', value: item => item.state_event.description},
         {title: 'Управление', key: 'actions'}
       ],
