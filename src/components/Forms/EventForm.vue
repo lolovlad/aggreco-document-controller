@@ -123,8 +123,9 @@ export default {
         {title: 'Ответственный', key: 'responsible'},
         {title: 'Тип', key: 'type_event', value: item => item.type_event.description},
         {title: 'Дата', key: 'date_finish', value: item => {
-            const dateNow = new Date(item.date_finish)
-            return `${dateNow.toLocaleString()}`}},
+            const dateNow = new Date(item.time)
+            return moment(dateNow).format('DD.MM.YYYY')
+        }},
         {title: 'Состояние', key: 'state_event', value: item => item.state_event.description},
         {title: 'Управление', key: 'actions'}
       ],

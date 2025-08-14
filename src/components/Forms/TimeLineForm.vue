@@ -101,9 +101,9 @@ export default {
     return{
       headers: [
         { title: 'Время', key: 'time', value: item => {
-          const dateNow = new Date(item.time)
-          return `${dateNow.toLocaleString()}`
-          }},
+            const dateNow = new Date(item.time)
+            return moment(dateNow).format('DD.MM.YYYY HH:mm')
+        }},
         { title: 'Описание', key: 'description'},
         { title: 'Действия', key: 'actions'}
       ],
