@@ -3,7 +3,6 @@
     <v-data-table
         :headers="headers"
         :items="events"
-        hide-default-footer
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
