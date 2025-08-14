@@ -26,8 +26,10 @@ export default {
   methods: {
     getAccident(){
       ClaimService.getClaims(this.uuidClaim).then((claim) => {
+        if (claim.accident.time_line && Array.isArray(claim.accident.time_line)) {
+          claim.accident.time_line.sort((a, b) => new Date(a.time) - new Date(b.time))
+        }
         this.claim = claim
-        console.log(claim)
         this.isLoad = true
       })
     },
