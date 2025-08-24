@@ -102,7 +102,7 @@ export default {
       headers: [
         { title: 'Время', key: 'time', value: item => {
             const dateNow = new Date(item.time)
-            return moment(dateNow).format('DD.MM.YYYY HH:mm')
+            return moment(dateNow).format('DD.MM.YYYY HH:mm:ss')
         }},
         { title: 'Описание', key: 'description'},
         { title: 'Действия', key: 'actions'}
@@ -172,7 +172,7 @@ export default {
     },
 
     formatDate(date){
-      return moment(date).format('DD/MM/YYYY HH:mm');
+      return moment(date).format('DD/MM/YYYY HH:mm:ss');
     }
   },
 

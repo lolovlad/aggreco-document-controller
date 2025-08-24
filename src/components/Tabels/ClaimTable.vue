@@ -15,7 +15,8 @@ export default {
   data(){
     return{
       headers: [
-        { title: 'UUID', key: 'uuid', sortable: false, value: item => `${item.uuid}`},
+        { title: 'Объект', key: 'object', sortable: false, value: item => `${item.accident.object.name}`},
+        { title: 'Оборудованние', key: 'equipment', sortable: false, value: item => `${item.accident.damaged_equipment.map(eq => eq.name).join(", ")}`},
         { title: 'Время', key: 'datetime', sortable: false, value: item => {
             let dateNew = new Date(item.datetime)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
@@ -23,7 +24,7 @@ export default {
         },
         { title: 'Автор', key: 'user', sortable: false, value: item => {
             let user = item.user
-            return `${user.surname} ${user.name} ${user.patronymic}`
+            return `${user.surname} ${user.name[0]}. ${user.patronymic[0]}.`
           }
         },
         { title: 'Состояние заявки', sortable: false, key: 'state_claim', value: item => {
