@@ -16,7 +16,12 @@ export default {
     return{
       headers: [
         { title: 'Объект', key: 'object', sortable: false, value: item => `${item.accident.object.name}`},
-        { title: 'Оборудованние', key: 'equipment', sortable: false, value: item => `${item.accident.damaged_equipment.map(eq => eq.name).join(", ")}`},
+        { title: 'Оборудованние', key: 'equipment', sortable: false, value: item => {
+            const eqString = item.accident.damaged_equipment.map(eq => eq.name).join(", ");
+            const shortEqString = eqString.length > 50 ? eqString.slice(0, 50) + "..." : eqString;
+            return shortEqString
+          }
+        },
         { title: 'Время', key: 'datetime', sortable: false, value: item => {
             let dateNew = new Date(item.datetime)
             return moment(dateNew).format('DD.MM.YYYY HH:mm')
