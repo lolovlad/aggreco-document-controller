@@ -25,7 +25,8 @@ export default {
         name: null,
         surname: null,
         patronymic: null,
-        password: null
+        password: null,
+        email_send_info: {}
       },
       userScheme: {
         email: null,
@@ -34,13 +35,31 @@ export default {
         name: null,
         surname: null,
         patronymic: null,
-        password: null
+        password: null,
+        email_send_info: {}
       },
       typeUser: [],
       profUser: []
     }
   },
   methods: {
+    initEmailSendInfo(){
+      const options = this.emailOptions
+      if(!this.user.email_send_info || typeof this.user.email_send_info !== 'object'){
+        this.user.email_send_info = {}
+      }
+      options.forEach(opt => {
+        if(!(opt.key in this.user.email_send_info)){
+          this.$set ? this.$set(this.user.email_send_info, opt.key, false) : (this.user.email_send_info[opt.key] = false)
+        }
+      })
+      // Удаляем лишние ключи, не относящиеся к текущему типу формы
+      Object.keys(this.user.email_send_info).forEach(k => {
+        if(!options.find(o => o.key === k)){
+          delete this.user.email_send_info[k]
+        }
+      })
+    },
     loadType(){
       EnvService.loadTypeUser()
           .then(
@@ -63,6 +82,7 @@ export default {
       UserService.getUserByUuid(this.idUser)
           .then((user) => {
             Object.assign(this.user, user)
+            this.initEmailSendInfo()
           })
     },
 
@@ -78,10 +98,46 @@ export default {
     },
 
   },
+  computed: {
+    emailOptions(){
+      // Конфигурация типов рассылок
+      const adminOptions = [
+        { key: 'claim_update_state', label: 'Обновление статуса заявки' },
+        { key: 'claim_create', label: 'Создание заявки' },
+      ]
+      const workerOptions = [
+        { key: 'claim_update_state', label: 'Обновление статуса заявки' },
+      ]
+      
+      return this.typeUserForm !== 'worker' ? adminOptions : workerOptions
+    },
+
+    emailFieldTitle(){
+      return this.typeUserForm !== 'worker' ? 'Настройки рассылок (админ)' : 'Настройки рассылок'
+    },
+    
+    selectedEmailKeys: {
+      get(){
+        if(!this.user.email_send_info || typeof this.user.email_send_info !== 'object') return []
+        const allowed = new Set(this.emailOptions.map(o => o.key))
+        return Object.keys(this.user.email_send_info)
+            .filter(k => allowed.has(k) && this.user.email_send_info[k] === true)
+      },
+      set(newKeys){
+        this.initEmailSendInfo()
+        const allowed = new Set(this.emailOptions.map(o => o.key))
+        // Сбрасываем все текущие допустимые ключи в false
+        this.emailOptions.forEach(o => { this.user.email_send_info[o.key] = false })
+        // Устанавливаем true для выбранных
+        newKeys.forEach(k => { if(allowed.has(k)) this.user.email_send_info[k] = true })
+      }
+    }
+  },
   mounted() {
     this.loadType()
     this.loadProf()
     this.getUser()
+    this.initEmailSendInfo()
   }
 }
 </script>
@@ -148,7 +204,6 @@ export default {
             item-value="id"
             label="Должность"
             variant="underlined"
-            :disabled="typeUserForm === 'worker'"
         />
       </v-col>
     </v-row>
@@ -158,6 +213,21 @@ export default {
             type="password"
             v-model="user.password"
             label="Пароль"
+            variant="underlined"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="12">
+        <v-select
+            :items="emailOptions"
+            item-title="label"
+            item-value="key"
+            v-model="selectedEmailKeys"
+            :label="emailFieldTitle"
+            multiple
+            chips
+            closable-chips
             variant="underlined"
         />
       </v-col>

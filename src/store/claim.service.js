@@ -3,14 +3,23 @@ import moment from 'moment-timezone';
 
 
 class ClaimService{
-    getPageClaim(page, perItemPage, idStateClaim, uuidObject){
+    getPageClaim(page, perItemPage, idStateClaim, uuidObject, dateFrom = null, dateTo = null){
+        const params = {
+            page: page,
+            per_item_page: perItemPage,
+            id_state_claim: idStateClaim,
+            uuid_object: uuidObject
+        };
+        
+        if (dateFrom) {
+            params.date_from = moment(dateFrom).format('YYYY-MM-DD');
+        }
+        if (dateTo) {
+            params.date_to = moment(dateTo).format('YYYY-MM-DD');
+        }
+        
         return axios
-            .get('/claim/page', {params: {
-                    page: page,
-                    per_item_page: perItemPage,
-                    id_state_claim: idStateClaim,
-                    uuid_object: uuidObject
-            }})
+            .get('/claim/page', {params: params})
             .then((response) => {
                 if(response.status === 200)
                     return response

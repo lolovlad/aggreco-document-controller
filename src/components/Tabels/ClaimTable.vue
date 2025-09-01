@@ -6,12 +6,14 @@ import {auth as $store} from "@/store/auth.model";
 import EditButton from "@/components/UI/Buttons/EditButton.vue";
 import SendForwardButton from "@/components/UI/Buttons/SendForwardButton.vue";
 import SendBackButton from "@/components/UI/Buttons/SendBackButton.vue";
-import InformationButton from "@/components/UI/Buttons/InformationButton.vue";
 import SearchClaimForm from "@/components/Forms/Search/SearchClaimForm.vue";
+import InformationClaimButton from "@/components/UI/Buttons/InformationClaimButton.vue";
 
 export default {
   name: "ClaimTable",
-  components: {SearchClaimForm, InformationButton, SendBackButton, SendForwardButton, EditButton, DeleteButton},
+  components: {
+    InformationClaimButton,
+    SearchClaimForm, SendBackButton, SendForwardButton, EditButton, DeleteButton},
   data(){
     return{
       headers: [
@@ -51,7 +53,9 @@ export default {
       itemsPerPageNow: 20,
 
       selectObject: "all",
-      selectState: 0
+      selectState: 0,
+      selectDateFrom: null,
+      selectDateTo: null
     }
   },
   methods: {
@@ -74,9 +78,11 @@ export default {
       this.saveState()
       this.$emit("downgradeStateClaim", item.uuid)
     },
-    updateSearchClaim(selectObject, selectState){
+    updateSearchClaim(selectObject, selectState, dateFrom, dateTo){
       this.selectObject = selectObject
       this.selectState = selectState
+      this.selectDateFrom = dateFrom
+      this.selectDateTo = dateTo
       this.loadItem(1)
     },
     loadItem({page=1, itemsPerPage=20}){
@@ -88,7 +94,7 @@ export default {
           itemsPerPage = initialState.perItemPage
           this.$store.dispatch('page/dropState')
         }
-        ClaimService.getPageClaim(page, itemsPerPage, this.selectState, this.selectObject).then(
+        ClaimService.getPageClaim(page, itemsPerPage, this.selectState, this.selectObject, this.selectDateFrom, this.selectDateTo).then(
             response => {
               this.page = page
               this.items = response.data
@@ -198,7 +204,7 @@ export default {
             @click="downgradeStateClaim(item)"
             :type-user="typeUser"
         />
-        <information-button @click="$router.push(`/claim/${item.uuid}`)"/>
+        <information-claim-button :uuid-claim="item.uuid"/>
       </template>
     </v-data-table-server>
   </v-card>

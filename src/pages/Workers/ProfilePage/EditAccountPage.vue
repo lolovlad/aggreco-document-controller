@@ -9,9 +9,6 @@ export default {
     return{
       user: null,
       load: false,
-      error: null,
-      snackbar: false,
-      message: ""
     }
   },
   methods: {
@@ -43,29 +40,12 @@ export default {
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="12" md="12">
-      <v-alert
-          density="compact"
-          :text="error"
-          title="Ошибка"
-          type="warning"
-          v-if="error !== null"
-      />
-    </v-col>
-  </v-row>
   <EditAccountForm
       :idUser="user.uuid"
       @updateUser="updateUser"
       v-if="load"
-      :type-user-form="'worker'"
+      :type-user-form="user.type.name"
   />
-  <v-snackbar
-      :timeout="4000"
-      v-model="snackbar"
-  >
-    {{message}}
-  </v-snackbar>
 </template>
 
 <style scoped>
