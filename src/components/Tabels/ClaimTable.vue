@@ -17,6 +17,7 @@ export default {
   data(){
     return{
       headers: [
+        { title: '№', key: 'index', sortable: false },
         { title: 'Объект', key: 'object', sortable: false, value: item => `${item.accident.object.name}`},
         { title: 'Оборудованние', key: 'equipment', sortable: false, value: item => {
             const eqString = item.accident.damaged_equipment.map(eq => eq.name).join(", ");
@@ -186,6 +187,9 @@ export default {
         :loading-text="'Загрузка данных'"
         :no-data-text="'Данных не обнаружено'"
     >
+      <template v-slot:[`item.index`]="{ index }">
+        {{ (page - 1) * itemsPerPage + index + 1 }}
+      </template>
       <template v-slot:[`item.state_claim`]="{ value }">
         <v-chip :color="getColor(value)">
           {{ value }}
