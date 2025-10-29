@@ -3,6 +3,7 @@ import DefaultHeader from "@/components/DefaultHeader.vue";
 import moment from "moment/moment";
 import ClaimService from "@/store/claim.service";
 import ButtonBack from "@/components/UI/ButtonBack.vue";
+import axios from "axios";
 
 export default {
   name: "InfoClaimPage",
@@ -12,6 +13,8 @@ export default {
       uuidClaim: this.$route.params.uuid_claim,
       claim: null,
       isLoad: false,
+      mainFileClaimRef: null,
+      editFileClaimRef: null,
 
       headersEquip: [
         { title: 'Название', key: 'name'},
@@ -30,6 +33,12 @@ export default {
           claim.accident.time_line.sort((a, b) => new Date(a.time) - new Date(b.time))
         }
         this.claim = claim
+        if(claim.main_document && typeof claim.main_document === 'string' && claim.main_document.includes('/')){
+          this.mainFileClaimRef = `${axios.defaults.baseURL}claim/file/main/${claim.uuid}`
+        }
+        if(claim.edit_document && typeof claim.edit_document === 'string' && claim.edit_document.includes('/')){
+          this.editFileClaimRef = `${axios.defaults.baseURL}claim/file/edit/${claim.uuid}`
+        }
         this.isLoad = true
       })
     },
@@ -76,6 +85,20 @@ export default {
         <v-row>
           <v-col cols="12" md="12">
             <p class="text-h3">АО от {{ dateConvert }}</p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="6">
+            <p>
+              <a v-if="mainFileClaimRef" :href="mainFileClaimRef" target="_blank">Скачать главный файл</a>
+              <span v-else>Главный файл не загружен</span>
+            </p>
+          </v-col>
+          <v-col cols="12" md="6">
+            <p>
+              <a v-if="editFileClaimRef" :href="editFileClaimRef" target="_blank">Скачать файл с правками</a>
+              <span v-else>Файл с правками не загружен</span>
+            </p>
           </v-col>
         </v-row>
         <v-row>

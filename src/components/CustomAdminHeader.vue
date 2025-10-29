@@ -65,6 +65,7 @@
       <v-list-item prepend-icon="mdi-bank-outline" title="Объекты" @click="objectPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрация АО" @click="claimPage"/>
+      <v-list-item prepend-icon="mdi-cog-box" title="Заявки для улучшения" @click="proposalsPage"/>
       <v-list-item prepend-icon="mdi-chart-bar" title="Статистика" @click="statisticPage"/>
     </v-list>
 
@@ -115,6 +116,9 @@ export default {
     },
     claimPage(){
       router.push('/admin/claim')
+    },
+    proposalsPage(){
+      router.push('/admin/proposals')
     },
     logout(){
       this.$store.dispatch('auth/logout')

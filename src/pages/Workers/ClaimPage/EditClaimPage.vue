@@ -84,7 +84,7 @@ export default {
     },
     infoReadOnly(){
       if(this.isUser){
-        if(this.claim.state_claim.name === "under_consideration" || this.claim.state_claim.name === "accepted"){
+        if(this.claim.state_claim.name === "under_consideration"){
           this.isReadOnly = true
         }
       }

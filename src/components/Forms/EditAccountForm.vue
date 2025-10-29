@@ -102,8 +102,9 @@ export default {
     emailOptions(){
       // Конфигурация типов рассылок
       const adminOptions = [
-        { key: 'claim_update_state', label: 'Обновление статуса заявки' },
-        { key: 'claim_create', label: 'Создание заявки' },
+          { key: 'claim_update_state', label: 'Обновление статуса заявки' },
+          { key: 'claim_create', label: 'Создание заявки' },
+          { key: 'proposals_add', label: 'Создание нового предложения' },
       ]
       const workerOptions = [
         { key: 'claim_update_state', label: 'Обновление статуса заявки' },

@@ -46,6 +46,10 @@ import TypeEquipmentPage from "@/pages/AdminPage/EnvPage/TypeEquipmentPage.vue";
 import RegionPage from "@/pages/AdminPage/EnvPage/RegionPage.vue";
 import YandexAcceptPage from "@/pages/YandexAcceptPage.vue";
 import InfoClaimPage from "@/pages/All/InfoClaimPage.vue";
+import BaseUserProposalsPage from "@/pages/Workers/ProposalsPage/BaseUserProposalsPage.vue";
+import ProposalsViewWorkerPage from "@/pages/Workers/ProposalsPage/ProposalsViewWorkerPage.vue";
+import BaseAdminProposalsPage from "@/pages/AdminPage/ProposalsPage/BaseAdminProposalsPage.vue";
+import ProposalsViewAdminPage from "@/pages/AdminPage/ProposalsPage/ProposalsViewAdminPage.vue";
 
 const routes = [
     {
@@ -216,6 +220,16 @@ const routes = [
                 ]
             },
             {
+                path: "proposals",
+                component: BaseAdminProposalsPage,
+                children: [
+                    {
+                        path: "",
+                        component: ProposalsViewAdminPage
+                    }
+                ]
+            },
+            {
                 path: "statistic",
                 component: MainStatisticPage,
                 children: [
@@ -310,6 +324,16 @@ const routes = [
                     {
                         path: "edit/:uuid",
                         component: EditClaimPage
+                    }
+                ]
+            },
+            {
+                path: "proposals",
+                component: BaseUserProposalsPage,
+                children: [
+                    {
+                        path: "",
+                        component: ProposalsViewWorkerPage
                     }
                 ]
             },

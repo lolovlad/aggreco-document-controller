@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: vue-app
+    restart: always
     volumes:
       - /etc/ssl/certs/cloud_aggreko.crt:/etc/nginx/ssl/certs/cloud_aggreko.crt
       - /etc/ssl/private/cloud_aggreko.key:/etc/nginx/ssl/private/cloud_aggreko.key

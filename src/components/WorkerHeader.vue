@@ -20,11 +20,11 @@ export default {
     objectPage(){
       router.push('/worker/object')
     },
-    accidentPage(){
-      router.push('/worker/accident')
-    },
     claimPage(){
       router.push('/worker/claim')
+    },
+    proposalsPage(){
+      router.push('/worker/proposals')
     },
     logout(){
       this.$store.dispatch('auth/logout')
@@ -87,7 +87,7 @@ export default {
           <v-divider></v-divider>
 
           <v-list>
-            <v-list-item prepend-icon="mdi-cogs" title="Настройки" @click="profilePageOpen"/>
+            <v-list-item prepend-icon="mdi-cogs" title="Настройки" @click="router.push('/worker/claim')"/>
           </v-list>
 
           <v-card-actions>
@@ -117,8 +117,8 @@ export default {
   >
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-bank-outline" title="Объекты" @click="objectPage"/>
-      <!--<v-list-item prepend-icon="mdi-file-alert" title="АО" @click="accidentPage"/>-->
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрации АО" @click="claimPage"/>
+      <v-list-item prepend-icon="mdi-cog-box" title="Технические предложения" @click="proposalsPage"/>
     </v-list>
   </v-navigation-drawer>
 </template>

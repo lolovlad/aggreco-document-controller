@@ -103,7 +103,7 @@ export default {
       <v-col cols="12" sm="2" v-else>
         <p>Файл не загружен</p>
       </v-col>
-      <v-col cols="12" sm="10" v-if="(isUser === false) && !readOnly">
+      <v-col cols="12" sm="10" v-if="!readOnly">
         <MainFileUploader :type-file-upload="'edit'" :uuid-claim="uuidClaim"/>
       </v-col>
     </v-row>
