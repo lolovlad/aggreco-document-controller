@@ -50,6 +50,8 @@ import BaseUserProposalsPage from "@/pages/Workers/ProposalsPage/BaseUserProposa
 import ProposalsViewWorkerPage from "@/pages/Workers/ProposalsPage/ProposalsViewWorkerPage.vue";
 import BaseAdminProposalsPage from "@/pages/AdminPage/ProposalsPage/BaseAdminProposalsPage.vue";
 import ProposalsViewAdminPage from "@/pages/AdminPage/ProposalsPage/ProposalsViewAdminPage.vue";
+import BaseAdminAnalysisPage from "@/pages/AdminPage/AnalysisPage/BaseAdminAnalysisPage.vue";
+import AnalysisViewPage from "@/pages/AdminPage/AnalysisPage/AnalysisViewPage.vue";
 
 const routes = [
     {
@@ -240,6 +242,16 @@ const routes = [
                     {
                         path: "object",
                         component: ObjectStatic
+                    }
+                ]
+            },
+            {
+                path: "analysis",
+                component: BaseAdminAnalysisPage,
+                children: [
+                    {
+                        path: "",
+                        component: AnalysisViewPage
                     }
                 ]
             },

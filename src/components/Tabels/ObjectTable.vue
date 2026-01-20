@@ -40,21 +40,35 @@
         >
           mdi-pencil
         </v-icon>
+        <v-icon
+            class="me-2"
+            size="small"
+            @click="openSettings(item.uuid)"
+            title="Настройки объекта"
+        >
+          mdi-cog
+        </v-icon>
         <delete-button @agree="deleteObject(item.uuid)"/>
       </template>
     </v-data-table-server>
   </v-card>
 
+  <ObjectSettingsForm
+      :object-uuid="selectedObjectUuid"
+      ref="settingsForm"
+      @saved="handleSettingsSaved"
+  />
 </template>
 
 <script>
 import ObjectService from "@/store/object.service";
 import DeleteButton from "@/components/UI/Buttons/DeleteButton.vue";
+import ObjectSettingsForm from "@/components/Forms/ObjectSettingsForm.vue";
 import {page as $store} from "@/store/page.model";
 
 export default {
   name: "ObjectTable",
-  components: {DeleteButton},
+  components: {DeleteButton, ObjectSettingsForm},
   data(){
     return {
       search: "",
@@ -71,7 +85,8 @@ export default {
       loading: false,
       pageNow: 1,
       itemsPerPageNow: 20,
-      page: 1
+      page: 1,
+      selectedObjectUuid: null
     }
   },
   methods: {
@@ -113,6 +128,17 @@ export default {
       this.saveState()
       this.$emit("deleteObject", uuid)
     },
+    openSettings(uuid){
+      this.saveState()
+      this.selectedObjectUuid = uuid
+      if (this.$refs.settingsForm) {
+        this.$refs.settingsForm.open()
+      }
+    },
+    handleSettingsSaved(){
+      // Можно перезагрузить данные таблицы, если нужно
+      // this.loadItem({page: this.page, itemsPerPage: this.itemsPerPage})
+    }
   },
 }
 </script>

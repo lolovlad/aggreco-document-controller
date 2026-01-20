@@ -67,6 +67,7 @@
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрация АО" @click="claimPage"/>
       <v-list-item prepend-icon="mdi-cog-box" title="Заявки для улучшения" @click="proposalsPage"/>
       <v-list-item prepend-icon="mdi-chart-bar" title="Статистика" @click="statisticPage"/>
+      <v-list-item prepend-icon="mdi-chart-line-variant" title="Анализ" @click="analysisPage"/>
     </v-list>
 
     <template v-slot:append>
@@ -113,6 +114,9 @@ export default {
     },
     statisticPage(){
       router.push('/admin/statistic')
+    },
+    analysisPage(){
+      router.push('/admin/analysis')
     },
     claimPage(){
       router.push('/admin/claim')

@@ -148,6 +148,46 @@ class ObjectService{
             })
     }
 
+    getObjectSettings(uuid){
+        return axios
+            .get(`/object/${uuid}/settings`)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+
+    createObjectSettings(uuid, formData){
+        return axios
+            .post(`/object/${uuid}/settings`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                if(response.status === 201)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+
+    updateObjectSettings(uuid, data){
+        return axios
+            .put(`/object/${uuid}/settings`, data)
+            .then((response) => {
+                if(response.status === 200)
+                    return response.data
+            })
+            .catch(function (e){
+                throw e
+            })
+    }
+
 }
 
 export default new ObjectService();
