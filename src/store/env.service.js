@@ -1,9 +1,10 @@
 import axios from "axios";
+import userAxios from "@/axios-user";
 
 
 class EnvService{
     loadTypeUser(){
-        return axios
+        return userAxios
             .get(`/env/type_user`)
             .then((response) => {
                 if(response.status === 200)
@@ -14,7 +15,7 @@ class EnvService{
             })
     }
     getProfUser(){
-        return axios
+        return userAxios
             .get(`/env/profession`)
             .then((response) => {
                 if(response.status === 200)
@@ -25,7 +26,7 @@ class EnvService{
             })
     }
     addProf(prof){
-        return axios
+        return userAxios
             .post("/env/profession", prof)
             .then((response) => {
                 if(response.status === 201)
@@ -36,7 +37,7 @@ class EnvService{
             })
     }
     deleteProf(id_prof){
-        return axios
+        return userAxios
             .delete(`/env/profession/${id_prof}`)
             .then(
                 (response) => {

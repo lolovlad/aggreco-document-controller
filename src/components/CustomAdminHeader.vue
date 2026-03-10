@@ -2,7 +2,7 @@
   <v-app-bar color="rgb( 253,110,57)"
              prominent>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    <v-app-bar-title @click="$route.push('/')">Aggreko-work-tool</v-app-bar-title>
+    <v-app-bar-title @click="$route.push('/')" class="text-white">agk-work-tool</v-app-bar-title>
     <template v-slot:append>
       <v-menu
           v-model="menu"
@@ -74,18 +74,27 @@
       <v-divider></v-divider>
       <v-list density="compact" nav>
         <v-list-item prepend-icon="mdi-cog-outline" title="Настройки" @click="envPage"/>
+        <v-list-item 
+          prepend-icon="mdi-alert-circle" 
+          title="🐛 Сообщить об ошибке" 
+          @click="showSupportDialog"
+          class="text-error"
+        />
       </v-list>
     </template>
   </v-navigation-drawer>
+  
+  <SupportDialog v-model="supportDialog" />
 </template>
 
 <script>
 import router from "@/router/router";
+import SupportDialog from "@/components/SupportDialog.vue";
 
 
 export default {
   name: "CustomAdminHeader",
-  components: {},
+  components: { SupportDialog },
   data(){
     return{
       drawer: false,
@@ -94,6 +103,7 @@ export default {
       menu: false,
       message: false,
       hints: true,
+      supportDialog: false,
     }
   },
   methods:{
@@ -130,6 +140,9 @@ export default {
     },
     envPage(){
       router.push('/admin/env')
+    },
+    showSupportDialog(){
+      this.supportDialog = true
     }
   },
   computed: {
@@ -156,5 +169,7 @@ export default {
 </script>
 
 <style scoped>
-
+.text-white {
+  color: white !important;
+}
 </style>

@@ -1,8 +1,10 @@
 <script>
 import router from "@/router/router";
+import SupportDialog from "@/components/SupportDialog.vue";
 
 export default {
   name: "WorkerHeader",
+  components: { SupportDialog },
   data(){
     return{
       drawer: false,
@@ -11,6 +13,7 @@ export default {
       menu: false,
       message: false,
       hints: true,
+      supportDialog: false,
     }
   },
   methods:{
@@ -29,6 +32,9 @@ export default {
     logout(){
       this.$store.dispatch('auth/logout')
       router.push('/')
+    },
+    showSupportDialog(){
+      this.supportDialog = true
     }
   },
   computed: {
@@ -58,7 +64,7 @@ export default {
   <v-app-bar color="rgb( 253,110,57)"
              prominent>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    <v-app-bar-title @click="$route.push('/')">Aggreko-work-tool</v-app-bar-title>
+    <v-app-bar-title @click="$route.push('/')" class="text-white">agk-work-tool</v-app-bar-title>
     <template v-slot:append>
       <v-menu
           v-model="menu"
@@ -119,10 +125,20 @@ export default {
       <v-list-item prepend-icon="mdi-bank-outline" title="Объекты" @click="objectPage"/>
       <v-list-item prepend-icon="mdi-file-alert" title="Регистрации АО" @click="claimPage"/>
       <v-list-item prepend-icon="mdi-cog-box" title="Технические предложения" @click="proposalsPage"/>
+      <v-list-item 
+        prepend-icon="mdi-alert-circle" 
+        title="🐛 Сообщить об ошибке" 
+        @click="showSupportDialog"
+        class="text-error"
+      />
     </v-list>
   </v-navigation-drawer>
+  
+  <SupportDialog v-model="supportDialog" />
 </template>
 
 <style scoped>
-
+.text-white {
+  color: white !important;
+}
 </style>

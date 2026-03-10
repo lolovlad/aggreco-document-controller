@@ -1,8 +1,8 @@
-import axios from "axios";
+import userAxios from "@/axios-user";
 
 class UserService {
     getPageUser(page, perItemPage, typeUser=""){
-        return axios
+        return userAxios
             .get('/user/page_user', {params: {page: page, type_user: typeUser, per_item_page: perItemPage}})
             .then(response => {
                 if(response.status === 200)
@@ -13,7 +13,7 @@ class UserService {
             })
     }
     importFile(form){
-        return axios
+        return userAxios
             .post('/user/import_file/csv', form)
             .then(response => {
                 if(response.status === 201)
@@ -24,7 +24,7 @@ class UserService {
             })
     }
     searchUsers(search){
-        return axios
+        return userAxios
             .get('/user/search', {
                 params: {
                     search_field: search,
@@ -39,7 +39,7 @@ class UserService {
             })
     }
     getUserByUuid(uuid){
-        return axios
+        return userAxios
             .get(`/user/get_one/${uuid}`)
             .then((response) => {
                 if(response.status === 200){
@@ -51,7 +51,7 @@ class UserService {
             })
     }
     addUser(user){
-        return axios
+        return userAxios
             .post("/user", user)
             .then((response) => {
                 if(response.status === 200)
@@ -62,7 +62,7 @@ class UserService {
             })
     }
     updateUser(uuid, user){
-        return axios
+        return userAxios
             .put(`/user/${uuid}`, user)
             .then((response) => {
                 if(response.status === 205)
@@ -73,7 +73,7 @@ class UserService {
             })
     }
     getProfile(){
-        return axios
+        return userAxios
             .get(`/user/get/profile`)
             .then(
                 (response) => {
@@ -86,7 +86,7 @@ class UserService {
             })
     }
     saveSignature(form){
-        return axios
+        return userAxios
             .post('/user/file/signature', form)
             .then(response => {
                 if(response.status === 200)
@@ -97,8 +97,8 @@ class UserService {
             })
     }
     getSignature(){
-        return axios
-            .get('user/file/signature')
+        return userAxios
+            .get('/user/file/signature')
             .then(response => {
                 if(response.status === 200)
                     return response.data
@@ -109,7 +109,7 @@ class UserService {
             })
     }
     deleteUser(uuidUser){
-        return axios
+        return userAxios
             .delete(`/user/${uuidUser}`)
             .then((response) => {
                 if(response.status === 200)
@@ -120,7 +120,7 @@ class UserService {
             })
     }
     updateProfileUser(uuid, user){
-        return axios
+        return userAxios
             .put(`/user/profile/update/${uuid}`, user)
             .then((response) => {
                 if(response.status === 205)

@@ -54,6 +54,7 @@
 
 <script>
 import axios from "axios";
+import userAxios from "@/axios-user";
 import M from "materialize-css";
 
 export default {
@@ -80,7 +81,7 @@ export default {
       this.search = ''
     },
     search(){
-      axios
+      userAxios
           .get('/user/search', {params: {
             search_field: this.search
           }})
