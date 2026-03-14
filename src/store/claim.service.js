@@ -19,7 +19,7 @@ class ClaimService{
         }
         
         return axios
-            .get('/claim/page', {params: params})
+            .get('/api/main/v1/claim/page', {params: params})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -31,7 +31,7 @@ class ClaimService{
     addClaim(claim){
         const timezone = moment().format("Z");
         return axios
-            .post('/claim', claim, {
+            .post('/api/main/v1/claim', claim, {
                 headers: {
                     "X-Timezone": timezone,
                 }
@@ -47,7 +47,7 @@ class ClaimService{
     }
     getClaims(uuid){
         return axios
-            .get(`/claim/get/${uuid}`)
+            .get(`/api/main/v1/claim/get/${uuid}`)
             .then(response => {
                 if(response.status === 200){
                     return response.data
@@ -59,7 +59,7 @@ class ClaimService{
     }
     saveFile(uuid, typeFile, file){
         return axios
-            .post(`/claim/file/${typeFile}/${uuid}`, file)
+            .post(`/api/main/v1/claim/file/${typeFile}/${uuid}`, file)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -70,7 +70,7 @@ class ClaimService{
     }
     deleteClaim(uuid){
         return axios
-            .delete(`/claim/${uuid}`)
+            .delete(`/api/main/v1/claim/${uuid}`)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -81,7 +81,7 @@ class ClaimService{
     }
     updateStateClaim(uuid, stateClaim){
         return axios
-            .put(`/claim/update/state/${uuid}/${stateClaim}`)
+            .put(`/api/main/v1/claim/update/state/${uuid}/${stateClaim}`)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -92,7 +92,7 @@ class ClaimService{
     }
     updateClaim(uuid, claim){
         return  axios
-            .put(`/claim/${uuid}`, claim)
+            .put(`/api/main/v1/claim/${uuid}`, claim)
             .then(response => {
                 if(response.status === 200)
                     return response

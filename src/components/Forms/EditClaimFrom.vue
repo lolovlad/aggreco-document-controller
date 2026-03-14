@@ -39,9 +39,9 @@ export default {
     getClaim(){
       ClaimService.getClaims(this.uuidClaim).then((claim) => {
         if(claim.edit_document.includes('/'))
-          this.editFileClaimRef = `${axios.defaults.baseURL}claim/file/edit/${claim.uuid}`
+          this.editFileClaimRef = `${axios.defaults.baseURL}/api/main/v1/claim/file/edit/${claim.uuid}`
         if(claim.main_document.includes('/'))
-            this.mainFileClaimRef = `${axios.defaults.baseURL}claim/file/main/${claim.uuid}`
+            this.mainFileClaimRef = `${axios.defaults.baseURL}/api/main/v1/claim/file/main/${claim.uuid}`
         this.comment = claim.comment
         this.datetime = claim.datetime
       })

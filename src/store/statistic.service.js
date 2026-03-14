@@ -4,7 +4,7 @@ import axios from "axios";
 class StatisticService{
     getAllStatistic(year){
         return axios
-            .get('/statistic/accident/type_brake', {params: {year: year}})
+            .get('/api/main/v1/statistic/accident/type_brake', {params: {year: year}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -15,7 +15,7 @@ class StatisticService{
     }
     getStatisticSlice(date_start, date_end){
         return axios
-            .get('/statistic/accident/date_slice', {params: {start_date: date_start, end_date: date_end}})
+            .get('/api/main/v1/statistic/accident/date_slice', {params: {start_date: date_start, end_date: date_end}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -45,7 +45,7 @@ class StatisticService{
         
         // Формируем URL с параметрами
         const queryString = searchParams.toString();
-        const url = `/statistic/accident${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/accident${queryString ? '?' + queryString : ''}`;
         
         console.log('Request URL:', url); // Для отладки
         
@@ -81,7 +81,7 @@ class StatisticService{
         
         // Формируем URL с параметрами
         const queryString = searchParams.toString();
-        const url = `/statistic/accident/monthly${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/accident/monthly${queryString ? '?' + queryString : ''}`;
         
         console.log('Monthly Request URL:', url);
         
@@ -98,7 +98,7 @@ class StatisticService{
     }
     getObjectStatistic(uuidObject, typeFilter, param){
         return axios
-            .get(`/statistic/object/${uuidObject}`, {params: {type_filter: typeFilter, param: param}})
+            .get(`/api/main/v1/statistic/object/${uuidObject}`, {params: {type_filter: typeFilter, param: param}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -109,7 +109,7 @@ class StatisticService{
     }
     getListClassBrake(){
         return axios
-            .get(`/statistic/type_brake/class`)
+            .get(`/api/main/v1/statistic/type_brake/class`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -140,7 +140,7 @@ class StatisticService{
         }
         
         const queryString = searchParams.toString();
-        const url = `/statistic/accident/${uuid_object}/class${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/accident/${uuid_object}/class${queryString ? '?' + queryString : ''}`;
         
         console.log('Object ClassBrake Request URL:', url);
         
@@ -177,7 +177,7 @@ class StatisticService{
         }
         
         const queryString = searchParams.toString();
-        const url = `/statistic/accident/${uuid_object}/type${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/accident/${uuid_object}/type${queryString ? '?' + queryString : ''}`;
         
         console.log('Object TypeBrake Request URL:', url);
         
@@ -214,7 +214,7 @@ class StatisticService{
         }
         
         const queryString = searchParams.toString();
-        const url = `/statistic/accident/${uuid_object}/monthly/class${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/accident/${uuid_object}/monthly/class${queryString ? '?' + queryString : ''}`;
         
         console.log('Object Monthly ClassBrake Request URL:', url);
         
@@ -257,7 +257,7 @@ class StatisticService{
         
         // Формируем URL с параметрами
         const queryString = searchParams.toString();
-        const url = `/statistic/export/csv${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/statistic/export/csv${queryString ? '?' + queryString : ''}`;
         
         console.log('Export CSV Request URL:', url);
         

@@ -4,7 +4,7 @@ import axios from "axios";
 class DocumentService{
     getPageDocument(page){
         return axios
-            .get('/document/page_document', {params: {page: page}})
+            .get('/api/main/v1/document/page_document', {params: {page: page}})
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -15,7 +15,7 @@ class DocumentService{
     }
     addDocument(document){
         return axios
-            .post('/document', document)
+            .post('/api/main/v1/document', document)
             .then(response => {
                 if(response.status === 201)
                     return response
@@ -26,7 +26,7 @@ class DocumentService{
     }
     getDocumentByUuid(uuid){
         return axios
-            .get(`/document/get_document/${uuid}`)
+            .get(`/api/main/v1/document/get_document/${uuid}`)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -37,7 +37,7 @@ class DocumentService{
     }
     updateDocument(document){
         return axios
-            .put('/document', document)
+            .put('/api/main/v1/document', document)
             .then((response) => {
                 if(response.status === 205)
                     return response
@@ -48,7 +48,7 @@ class DocumentService{
     }
     deleteDocument(uuid){
         return axios
-            .delete(`/document/${uuid}`)
+            .delete(`/api/main/v1/document/${uuid}`)
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -59,7 +59,7 @@ class DocumentService{
     }
     getUrlDocument(uuid){
         return axios
-            .get(`/document/get_url/${uuid}`)
+            .get(`/api/main/v1/document/get_url/${uuid}`)
             .then((response) => {
                 if(response.status === 200){
                     return response.data.message
@@ -71,7 +71,7 @@ class DocumentService{
     }
     getViewUsersDocument(uuid){
         return axios
-            .get(`/document/get_user_in_document/${uuid}`)
+            .get(`/api/main/v1/document/get_user_in_document/${uuid}`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data

@@ -51,7 +51,7 @@ class EnvService{
     }
     deleteTypeEquipment(idTypeEquip){
         return axios
-            .delete(`/env/type_equip/${idTypeEquip}`)
+            .delete(`/api/object_equipment/v1/env/type_equip/${idTypeEquip}`)
             .then(
                 (response) => {
                     if(response.status === 200)
@@ -64,7 +64,7 @@ class EnvService{
     }
     getTypeEquipment(){
         return axios
-            .get(`/env/type_equip`)
+            .get(`/api/object_equipment/v1/env/type_equip`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -72,7 +72,7 @@ class EnvService{
     }
     getStateObject(){
         return axios
-            .get(`/env/state_object`)
+            .get(`/api/object_equipment/v1/env/state_object`)
             .then((response)=> {
                 if (response.status === 200)
                     return response.data
@@ -80,7 +80,7 @@ class EnvService{
     }
     getRegion(){
         return axios
-            .get(`/env/region/get_all`)
+            .get(`/api/object_equipment/v1/env/region/get_all`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -89,7 +89,7 @@ class EnvService{
 
     getListSignsAccident(){
         return axios
-            .get(`/env/signs_accident/get_all`)
+            .get(`/api/main/v1/env/signs_accident/get_all`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -100,7 +100,7 @@ class EnvService{
     }
     getListExternalOrganizationalTypeBrake(){
         return axios
-            .get(`/env/type_brake_mechanical/external_organizational`)
+            .get(`/api/main/v1/env/type_brake_mechanical/external_organizational`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -111,7 +111,7 @@ class EnvService{
     }
     getListDomesticOrganizationalTypeBrake(){
         return axios
-            .get(`/env/type_brake_mechanical/domestic_organizational`)
+            .get(`/api/main/v1/env/type_brake_mechanical/domestic_organizational`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -122,7 +122,7 @@ class EnvService{
     }
     getListMehTypeBrake(){
         return axios
-            .get(`/env/type_brake_mechanical/meh`)
+            .get(`/api/main/v1/env/type_brake_mechanical/meh`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -133,7 +133,7 @@ class EnvService{
     }
     getTypeEvent(){
         return axios
-            .get(`/env/event/type_event`)
+            .get(`/api/main/v1/env/event/type_event`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -144,7 +144,7 @@ class EnvService{
     }
     getStateEvent(){
         return axios
-            .get(`/env/event/state_event`)
+            .get(`/api/main/v1/env/event/state_event`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -155,7 +155,7 @@ class EnvService{
     }
     getStateClaim(){
         return axios
-            .get('/env/state_claim')
+            .get('/api/main/v1/env/state_claim')
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -166,7 +166,7 @@ class EnvService{
     }
     exportTypeEquipmentFile(file){
         return axios
-            .post(`/env/type_equip/import_file`, file)
+            .post(`/api/object_equipment/v1/env/type_equip/import_file`, file)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -177,7 +177,7 @@ class EnvService{
     }
     addTypeEquipment(typeEquip){
         return axios
-            .post("/env/type_equip", typeEquip)
+            .post("/api/object_equipment/v1/env/type_equip", typeEquip)
             .then((response) => {
                 if(response.status === 201)
                     return response
@@ -188,7 +188,7 @@ class EnvService{
     }
     exportRegionFile(file){
         return axios
-            .post(`/env/region/import_file`, file)
+            .post(`/api/object_equipment/v1/env/region/import_file`, file)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -199,7 +199,7 @@ class EnvService{
     }
     addRegion(prof){
         return axios
-            .post("/env/region", prof)
+            .post("/api/object_equipment/v1/env/region", prof)
             .then((response) => {
                 if(response.status === 201)
                     return response

@@ -192,7 +192,7 @@ export default {
   methods:{
     getAccident(){
       axios
-          .get(`accident/${this.uuidAccident}`)
+          .get(`/api/main/v1/accident/${this.uuidAccident}`)
           .then((response) => {
             console.log(response.data)
 
@@ -223,7 +223,7 @@ export default {
     },
     getListObject(){
       axios
-          .get(`/object/list`)
+          .get(`/api/object_equipment/v1/object/list`)
           .then((response) => {
             this.listObject = response.data
           })

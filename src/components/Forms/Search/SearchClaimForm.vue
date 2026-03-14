@@ -8,26 +8,27 @@ export default {
   data(){
     return{
       userType: $store.state.user.type.name || null,
-      selectedObject: null,
-      selectedStatus: null,
+      selectedObject: "all",
+      selectedStatus: 0,
       dateFrom: null,
       dateTo: null,
       objectOptions: [{name: "Все", uuid: "all"}],
       statusOptions: [{description: "Все", id: 0}],
+      settingDefaults: false, // не эмитить при установке дат по умолчанию (один запрос вместо двух)
     }
   },
   watch: {
     selectedObject() {
-      this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
+      if (!this.settingDefaults) this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
     },
     selectedStatus() {
-      this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
+      if (!this.settingDefaults) this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
     },
     dateFrom() {
-      this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
+      if (!this.settingDefaults) this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
     },
     dateTo() {
-      this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
+      if (!this.settingDefaults) this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo)
     },
   },
   methods: {
@@ -53,12 +54,16 @@ export default {
       )
     },
     setDefaultDates() {
+      this.settingDefaults = true;
       const now = new Date();
       const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-      
       this.dateFrom = firstDayOfMonth.toISOString().split('T')[0];
       this.dateTo = lastDayOfMonth.toISOString().split('T')[0];
+      this.$nextTick(() => {
+        this.settingDefaults = false;
+        this.$emit("updateSelect", this.selectedObject, this.selectedStatus, this.dateFrom, this.dateTo);
+      });
     },
     clearDates() {
       this.dateFrom = null;

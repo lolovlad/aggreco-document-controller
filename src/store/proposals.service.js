@@ -11,7 +11,7 @@ class ProposalsService {
         };
 
         return axios
-            .get('/proposals/page', {params: params})
+            .get('/api/main/v1/proposals/page', {params: params})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -22,7 +22,7 @@ class ProposalsService {
     }
     addEntity(data){
         return axios
-            .post(`/proposals/`, data)
+            .post(`/api/main/v1/proposals/`, data)
             .then(response => {
                 if(response.status === 201)
                     return response
@@ -33,7 +33,7 @@ class ProposalsService {
     }
     getEntity(uuid){
         return axios
-            .get(`/proposals/get/${uuid}`)
+            .get(`/api/main/v1/proposals/get/${uuid}`)
             .then(response => {
                 if(response.status === 200)
                     return response.data
@@ -44,7 +44,7 @@ class ProposalsService {
     }
     updateEntity(uuid, form){
         return  axios
-            .put(`/proposals/${uuid}`, form)
+            .put(`/api/main/v1/proposals/${uuid}`, form)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -55,7 +55,7 @@ class ProposalsService {
     }
     deleteEntity(uuid){
         return axios
-            .delete(`/proposals/${uuid}`, )
+            .delete(`/api/main/v1/proposals/${uuid}`, )
             .then((response) => {
                 if(response.status === 200){
                     return response
@@ -67,7 +67,7 @@ class ProposalsService {
     }
     approveProposal(uuid, comment){
         return axios
-            .put(`/proposals/${uuid}/approve`, { comment: comment })
+            .put(`/api/main/v1/proposals/${uuid}/approve`, { comment: comment })
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -78,7 +78,7 @@ class ProposalsService {
     }
     rejectProposal(uuid, comment){
         return axios
-            .put(`/proposals/${uuid}/reject`, { comment: comment })
+            .put(`/api/main/v1/proposals/${uuid}/reject`, { comment: comment })
             .then(response => {
                 if(response.status === 200)
                     return response

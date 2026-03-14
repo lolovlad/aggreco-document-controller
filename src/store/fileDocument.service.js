@@ -3,7 +3,7 @@ import axios from "axios";
 class FileDocumentService{
     saveFile(file){
         return axios
-            .post(`/file`, file)
+            .post(`/api/main/v1/file`, file)
             .then(response => {
                 if(response.status === 200)
                     return response
@@ -14,7 +14,7 @@ class FileDocumentService{
     }
     getListFiles(){
         return axios
-            .get('/file/all')
+            .get('/api/main/v1/file/all')
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -25,7 +25,7 @@ class FileDocumentService{
     }
     generateDocument(uuidClaim, dataGenerate){
         return axios
-            .post(`/file/generate/${uuidClaim}`, dataGenerate)
+            .post(`/api/main/v1/file/generate/${uuidClaim}`, dataGenerate)
             .then((response) => {
                 if(response.status === 201)
                     return response.data
@@ -36,7 +36,7 @@ class FileDocumentService{
     }
     getFile(idBlueprint){
         return axios
-            .get(`/file/metadata/${idBlueprint}`)
+            .get(`/api/main/v1/file/metadata/${idBlueprint}`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -47,7 +47,7 @@ class FileDocumentService{
     }
     updateFile(idBlueprint, file){
         return axios
-            .put(`/file/${idBlueprint}`, file)
+            .put(`/api/main/v1/file/${idBlueprint}`, file)
             .then(response => {
                 if(response.status === 200)
                     return response

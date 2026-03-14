@@ -20,7 +20,7 @@ class LogAnalysisService{
         }
         
         const queryString = searchParams.toString();
-        const url = `/log-analysis/object/${uuid_object}/summarize${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/log-analysis/object/${uuid_object}/summarize${queryString ? '?' + queryString : ''}`;
         
         return axios
             .get(url)
@@ -53,7 +53,7 @@ class LogAnalysisService{
         }
         
         const queryString = searchParams.toString();
-        const url = `/log-analysis/object/${uuid_object}/equipment/${uuid_equipment}/summarize${queryString ? '?' + queryString : ''}`;
+        const url = `/api/main/v1/log-analysis/object/${uuid_object}/equipment/${uuid_equipment}/summarize${queryString ? '?' + queryString : ''}`;
         
         return axios
             .get(url)
@@ -74,7 +74,7 @@ class LogAnalysisService{
      */
     analyzeObjectLogs(uuid_object){
         return axios
-            .post(`/log-analysis/object/${uuid_object}/analyze`, {}, {
+            .post(`/api/main/v1/log-analysis/object/${uuid_object}/analyze`, {}, {
                 timeout: 600000 // 10 минут (600000 мс) для долгих запросов анализа
             })
             .then((response) => {

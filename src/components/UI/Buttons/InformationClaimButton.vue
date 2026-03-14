@@ -47,12 +47,12 @@ export default {
         }
         this.claim = claim
         if(claim.main_document && typeof claim.main_document === 'string' && claim.main_document.includes('/')){
-          this.mainFileClaimRef = `${axios.defaults.baseURL}claim/file/main/${claim.uuid}`
+          this.mainFileClaimRef = `${axios.defaults.baseURL}/api/main/v1/claim/file/main/${claim.uuid}`
         } else {
           this.mainFileClaimRef = null
         }
         if(claim.edit_document && typeof claim.edit_document === 'string' && claim.edit_document.includes('/')){
-          this.editFileClaimRef = `${axios.defaults.baseURL}claim/file/edit/${claim.uuid}`
+          this.editFileClaimRef = `${axios.defaults.baseURL}/api/main/v1/claim/file/edit/${claim.uuid}`
         } else {
           this.editFileClaimRef = null
         }

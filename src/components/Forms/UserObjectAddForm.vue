@@ -101,7 +101,7 @@ export default {
 
     registrationUser(uuid){
       axios
-          .post(`/object/${this.uuidObject}/user/${uuid}`)
+          .post(`/api/object_equipment/v1/object/${this.uuidObject}/user/${uuid}`)
           .then((response) => {
             M.toast({html: response.data.message})
             this.getUserList()
@@ -110,7 +110,7 @@ export default {
 
     deleteUser(uuid){
       axios
-          .delete(`/object/${this.uuidObject}/user/${uuid}`)
+          .delete(`/api/object_equipment/v1/object/${this.uuidObject}/user/${uuid}`)
           .then((response) => {
             M.toast({html: response.data.message})
             this.getUserList()
@@ -119,7 +119,7 @@ export default {
 
     getUserList(){
       axios
-          .get(`/object/${this.uuidObject}/users`)
+          .get(`/api/object_equipment/v1/object/${this.uuidObject}/users`)
           .then((response) => {
             this.selectUsers = response.data
           })

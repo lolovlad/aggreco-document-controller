@@ -4,7 +4,7 @@ import axios from "axios";
 class ObjectService{
     getPageObject(page, perItemPage){
         return axios
-            .get('/object/page', {params: {page: page, per_item_page: perItemPage}})
+            .get('/api/object_equipment/v1/object/page', {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -15,7 +15,7 @@ class ObjectService{
     }
     deleteObject(uuid){
         return axios
-            .delete(`/object/${uuid}`)
+            .delete(`/api/object_equipment/v1/object/${uuid}`)
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -26,7 +26,7 @@ class ObjectService{
     }
     getObjectByUuid(uuid){
         return axios
-            .get(`/object/one/${uuid}`)
+            .get(`/api/object_equipment/v1/object/one/${uuid}`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -37,7 +37,7 @@ class ObjectService{
     }
     addObject(obj){
         return axios
-            .post("/object", obj)
+            .post("/api/object_equipment/v1/object", obj)
             .then((response) => {
                 if(response.status === 201)
                     return response.data.message
@@ -48,7 +48,7 @@ class ObjectService{
     }
     updateObject(obj, uuid){
         return axios
-            .put(`/object/${uuid}`, obj)
+            .put(`/api/object_equipment/v1/object/${uuid}`, obj)
             .then((response) => {
                 if(response.status === 200)
                     return response.data.message
@@ -59,7 +59,7 @@ class ObjectService{
     }
     getEquipmentPage(uuidObject, page, perItemPage){
         return axios
-            .get(`/object/${uuidObject}/equipment/page`, {params: {page: page, per_item_page: perItemPage}})
+            .get(`/api/object_equipment/v1/object/${uuidObject}/equipment/page`, {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -70,7 +70,7 @@ class ObjectService{
     }
     deleteEquipment(uuid){
         return axios
-            .delete(`/object/equipment/${uuid}`, )
+            .delete(`/api/object_equipment/v1/object/equipment/${uuid}`, )
             .then((response) => {
                 if(response.status === 200){
                     return response
@@ -82,7 +82,7 @@ class ObjectService{
     }
     getEquipmentByUuid(uuid){
         return axios
-            .get(`/object/equipment/${uuid}`)
+            .get(`/api/object_equipment/v1/object/equipment/${uuid}`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -93,7 +93,7 @@ class ObjectService{
     }
     addEquipment(uuidObject, obj){
         return axios
-            .post(`/object/${uuidObject}/equipment`, obj)
+            .post(`/api/object_equipment/v1/object/${uuidObject}/equipment`, obj)
             .then((response) => {
                 if(response.status === 201)
                     return response.data.message
@@ -104,7 +104,7 @@ class ObjectService{
     }
     updateEquipment(uuidEquipment, equip){
         return axios
-            .put(`/object/equipment/${uuidEquipment}`, equip)
+            .put(`/api/object_equipment/v1/object/equipment/${uuidEquipment}`, equip)
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -116,7 +116,7 @@ class ObjectService{
 
     getListObject(){
         return axios
-            .get('/object/list')
+            .get('/api/object_equipment/v1/object/list')
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -127,7 +127,7 @@ class ObjectService{
     }
     searchEquipmentInObject(uuid, search){
         return axios
-            .get(`/object/${uuid}/equipment/search`, {params: {search_field: search}})
+            .get(`/api/object_equipment/v1/object/${uuid}/equipment/search`, {params: {search_field: search}})
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -138,7 +138,7 @@ class ObjectService{
     }
     getObjectByUser(){
         return axios
-            .get(`/object/get_object_to_user`)
+            .get(`/api/object_equipment/v1/object/get_object_to_user`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -150,7 +150,7 @@ class ObjectService{
 
     getObjectSettings(uuid){
         return axios
-            .get(`/object/${uuid}/settings`)
+            .get(`/api/object_equipment/v1/object/${uuid}/settings`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -162,7 +162,7 @@ class ObjectService{
 
     createObjectSettings(uuid, formData){
         return axios
-            .post(`/object/${uuid}/settings`, formData, {
+            .post(`/api/object_equipment/v1/object/${uuid}/settings`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -178,7 +178,7 @@ class ObjectService{
 
     updateObjectSettings(uuid, data){
         return axios
-            .put(`/object/${uuid}/settings`, data)
+            .put(`/api/object_equipment/v1/object/${uuid}/settings`, data)
             .then((response) => {
                 if(response.status === 200)
                     return response.data

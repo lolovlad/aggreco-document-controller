@@ -56,7 +56,9 @@ export default {
       selectObject: "all",
       selectState: 0,
       selectDateFrom: null,
-      selectDateTo: null
+      selectDateTo: null,
+
+      filtersInitialized: false // ждём первый emit из SearchClaimForm (с датами), чтобы не делать лишний запрос без фильтров
     }
   },
   methods: {
@@ -84,9 +86,11 @@ export default {
       this.selectState = selectState
       this.selectDateFrom = dateFrom
       this.selectDateTo = dateTo
+      this.filtersInitialized = true
       this.loadItem(1)
     },
     loadItem({page=1, itemsPerPage=20}){
+      if (!this.filtersInitialized) return // один запрос после инициализации фильтров (SearchClaimForm)
       this.loading = true
       if(this.search.length >= 0){
         const initialState = $store.state;

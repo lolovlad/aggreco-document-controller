@@ -20,7 +20,7 @@ const getRefreshTokenFromStorage = () => {
     }
 };
 
-axios.defaults.baseURL = `${import.meta.env.VITE_TYPE_HTTP_PROTOCOL}://${import.meta.env.VITE_HOST_SERVER}:${import.meta.env.VITE_PORT_SERVER}/api/main/v1/`;
+axios.defaults.baseURL = `${import.meta.env.VITE_TYPE_HTTP_PROTOCOL}://${import.meta.env.VITE_HOST_SERVER}:${import.meta.env.VITE_PORT_SERVER}`;
 const initialToken = getTokenFromStorage();
 if (initialToken) {
     axios.defaults.headers.common['Authorization'] = `Bearer ` + initialToken;

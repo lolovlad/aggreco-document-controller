@@ -5,7 +5,7 @@ import moment from 'moment-timezone';
 class AccidentService{
     getPageAccident(page, perItemPage){
         return axios
-            .get('/accident/page', {params: {page: page, per_item_page: perItemPage}})
+            .get('/api/main/v1/accident/page', {params: {page: page, per_item_page: perItemPage}})
             .then((response) => {
                 if(response.status === 200)
                     return response
@@ -18,7 +18,7 @@ class AccidentService{
 
         const timezone = moment().format("Z");
         return axios
-            .put(`accident/${uuidAccident}`, accident, {
+            .put(`/api/main/v1/accident/${uuidAccident}`, accident, {
                 headers: {
                     "X-Timezone": timezone,
                 }
@@ -34,7 +34,7 @@ class AccidentService{
     }
     deleteAccident(uuidAccident){
         return axios
-            .delete(`accident/${uuidAccident}`)
+            .delete(`/api/main/v1/accident/${uuidAccident}`)
             .then((response) => {
                 if(response.status >= 200){
                     return response
@@ -46,7 +46,7 @@ class AccidentService{
     }
     getTimeLine(uuidAccident){
         return axios
-            .get(`accident/${uuidAccident}/time_line`)
+            .get(`/api/main/v1/accident/${uuidAccident}/time_line`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -58,7 +58,7 @@ class AccidentService{
 
     getEventAll(uuidAccident){
         return axios
-            .get(`accident/${uuidAccident}/event`)
+            .get(`/api/main/v1/accident/${uuidAccident}/event`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -69,7 +69,7 @@ class AccidentService{
     }
     getEvent(uuidAccident, uuidItem){
         return axios
-            .get(`accident/${uuidAccident}/event/${uuidItem}`)
+            .get(`/api/main/v1/accident/${uuidAccident}/event/${uuidItem}`)
             .then((response) => {
                 if(response.status === 200)
                     return response.data
@@ -81,7 +81,7 @@ class AccidentService{
 
     addTimeLine(uuidAccident, item){
         return axios
-            .post(`accident/${uuidAccident}/time_line`, item)
+            .post(`/api/main/v1/accident/${uuidAccident}/time_line`, item)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data
@@ -94,7 +94,7 @@ class AccidentService{
     }
     deleteTimeLine(uuidAccident, uuidItem){
         return axios
-            .delete(`accident/${uuidAccident}/time_line/${uuidItem}`)
+            .delete(`/api/main/v1/accident/${uuidAccident}/time_line/${uuidItem}`)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data
@@ -106,7 +106,7 @@ class AccidentService{
     }
     updateTimeLine(uuidAccident, item){
         return axios
-            .put(`accident/${uuidAccident}/time_line`, item)
+            .put(`/api/main/v1/accident/${uuidAccident}/time_line`, item)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data
@@ -118,7 +118,7 @@ class AccidentService{
     }
     addEvent(uuidAccident, item){
         return axios
-            .post(`accident/${uuidAccident}/event`, item)
+            .post(`/api/main/v1/accident/${uuidAccident}/event`, item)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data
@@ -130,7 +130,7 @@ class AccidentService{
     }
     deleteEvent(uuidAccident, uuidEvent){
         return axios
-            .delete(`accident/${uuidAccident}/event/${uuidEvent}`)
+            .delete(`/api/main/v1/accident/${uuidAccident}/event/${uuidEvent}`)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data
@@ -142,7 +142,7 @@ class AccidentService{
     }
     updateEvent(uuidAccident, item){
         return axios
-            .put(`accident/${uuidAccident}/event`, item)
+            .put(`/api/main/v1/accident/${uuidAccident}/event`, item)
             .then((response) => {
                 if(response.status >= 200){
                     return response.data

@@ -67,7 +67,7 @@ export default {
   methods:{
     getAccident(){
       axios
-          .get(`accident/${this.uuidAccident}`)
+          .get(`/api/main/v1/accident/${this.uuidAccident}`)
           .then((response) => {
             const accidentResponse = response.data
             this.datetimeStart = accidentResponse.datetime_start

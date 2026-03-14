@@ -127,7 +127,7 @@ export default {
   methods: {
     getAccident(){
       axios
-          .get(`accident/${this.uuidAccident}`)
+          .get(`/api/main/v1/accident/${this.uuidAccident}`)
           .then((response) => {
             this.accident = response.data
             console.log(this.accident)
